@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANAGING BURNOUT</title>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E8B57;
+            --secondary: #4682B4;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #5f6368;
+            --white: #ffffff;
+        }
+  /* Header Styles */
+        header {
+            background-color:#2E8B57;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--white);
+            background: none;
+            border: none;
+            cursor: pointer;
+        } 
+  
+ @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+     body{
+        background-color: rgb(190, 221, 221) ;
+    }
+    </style>
+</head>
+<body>
+     <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">PearlNurses</a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#"  onclick="window.location.href='Homepage.html'">Home</a></li>
+                <li><a href="#"  onclick="window.location.href='NURSINGINUGANDA.HTML'">Nursing in Uganda</a></li>
+                <li><a href="#" onclick="window.location.href='schoolguide.html'">Nursing School Guide</a></li>
+                <li><a href="#" onclick="window.location.href='equip.html'" >Equipment & Reviews</a></li>
+            </ul>
+        </div>
+    </header>
+    <button onclick="window.location.href='Homepage.html'">BACK</button>
+    <div><H1> Managing Burnout: Self-care strategies for ugandan nurses</H1>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+         Architecto doloribus vel voluptatem nulla vero eaque,
+         quibusdam ipsa deserunt aliquam blanditiis amet 
+        doloremque veritatis qui exercitationem nemo eos impedit quam iure. 
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt ad accusamus atque commodi
+         numquam esse porro deserunt voluptate similique sequi minus ipsa a provident,
+         maiores possimus aliquam dicta consequatur repellat! 
+         Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+         Cumque doloremque quae reprehenderit esse
+          possimus fuga libero exercitationem excepturi veniam vel.
+          Architecto voluptatem dolores distinctio! Iusto, doloremque. Labore quae
+           fuga odit! Lorem ipsum dolor sit amet consectetur 
+          adipisicing elit. Accusamus iste laudantium vero nam, corporis amet ipsa
+           impedit deserunt veritatis eius harum quos sunt quidem 
+          sapiente
+           similique quae dolorem saepe magnam.
+           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis saepe odio commodi?
+            Fugiat atque id quis adipisci quisquam porro minima totam.
+            Rerum possimus officia adipisci corrupti laudantium nemo impedit illo?Lorem,
+             ipsum dolor sit amet consectetur adipisicing elit. Corporis commodi velit est ut, 
+             culpa quidem non odio laboriosam. Repellat, velit nemo. 
+            Nihil, repellat voluptas corrupti nesciunt voluptatum ut ea maiores?
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, 
+            mollitia tempore magni eligendi quaerat, temporibus aliquid iusto laboriosam aperiam et odit cupiditate
+             ipsum consectetur tenetur, repudiandae aspernatur recusandae quos ex.
+             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum illum rerum, laboriosam unde optio perferendis,
+              ab vel quia dolores voluptatibus expedita laudantium. Possimus perferendis assumenda quasi corrupti, 
+              sit alias ullam!
+
+      </p>
+    
+    
+    
+    
+    
+    </div>
+   
+    
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ugandan Nurse - Empowering Uganda's Nursing Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E8B57;
+            --secondary: #4682B4;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #5f6368;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--white);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--secondary);
+            color: var(--white);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #3a6ea5;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #267a48;
+        }
+
+        /* Featured Posts */
+        .featured-posts {
+            padding: 60px 20px;
+            background-color: var(--dark);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 10px;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .post-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%);
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-category {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            color: #cccccc;
+            margin-bottom: 15px;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background-color: var(--secondary);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .newsletter p {
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #267a48;
+        }
+
+        /* Recent Articles */
+        .recent-articles {
+            padding: 60px 20px;
+            background-color: var(--dark);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            display: flex;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .article-content {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .article-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .article-meta {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #151515;
+            padding: 50px 20px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-about {
+            max-width: 300px;
+        }
+
+        .footer-about h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .footer-about p {
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-contact h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .footer-contact p {
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+
+            .newsletter-btn {
+                border-radius: 4px;
+                padding: 12px;
+            }
+
+            .article-card {
+                flex-direction: column;
+            }
+
+            .article-image {
+                width: 100%;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 70px 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .posts-grid,
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">PearlNurses</a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#"  onclick="window.location.href='Homepage.html'">Home</a></li>
+                <li><a href="#"  onclick="window.location.href='NURSINGINUGANDA.HTML'">Nursing in Uganda</a></li>
+                <li><a href="#" onclick="window.location.href='schoolguide.html'">Nursing School Guide</a></li>
+                <li><a href="#" onclick="window.location.href='equip.html'" >Equipment & Reviews</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Trusted Source for Nursing in Uganda</h1>
+            <p>News, resources, and stories from the heart of Uganda's nursing community. Empowering nurses with knowledge, connection, and support.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn" onclick="window.location.href='articles.html'">Explore Articles</a>
+                <a href="https://x.com/i/communities/your_community_id" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Join Our Community</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Posts -->
+    <section class="featured-posts">
+        <h2 class="section-title">Featured Posts</h2>
+        <div class="posts-grid">
+            <div class="post-card"  onclick="window.location.href='a day in life.html'">
+                <div class="post-image" style="background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%), #4682B4;"></div>
+                <div class="post-content">
+                    <span class="post-category">Nursing in Uganda</span>
+                    <h3 class="post-title"  onclick="window.location.href='a day in life.html'">A Day in the Life of a Rural Nurse in Northern Uganda</h3>
+                    <p class="post-excerpt">Follow Nurse Sarah as she navigates challenges and triumphs in a remote health center...</p>
+                    <div class="post-meta">May 15, 2023</div>
+                </div>
+            </div>
+            <div class="post-card" onclick="window.location.href='esstools.html'">
+                <div class="post-image" style="background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%), #2E8B57;"></div>
+                <div class="post-content">
+                    <span class="post-category">Equipment & Reviews</span>
+                    <h3 class="post-title" onclick="window.location.href='esstools.html'">5 Essential Tools for New Nurses in Uganda</h3>
+                    <p class="post-excerpt">Starting your nursing career? Here are the must-have equipment and how to maintain them on a budget...</p>
+                    <div class="post-meta">April 28, 2023</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>Stay Updated with Ugandan Nursing News</h2>
+            <p>Subscribe to our newsletter and get the latest articles, updates, and resources delivered directly to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Recent Articles -->
+    <section class="recent-articles">
+        <h2 class="section-title"  onclick="window.location.href='articles.html'">Recent Articles</h2>
+        <div class="articles-grid">
+            <div class="article-card"  onclick="window.location.href='managingburnout.html'">
+                <div class="article-image" style="background-color: #4682B4;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='managingburnout.html'">Managing Burnout: Self-Care Strategies for Ugandan Nurses</h3>
+                    <div class="article-meta">
+                        <i class="fas fa-search"></i> Nursing Equipment • May 5, 2023
+                    </div>
+                </div>
+            </div>
+            <div class="article-card" onclick="window.location.href='localvimported.html'">
+                <div class="article-image" style="background-color: #2E8B57;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='localvimported.html'">Comparing Local vs Imported Medical Supplies</h3>
+                    <div class="article-meta">April 18, 2023</div>
+                </div>
+            </div>
+            <div class="article-card" onclick="window.location.href='curricupdates.html'">
+                <div class="article-image" style="background-color: #4682B4;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='curricupdates.html'">New Nursing Curriculum Updates from Uganda Nurses Council</h3>
+                    <div class="article-meta">April 18, 2023</div>
+                </div>
+            </div>
+            <div class="article-card"  onclick="window.location.href='articles.html'">
+                <div class="article-image" style="background-color: #2E8B57;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='articles.html'">Ugandan Nurses in International Health Organizations</h3>
+                    <div class="article-meta">April 5, 2023</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>PearlNurses</h3>
+                <p>Empowering, informing, and connecting Uganda's nursing community through news, resources, and shared experiences.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li  onclick="window.location.href='articles.html'"><a href="#">Nursing News</a></li>
+                    <li  onclick="window.location.href='clinicalskills.html'"><a href="#">Clinical Skills</a></li>
+                    <li  onclick="window.location.href='nursingschoollife.html'"><a href="#">Nursing School Life</a></li>
+                    <li onclick="window.location.href='careerdev.html'"><a href="#">Career Development</a></li>
+                    <li  onclick="window.location.href='communitynwellness.html'"><a href="#">Community & Wellness</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>info@pearlnurses.com</p>
+                <p>+256 700 123 456</p>
+                <p>Kampala, Uganda</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 pearlnurses. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
