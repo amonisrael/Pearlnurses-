@@ -477,6 +477,24 @@
                 text-align: center;
             }
         }
+    /* Fix link styling for card wrappers */
+.posts-grid a, .articles-grid a {
+    text-decoration: none;
+    color: inherit;
+    display: block; /* Makes the whole area clickable */
+}
+
+/* Ensure article cards keep their flex layout */
+.articles-grid .article-card {
+    display: flex;
+    height: 100%; /* Ensures uniform height in the grid */
+}
+
+.article-card:hover {
+    background-color: #333333; /* Subtle highlight on hover */
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+}
     </style>
 </head>
 <body>
