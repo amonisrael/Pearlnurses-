@@ -482,6 +482,40 @@
         background-color: #4682B4;
         transform: translateY(-2px);
     }
+.newsletter-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4682B4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 9999;
+    max-width: 300px;
+}
+.newsletter-banner input {
+    width: 70%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    margin-top: 10px;
+}
+.newsletter-banner button {
+    background: #2E8B57;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.close-btn {
+    background: none !important;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -653,7 +687,20 @@
         let modal = document.getElementById('aboutModal');
         if (event.target == modal) { closeAbout(); }
     }
+function closeBanner() {
+    document.getElementById('newsletter-slidein').style.display = 'none';
+}
+
 
     </script>
+<div id="newsletter-slidein" class="newsletter-banner">
+    <p>Join 500+ Ugandan Nurses! <strong>Get free clinical guides.</strong></p>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit">Join</button>
+        <button type="button" onclick="closeBanner()" class="close-btn">&times;</button>
+    </form>
+</div>
+
 </body>
 </html>
