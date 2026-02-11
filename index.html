@@ -79,6 +79,29 @@
             border: none;
             cursor: pointer;
         }
+.search-container {
+    position: relative;
+    max-width: 300px;
+    width: 100%;
+}
+
+#siteSearch {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.2);
+    color: white;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+}
 
         
 
@@ -514,6 +537,11 @@
                 <li><a href="#" onclick="window.location.href='equip.html'" >Equipment & Reviews</a></li>
             </ul>
         </div>
+<div class="search-container">
+    <input type="text" id="siteSearch" placeholder="Search guides or equipment..." onkeyup="filterContent()">
+    <i class="fas fa-search search-icon"></i>
+</div>
+
     </header>
 
   
