@@ -119,16 +119,16 @@
     /* When active, hide the middle bar     and rotate the top/bottom ones */
 #nav-links.active ~ .hamburger span:nth-child(1),
     .hamburger.active span:nth-child(1) {
-    transform: translateY(8.5px)     rotate(45deg);
+    transform: translateY(8px)     rotate(45deg);
 }
 
     .hamburger.active span:nth-child(2) {
     opacity: 0;
-    transform: translateX(-10px);
+    
 }
 
     .hamburger.active span:nth-child(3) {
-    transform: translateY(-8.5px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 .search-container {
@@ -154,10 +154,7 @@
     transform: translateY(-50%);
     color: var(--gray);
 }
-    .hamburger {
-    position: relative;
-    z-index: 1001; /* Higher than the nav-links z-index */
-}
+    
      .menu-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -755,13 +752,51 @@
  </footer>
 
     <script>
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('nav-links');
+    document.addEventListener('DOMContentLoaded', () => {
+    // 1. Hamburger & Menu Logic
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    const overlay = document.getElementById('menu-overlay');
 
+    if (hamburger && navLinks) {
         hamburger.addEventListener('click', () => {
+            // Toggles the 'active' class on the menu AND the button
             navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            
+            // Toggle overlay if you added it
+            if(overlay) overlay.classList.toggle('active');
         });
+    }
+
+    // 2. Newsletter Banner Logic
+    // We target the button specifically by its class or onclick
+    window.closeBanner = function() {
+        const banner = document.getElementById('newsletter-slidein');
+        if (banner) {
+            banner.style.display = 'none';
+        }
+    };
+
+    // 3. Modal Logic
+    window.openAbout = () => {
+        const modal = document.getElementById('aboutModal');
+        if(modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    window.closeAbout = () => {
+        const modal = document.getElementById('aboutModal');
+        if(modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
+});
+
+        
          document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             document.querySelector('nav ul').classList.toggle('active');
         });
@@ -797,30 +832,7 @@ function filterContent() {
         }
     });
 }
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    // Add this line below:
-    hamburger.classList.toggle('active'); 
-});
-  const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
-const overlay = document.getElementById('menu-overlay');
-
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
-    overlay.classList.toggle('active'); // Dims the background
-});
-
-// Close menu if user clicks the dimmed area
-overlay.addEventListener('click', () => {
-    navLinks.classList.remove('active');
-    hamburger.classList.remove('active');
-    overlay.classList.remove('active');
-});
 
 
 
