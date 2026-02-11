@@ -447,6 +447,55 @@
         width: 100%;
     }
 
+/* More Articles Section */
+.more-articles-section {
+    padding: 40px 20px;
+    background-color: var(--dark);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.more-articles-title {
+    color: var(--primary); /* Using your green variable */
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.more-articles-list {
+    list-style: none;
+}
+
+.more-article-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.more-article-item:hover {
+    background-color: #252525;
+}
+
+.pointer {
+    color: #ff4d4d; /* Red pointer from your image */
+    font-weight: bold;
+    margin-right: 15px;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.more-article-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+}
+
+
     </style>
 </head>
 <body>
@@ -531,7 +580,28 @@
         </div>
     </section>
 
-<!-- More articles and news-->
+
+<section class="more-articles-section">
+    <h2 class="more-articles-title">More articles and news</h2>
+    
+    <div class="more-articles-list">
+        <div class="more-article-item" onclick="window.location.href='perfume-safety.html'">
+            <span class="pointer">&gt;</span>
+            <span class="more-article-text">Dermatologists Warn Public on Safe Perfume Use as Fragrance Trend Grows</span>
+        </div>
+
+        <div class="more-article-item" onclick="window.location.href='patio-bella.html'">
+            <span class="pointer">&gt;</span>
+            <span class="more-article-text">The Patio Bella — A Pinnacle of 2026 Hospitality</span>
+        </div>
+
+        <div class="more-article-item" onclick="window.location.href='miss-uganda.html'">
+            <span class="pointer">&gt;</span>
+            <span class="more-article-text">Inter Schools Miss Uganda Season 3 Grand Finale Shines</span>
+        </div>
+    </div>
+</section>
+
    
     <!-- Footer -->
     <footer>
