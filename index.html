@@ -709,6 +709,20 @@
 function closeBanner() {
     document.getElementById('newsletter-slidein').style.display = 'none';
 }
+function filterContent() {
+    let input = document.getElementById('siteSearch').value.toLowerCase();
+    let cards = document.querySelectorAll('.post-card, .article-card, .more-article-item');
+
+    cards.forEach(card => {
+        let title = card.querySelector('h3, .more-article-text').innerText.toLowerCase();
+        if (title.includes(input)) {
+            card.style.display = ""; // Show
+        } else {
+            card.style.display = "none"; // Hide
+        }
+    });
+}
+
 
 
     </script>
