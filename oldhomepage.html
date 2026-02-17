@@ -699,4 +699,151 @@
         </div>
     </div>
 </section>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>PearlNurses</h3>
+                <p>Empowering, informing, and connecting Uganda's nursing community through news, resources, and shared experiences.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li  onclick="window.location.href='articles.html'"><a href="#">Nursing News</a></li>
+                    <li  onclick="window.location.href='clinicalskills.html'"><a href="#">Clinical Skills</a></li>
+                    <li  onclick="window.location.href='nursingschoollife.html'"><a href="#">Nursing School Life</a></li>
+                    <li onclick="window.location.href='careerdev.html'"><a href="#">Career Development</a></li>
+                    <li  onclick="window.location.href='communitynwellness.html'"><a href="#">Community & Wellness</a></li>
+                </ul>
+            </div>
+           <div class="footer-contact">
+    <h4>Contact Us</h4>
+    <form action="https://formspree.io/f/your-form-id" method="POST" style="display: flex; flex-direction: column; gap: 10px;">
+        <input type="email" name="email" placeholder="Your Email" required style="padding: 8px; border-radius: 4px; border: none;">
+        <textarea name="message" placeholder="How can we help?" required style="padding: 8px; border-radius: 4px; border: none; height: 80px;"></textarea>
+        <button type="submit" class="btn btn-secondary" style="padding: 8px;">Send Message</button>
+    </form>
+ <div id="aboutModal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeAbout()">&times;</button>
 
+        <div class="modal-body">
+            <h2 style="color: #2E8B57;">Welcome to PearlNurses</h2>
+            <p style="font-style: italic; color: #4682B4; margin-bottom: 15px;">Supporting the Heartbeat of Uganda</p>
+            <hr style="border: 0; border-top: 1px solid #444; margin-bottom: 20px;">
+
+            <p>Nursing is more than a profession in Uganda; it is the backbone of our healthcare system. We provide a central digital space for localized clinical knowledge and community support.</p>
+
+            <ul style="margin: 20px 0; padding-left: 20px; color: #ccc;">
+                <li><strong>Contextual Guides:</strong> Built for the Ugandan ward.</li>
+                <li><strong>Wellness:</strong> Strategies to fight nurse burnout.</li>
+                <li><strong>Growth:</strong> Navigation for students and professionals.</li>
+            </ul>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="about-full.html" class="btn-modal">Read Our Full Story</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // 1. Hamburger & Menu Logic
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    const overlay = document.getElementById('menu-overlay');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            // Toggles the 'active' class on the menu AND the button
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+
+            // Toggle overlay if you added it
+            if(overlay) overlay.classList.toggle('active');
+        });
+    }
+
+    // 2. Newsletter Banner Logic
+    // We target the button specifically by its class or onclick
+    window.closeBanner = function() {
+        const banner = document.getElementById('newsletter-slidein');
+        if (banner) {
+            banner.style.display = 'none';
+        }
+    };
+
+    // 3. Modal Logic
+    window.openAbout = () => {
+        const modal = document.getElementById('aboutModal');
+        if(modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    window.closeAbout = () => {
+        const modal = document.getElementById('aboutModal');
+        if(modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
+});
+
+
+         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+
+    function openAbout() {
+        document.getElementById('aboutModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeAbout() {
+        document.getElementById('aboutModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close when clicking the dark background
+    window.onclick = function(event) {
+        let modal = document.getElementById('aboutModal');
+        if (event.target == modal) { closeAbout(); }
+    }
+function closeBanner() {
+    document.getElementById('newsletter-slidein').style.display = 'none';
+}
+function filterContent() {
+    let input = document.getElementById('siteSearch').value.toLowerCase();
+    let cards = document.querySelectorAll('.post-card, .article-card, .more-article-item');
+
+    cards.forEach(card => {
+        let title = card.querySelector('h3, .more-article-text').innerText.toLowerCase();
+        if (title.includes(input)) {
+            card.style.display = ""; // Show
+        } else {
+            card.style.display = "none"; // Hide
+        }
+    });
+}
+
+
+
+
+
+    </script>
+<div id="newsletter-slidein" class="newsletter-banner">
+    <p>Join 500+ Ugandan Nurses! <strong>Get free clinical guides.</strong></p>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit">Join</button>
+        <button type="button" onclick="closeBanner()" class="close-btn">&times;</button>
+    </form>
+</div>
+
+</body>
+</html>
