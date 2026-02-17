@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ugandan Nurse - Empowering Uganda's Nursing Community</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>PearlNurses | Supporting Uganda's Nurses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -26,12 +26,13 @@
             background-color: var(--dark);
             color: var(--white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Header Styles */
+        /* --- Header & Navigation --- */
         header {
             background-color: var(--primary);
-            padding: 15px 0;
+            padding: 10px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -54,798 +55,232 @@
             text-decoration: none;
         }
 
-        @media (max-width: 768px) {
-    .nav-links {
-        display: flex; /* Always flex, but moved off-screen */
-        position: fixed;
-        top: 0;
-        right: -100%; /* Completely hidden to the right */
-        width: 70%; /* Takes up 70% of the screen width */
-        height: 100vh;
-        background-color: var(--primary);
-        flex-direction: column;
-        padding: 80px 20px; /* Space for the X icon */
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-        z-index: 999;
-    }
-
-    .nav-links.active {
-        right: 0; /* Slides into view */
-    }
-
-    .nav-links li {
-        margin: 15px 0;
-        opacity: 0;
-        transform: translateX(20px);
-        transition: 0.3s ease;
-    }
-
-    /* Staggered animation for menu items */
-    .nav-links.active li {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-
-        /* Custom Hamburger Styles */
-.hamburger {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.bar-container {
-    width: 30px;
-    height: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-}
-
-.bar-container span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: var(--white);
-    border-radius: 3px;
-    transition: all 0.3s ease-in-out;
-}
-
-    /* Transformation Logic */
-    /* When active, hide the middle bar     and rotate the top/bottom ones */
-#nav-links.active ~ .hamburger span:nth-child(1),
-    .hamburger.active span:nth-child(1) {
-    transform: translateY(8px)     rotate(45deg);
-}
-
-    .hamburger.active span:nth-child(2) {
-    opacity: 0;
-    
-}
-
-    .hamburger.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-}
-
-.search-container {
-    position: relative;
-    max-width: 300px;
-    width: 100%;
-}
-
-    #siteSearch {
-    width: 100%;
-    padding: 10px 15px 10px 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.2);
-    color: white;
-    outline: none;
-}
-
-    .search-icon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray);
-}
-    
-     .menu-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: none;
-    z-index: 998;
-}
-.menu-overlay.active {
-    display: block;
-}
-
-
-        
-
-        /* Featured Posts */
-        .featured-posts {
-            padding: 60px 20px;
-            background-color: var(--dark);
-        }
-
-        
-
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .post-card {
-            background-color: #2a2a2a;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .post-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .post-image {
-            height: 200px;
-            width: 100%;
-            object-fit: cover;
-            background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%);
-        }
-
-        .post-content {
-            padding: 20px;
-        }
-
-        .post-category {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-
-        .post-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .post-excerpt {
-            color: #cccccc;
-            margin-bottom: 15px;
-        }
-
-        .post-meta {
-            font-size: 0.9rem;
-            color: #aaaaaa;
-        }
-
-        
-
-        /* Recent Articles */
-        .recent-articles {
-            padding: 60px 20px;
-            background-color: var(--dark);
-        }
-
-        .articles-grid {
+        .nav-links {
             display: flex;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 0;
-            max-width: 100%;
-            margin: 0 auto;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        .article-card {
-            display: flex !important;
-        flex-direction: row !important; 
-        align-items: flex-start;
-        background-color: transparent !important;
-        border-bottom: 1px solid #333;
-        padding: 15px 10px;
-        margin-bottom: 0;
-        box-shadow: none;
-        width: 100%;
-             }
-
-        .article-image {
-            width: 100px !important;
-        min-width: 100px !important; /* Critical: Stops the 'barcode' effect */
-        height: 75px !important;
-        flex-shrink: 0 !important;
-        border-radius: 4px;
-        background-size: cover;
-             }
-
-        .article-content {
-            padding: 0 0 0 15px;
-           
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1; /* Tells the text to take up all remaining space on the right */
-            overflow: hidden; /* Prevents text from pushing the image out */
-        }
-
-        .article-title {
-            font-size: 1rem;
-            margin-top: 0;
-            line-height: 1.3;
-            margin-bottom: 5px;
-        }
-
-        .article-meta {
-            font-size: 0.8rem;
-            color: #aaaaaa;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #151515;
-            padding: 50px 20px 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto 40px;
-        }
-
-        .footer-about {
-            max-width: 300px;
-        }
-
-        .footer-about h3 {
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .footer-about p {
-            color: #cccccc;
-            margin-bottom: 20px;
-        }
-
-        .footer-links h4 {
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        .footer-links ul {
             list-style: none;
+            gap: 25px;
         }
 
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-
-        .footer-links a {
-            color: #cccccc;
+        .nav-links a {
+            color: var(--white);
             text-decoration: none;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: 0.3s;
         }
 
-        .footer-links a:hover {
-            color: var(--secondary);
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            max-width: 250px;
+            margin: 10px 20px;
         }
 
-        .footer-contact h4 {
-            margin-bottom: 15px;
-            color: var(--primary);
+        #siteSearch {
+            width: 100%;
+            padding: 8px 15px 8px 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.1);
+            color: white;
+            outline: none;
         }
 
-        .footer-contact p {
-            color: #cccccc;
-            margin-bottom: 10px;
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.7);
         }
 
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-            color: #aaaaaa;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
+        /* Mobile Slide-in Menu */
         @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
                 background-color: var(--primary);
                 flex-direction: column;
-                padding: 20px;
-                text-align: center;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 100px 30px;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+                box-shadow: -10px 0 20px rgba(0,0,0,0.3);
             }
 
-            .nav-links.active {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-      
-        
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 70px 20px;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .posts-grid,
-            .articles-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-btns {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 250px;
-                text-align: center;
-            }
+            .nav-links.active { right: 0; }
         }
-    /* Fix link styling for card wrappers */
-.posts-grid a, .articles-grid a {
-    text-decoration: none;
-    color: inherit;
-    display: block; /* Makes the whole area clickable */
-}
 
+        /* Hamburger "X" Animation */
+        .hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            display: none;
+        }
 
-.article-card:hover {
-    background-color: #333333; /* Subtle highlight on hover */
-    transform: translateY(-3px);
-    transition: all 0.3s ease;
-}
-  /* Modal Logic & Design */
-    .modal-overlay {
-        display: none; 
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.85);
-        z-index: 9999;
-        justify-content: center;
-        align-items: center;
-    }
+        @media (max-width: 768px) { .hamburger { display: block; } }
 
-    .modal-content {
-        background-color: #2a2a2a;
-        width: 90%;
-        max-width: 550px;
-        padding: 40px 30px;
-        border-radius: 15px;
-        position: relative;
-        border: 1px solid #2E8B57;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    }
+        .bar-container { width: 25px; height: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+        .bar-container span { display: block; width: 100%; height: 3px; background: white; transition: 0.3s; border-radius: 2px; }
 
-    .modal-close {
-        position: absolute;
-        top: 15px; right: 20px;
-        font-size: 2.5rem;
-        background: none;
-        border: none;
-        color: #888;
-        cursor: pointer;
-    }
+        .hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-    .btn-modal {
-        background-color: #2E8B57;
-        color: white;
-        padding: 12px 25px;
-        text-decoration: none;
-        border-radius: 50px;
-        font-weight: bold;
-        transition: 0.3s;
-        display: inline-block;
-    }
+        /* --- Content Sections --- */
+        .section-title { padding: 40px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .post-card { background: #2a2a2a; border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #333; }
+        .post-card:hover { transform: translateY(-8px); border-color: var(--primary); }
+        .post-image { height: 200px; width: 100%; object-fit: cover; }
+        .post-content { padding: 20px; }
+        
+        /* More Articles List */
+        .more-article-item { display: flex; padding: 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; }
+        .more-article-item:hover { background: #222; }
+        .pointer { color: #ff4d4d; margin-right: 15px; font-weight: bold; }
 
-    .btn-modal:hover {
-        background-color: #4682B4;
-        transform: translateY(-2px);
-    }
-.newsletter-banner {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #4682B4;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 9999;
-    max-width: 300px;
-}
-.newsletter-banner input {
-    width: 70%;
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
-    margin-top: 10px;
-}
-.newsletter-banner button {
-    background: #2E8B57;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.close-btn {
-    background: none !important;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-}
-    @media (max-width: 768px) {
-    /* 1. Force the container to be a vertical list, not a grid */
-    .articles-grid {
-        display: flex !important;
-        flex-direction: column !important; 
-        gap: 0; 
-        width: 100%;
-    }
+        /* --- Footer & Modals --- */
+        footer { background: #111; padding: 60px 20px; border-top: 4px solid var(--primary); }
+        .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
+        .menu-overlay.active { display: block; }
 
-/* More Articles Section */
-.more-articles-section {
-    padding: 40px 20px;
-    background-color: var(--dark);
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.more-articles-title {
-    color: var(--primary); /* Using your green variable */
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
-
-.more-articles-list {
-    list-style: none;
-}
-
-.more-article-item {
-    padding: 20px 0;
-    border-bottom: 1px solid #333;
-    display: flex;
-    align-items: flex-start;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.more-article-item:hover {
-    background-color: #252525;
-}
-
-.pointer {
-    color: #ff4d4d; /* Red pointer from your image */
-    font-weight: bold;
-    margin-right: 15px;
-    font-size: 1.4rem;
-    line-height: 1.2;
-}
-
-.more-article-text {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--white);
-    line-height: 1.4;
-}
-
-</style>
-
+        .newsletter-banner { position: fixed; bottom: 20px; right: 20px; background: var(--secondary); padding: 20px; border-radius: 12px; z-index: 2000; max-width: 320px; }
+        
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
+        .modal-content { background: #222; padding: 40px; border-radius: 15px; max-width: 500px; position: relative; border: 1px solid var(--primary); }
+    </style>
 </head>
 <body>
-    <!-- Header -->
+
     <header>
         <div class="header-container">
             <a href="#" class="logo">PearlNurses</a>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="siteSearch" placeholder="Search...">
+            </div>
             <button class="hamburger" id="hamburger">
-    <div class="bar-container">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</button>
-
+                <div class="bar-container">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
             <ul class="nav-links" id="nav-links">
-                <li><a href="javascript:void(0)" onclick="openAbout()">About Us</a></li>
-
-                <li><a href = "nursing-in-uganda.html">Nursing in Uganda</a></li>
-                <li><a href="#" onclick="window.location.href='schoolguide.html'">Nursing School Guide</a></li>
-                <li><a href="#" onclick="window.location.href='equip.html'" >Equipment & Reviews</a></li>
+                <li><a href="#" onclick="openAbout()">About Us</a></li>
+                <li><a href="uganda.html">Nursing in Uganda</a></li>
+                <li><a href="guides.html">School Guide</a></li>
+                <li><a href="equip.html">Equipment</a></li>
             </ul>
         </div>
-<div class="search-container">
-    <input type="text" id="siteSearch" placeholder="Search guides or equipment..." onkeyup="filterContent()">
-    <i class="fas fa-search search-icon"></i>
-</div>
-
     </header>
-   <div id="menu-overlay" class="menu-overlay"></div>
 
+    <div id="menu-overlay" class="menu-overlay"></div>
 
-  
-
-    <!-- Featured Posts -->
-    <section class="featured-posts">
-        
-        <div class="posts-grid">
-            <div class="post-card"  onclick="window.location.href='a day in life.html'">
-                <div class="post-image" style="background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%), #4682B4;"></div>
-                <div class="post-content">
-                    <span class="post-category">Nursing in Uganda</span>
-                    <h3 class="post-title"  onclick="window.location.href='a day in life.html'">A Day in the Life of a Rural Nurse in Northern Uganda</h3>
-                    <p class="post-excerpt">Follow Nurse Sarah as she navigates challenges and triumphs in a remote health center...</p>
-                    <div class="post-meta">May 15, 2023</div>
-                </div>
-            </div>
-            <div class="post-card" onclick="window.location.href='esstools.html'">
-                <div class="post-image" style="background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%), #2E8B57;"></div>
-                <div class="post-content">
-                    <span class="post-category">Equipment & Reviews</span>
-                    <h3 class="post-title" onclick="window.location.href='esstools.html'">5 Essential Tools for New Nurses in Uganda</h3>
-                    <p class="post-excerpt">Starting your nursing career? Here are the must-have equipment and how to maintain them on a budget...</p>
-                    <div class="post-meta">April 28, 2023</div>
-                </div>
-            </div>
-        </div>
- 
-
-    <!-- Recent Articles -->
-    <section class="recent-articles">
-        <h2 class="section-title"  onclick="window.location.href='articles.html'">Recent Articles and News</h2>
-        <div class="articles-grid">
-            <div class="article-card"  onclick="window.location.href='managingburnout.html'">
-                <div class="article-image" style="background-color: #4682B4;"></div>
-                <div class="article-content">
-                    <h3 class="article-title"  onclick="window.location.href='managingburnout.html'">Managing Burnout: Self-Care Strategies for Ugandan Nurses</h3>
-                    <div class="article-meta">
-                        <i class="fas fa-search"></i> Nursing Equipment • May 5, 2023
-                    </div>
-                </div>
-            </div>
-            <div class="article-card" onclick="window.location.href='localvimported.html'">
-                <div class="article-image" style="background-color: #2E8B57;"></div>
-                <div class="article-content">
-                    <h3 class="article-title"  onclick="window.location.href='localvimported.html'">Comparing Local vs Imported Medical Supplies</h3>
-                    <div class="article-meta">April 18, 2023</div>
-                </div>
-            </div>
-            <div class="article-card" onclick="window.location.href='curricupdates.html'">
-                <div class="article-image" style="background-color: #4682B4;"></div>
-                <div class="article-content">
-                    <h3 class="article-title"  onclick="window.location.href='curricupdates.html'">New Nursing Curriculum Updates from Uganda Nurses Council</h3>
-                    <div class="article-meta">April 18, 2023</div>
-                </div>
-            </div>
-            <div class="article-card"  onclick="window.location.href='articles.html'">
-                <div class="article-image" style="background-color: #2E8B57;"></div>
-                <div class="article-content">
-                    <h3 class="article-title"  onclick="window.location.href='articles.html'">Ugandan Nurses in International Health Organizations</h3>
-                    <div class="article-meta">April 5, 2023</div>
-                </div>
+    <h2 class="section-title">Featured Stories</h2>
+    <section id="featured-posts" class="posts-grid">
+        <div class="post-card" onclick="location.href='article.html'">
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500" class="post-image">
+            <div class="post-content">
+                <h3>A Day in the Life: Rural Nurse</h3>
+                <p>Challenges and triumphs in Northern Uganda...</p>
             </div>
         </div>
     </section>
-<section class="more-articles-section">
-    <h2 class="more-articles-title">More articles and news</h2>
-    
-    <div class="more-articles-list">
-        <div class="more-article-item" onclick="window.location.href='perfume-safety.html'">
-            <span class="pointer">&gt;</span>
-            <span class="more-article-text">Dermatologists Warn Public on Safe Perfume Use as Fragrance Trend Grows</span>
-        </div>
 
-        <div class="more-article-item" onclick="window.location.href='patio-bella.html'">
-            <span class="pointer">&gt;</span>
-            <span class="more-article-text">Nurses in leadership</span>
+    <section class="more-articles-section" style="max-width:1200px; margin: 0 auto; padding: 40px 20px;">
+        <h2 style="color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px;">More News</h2>
+        <div class="more-article-item" onclick="location.href='news1.html'">
+            <span class="pointer">></span>
+            <span>Nurses in Leadership: The New Wave</span>
         </div>
+    </section>
 
-        <div class="more-article-item" onclick="window.location.href='miss-uganda.html'">
-            <span class="pointer">&gt;</span>
-            <span class="more-article-text">New Meds on market</span>
-        </div>
-    </div>
-</section>
-
-   
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-about">
-                <h3>PearlNurses</h3>
-                <p>Empowering, informing, and connecting Uganda's nursing community through news, resources, and shared experiences.</p>
+        <div class="footer-content" style="max-width:1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: var(--primary);">PearlNurses</h3>
+                <p>Empowering the heartbeat of Uganda's healthcare.</p>
             </div>
-            <div class="footer-links">
-                <h4>Categories</h4>
-                <ul>
-                    <li  onclick="window.location.href='articles.html'"><a href="#">Nursing News</a></li>
-                    <li  onclick="window.location.href='clinicalskills.html'"><a href="#">Clinical Skills</a></li>
-                    <li  onclick="window.location.href='nursingschoollife.html'"><a href="#">Nursing School Life</a></li>
-                    <li onclick="window.location.href='careerdev.html'"><a href="#">Career Development</a></li>
-                    <li  onclick="window.location.href='communitynwellness.html'"><a href="#">Community & Wellness</a></li>
-                </ul>
-            </div>
-           <div class="footer-contact">
-    <h4>Contact Us</h4>
-    <form action="https://formspree.io/f/your-form-id" method="POST" style="display: flex; flex-direction: column; gap: 10px;">
-        <input type="email" name="email" placeholder="Your Email" required style="padding: 8px; border-radius: 4px; border: none;">
-        <textarea name="message" placeholder="How can we help?" required style="padding: 8px; border-radius: 4px; border: none; height: 80px;"></textarea>
-        <button type="submit" class="btn btn-secondary" style="padding: 8px;">Send Message</button>
-    </form>
- <div id="aboutModal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeAbout()">&times;</button>
-        
-        <div class="modal-body">
-            <h2 style="color: #2E8B57;">Welcome to PearlNurses</h2>
-            <p style="font-style: italic; color: #4682B4; margin-bottom: 15px;">Supporting the Heartbeat of Uganda</p>
-            <hr style="border: 0; border-top: 1px solid #444; margin-bottom: 20px;">
-            
-            <p>Nursing is more than a profession in Uganda; it is the backbone of our healthcare system. We provide a central digital space for localized clinical knowledge and community support.</p>
-            
-            <ul style="margin: 20px 0; padding-left: 20px; color: #ccc;">
-                <li><strong>Contextual Guides:</strong> Built for the Ugandan ward.</li>
-                <li><strong>Wellness:</strong> Strategies to fight nurse burnout.</li>
-                <li><strong>Growth:</strong> Navigation for students and professionals.</li>
-            </ul>
-            
-            <div style="text-align: center; margin-top: 25px;">
-                <a href="about-full.html" class="btn-modal">Read Our Full Story</a>
+            <div style="flex: 1; min-width: 250px;">
+                <h4>Contact Us</h4>
+                <form action="#" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                    <input type="email" placeholder="Email" style="padding: 10px; border-radius: 5px; border: none;">
+                    <textarea placeholder="Message" style="padding: 10px; border-radius: 5px; border: none; height: 80px;"></textarea>
+                    <button type="submit" style="background: var(--primary); color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Send</button>
+                </form>
             </div>
         </div>
+    </footer>
+
+    <div id="aboutModal" class="modal-overlay">
+        <div class="modal-content">
+            <button style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; font-size: 2rem; cursor:pointer;" onclick="closeAbout()">&times;</button>
+            <h2 style="color: var(--primary);">About PearlNurses</h2>
+            <p style="margin-top: 20px;">We provide localized clinical knowledge and community support for the Ugandan nursing profession.</p>
+        </div>
     </div>
-</div>
-</div>
- </footer>
+
+    <div id="newsletter-slidein" class="newsletter-banner">
+        <button onclick="closeBanner()" style="float:right; background:none; border:none; color:white; cursor:pointer;">&times;</button>
+        <p><strong>Join 500+ Nurses</strong></p>
+        <input type="email" placeholder="Your email" style="width: 100%; margin: 10px 0; padding: 5px;">
+        <button style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor:pointer;">Join</button>
+    </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    // 1. Hamburger & Menu Logic
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('nav-links');
-    const overlay = document.getElementById('menu-overlay');
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+            const overlay = document.getElementById('menu-overlay');
+            const siteSearch = document.getElementById('siteSearch');
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            // Toggles the 'active' class on the menu AND the button
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            
-            // Toggle overlay if you added it
-            if(overlay) overlay.classList.toggle('active');
+            // --- Menu Logic ---
+            const toggleMenu = () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                overlay.classList.toggle('active');
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+
+            // --- Search Logic ---
+            siteSearch.addEventListener('keyup', () => {
+                let filter = siteSearch.value.toLowerCase();
+                let cards = document.querySelectorAll('.post-card, .more-article-item');
+                cards.forEach(card => {
+                    let text = card.innerText.toLowerCase();
+                    card.style.display = text.includes(filter) ? "" : "none";
+                });
+            });
+
+            // --- Modal & Banner Functions ---
+            window.openAbout = () => {
+                document.getElementById('aboutModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeAbout = () => {
+                document.getElementById('aboutModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            window.closeBanner = () => {
+                document.getElementById('newsletter-slidein').style.display = 'none';
+            };
         });
-    }
-
-    // 2. Newsletter Banner Logic
-    // We target the button specifically by its class or onclick
-    window.closeBanner = function() {
-        const banner = document.getElementById('newsletter-slidein');
-        if (banner) {
-            banner.style.display = 'none';
-        }
-    };
-
-    // 3. Modal Logic
-    window.openAbout = () => {
-        const modal = document.getElementById('aboutModal');
-        if(modal) {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-    };
-
-    window.closeAbout = () => {
-        const modal = document.getElementById('aboutModal');
-        if(modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    };
-});
-
-        
-         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
-        });
-
-    function openAbout() {
-        document.getElementById('aboutModal').style.display = 'flex';
-        document.body.style.overflow = 'hidden'; 
-    }
-
-    function closeAbout() {
-        document.getElementById('aboutModal').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-
-    // Close when clicking the dark background
-    window.onclick = function(event) {
-        let modal = document.getElementById('aboutModal');
-        if (event.target == modal) { closeAbout(); }
-    }
-function closeBanner() {
-    document.getElementById('newsletter-slidein').style.display = 'none';
-}
-function filterContent() {
-    let input = document.getElementById('siteSearch').value.toLowerCase();
-    let cards = document.querySelectorAll('.post-card, .article-card, .more-article-item');
-
-    cards.forEach(card => {
-        let title = card.querySelector('h3, .more-article-text').innerText.toLowerCase();
-        if (title.includes(input)) {
-            card.style.display = ""; // Show
-        } else {
-            card.style.display = "none"; // Hide
-        }
-    });
-}
-
-
-
-
-
     </script>
-<div id="newsletter-slidein" class="newsletter-banner">
-    <p>Join 500+ Ugandan Nurses! <strong>Get free clinical guides.</strong></p>
-    <form action="https://formspree.io/f/your-form-id" method="POST">
-        <input type="email" name="email" placeholder="Your email" required>
-        <button type="submit">Join</button>
-        <button type="button" onclick="closeBanner()" class="close-btn">&times;</button>
-    </form>
-</div>
-
 </body>
 </html>
+
+
+        
+         
+    
+
+    
