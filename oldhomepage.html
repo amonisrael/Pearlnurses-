@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ugandan Nurse - Empowering Uganda's Nursing Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E8B57;
+            --secondary: #4682B4;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #5f6368;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+    .nav-links {
+        display: flex; /* Always flex, but moved off-screen */
+        position: fixed;
+        top: 0;
+        right: -100%; /* Completely hidden to the right */
+        width: 70%; /* Takes up 70% of the screen width */
+        height: 100vh;
+        background-color: var(--primary);
+        flex-direction: column;
+        padding: 80px 20px; /* Space for the X icon */
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        right: 0; /* Slides into view */
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: 0.3s ease;
+    }
+
+    /* Staggered animation for menu items */
+    .nav-links.active li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+        /* Custom Hamburger Styles */
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.bar-container {
+    width: 30px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.bar-container span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--white);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+    /* Transformation Logic */
+    /* When active, hide the middle bar     and rotate the top/bottom ones */
+#nav-links.active ~ .hamburger span:nth-child(1),
+    .hamburger.active span:nth-child(1) {
+    transform: translateY(8px)     rotate(45deg);
+}
+
+    .hamburger.active span:nth-child(2) {
+    opacity: 0;
+
+}
+
+    .hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.search-container {
+    position: relative;
+    max-width: 300px;
+    width: 100%;
+}
+
+    #siteSearch {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.2);
+    color: white;
+    outline: none;
+}
+
+    .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+}
+
+     .menu-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 998;
+}
+.menu-overlay.active {
+    display: block;
+}
+
+
+
+
+        /* Featured Posts */
+        .featured-posts {
+            padding: 60px 20px;
+            background-color: var(--dark);
+        }
+
+
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .post-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%);
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-category {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            color: #cccccc;
+            margin-bottom: 15px;
+        }
+
+        .post-meta {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+        }
+
+
+
+        /* Recent Articles */
+        .recent-articles {
+            padding: 60px 20px;
+            background-color: var(--dark);
+        }
+
+        .articles-grid {
+            display: flex;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 0;
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .article-card {
+            display: flex !important;
+        flex-direction: row !important; 
+        align-items: flex-start;
+        background-color: transparent !important;
+        border-bottom: 1px solid #333;
+        padding: 15px 10px;
+        margin-bottom: 0;
+        box-shadow: none;
+        width: 100%;
+             }
+
+        .article-image {
+            width: 100px !important;
+        min-width: 100px !important; /* Critical: Stops the 'barcode' effect */
+        height: 75px !important;
+        flex-shrink: 0 !important;
+        border-radius: 4px;
+        background-size: cover;
+             }
+
+        .article-content {
+            padding: 0 0 0 15px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1; /* Tells the text to take up all remaining space on the right */
+            overflow: hidden; /* Prevents text from pushing the image out */
+        }
+
+        .article-title {
+            font-size: 1rem;
+            margin-top: 0;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+
+        .article-meta {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #151515;
+            padding: 50px 20px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-about {
+            max-width: 300px;
+        }
+
+        .footer-about h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .footer-about p {
+            color: #cccccc;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-contact h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .footer-contact p {
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+
+
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 70px 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .posts-grid,
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                text-align: center;
+            }
+        }
+    /* Fix link styling for card wrappers */
+.posts-grid a, .articles-grid a {
+    text-decoration: none;
+    color: inherit;
+    display: block; /* Makes the whole area clickable */
+}
+
+
+.article-card:hover {
+    background-color: #333333; /* Subtle highlight on hover */
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+}
+  /* Modal Logic & Design */
+    .modal-overlay {
+        display: none; 
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #2a2a2a;
+        width: 90%;
+        max-width: 550px;
+        padding: 40px 30px;
+        border-radius: 15px;
+        position: relative;
+        border: 1px solid #2E8B57;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 15px; right: 20px;
+        font-size: 2.5rem;
+        background: none;
+        border: none;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .btn-modal {
+        background-color: #2E8B57;
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: 0.3s;
+        display: inline-block;
+    }
+
+    .btn-modal:hover {
+        background-color: #4682B4;
+        transform: translateY(-2px);
+    }
+.newsletter-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4682B4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 9999;
+    max-width: 300px;
+}
+.newsletter-banner input {
+    width: 70%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    margin-top: 10px;
+}
+.newsletter-banner button {
+    background: #2E8B57;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.close-btn {
+    background: none !important;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+    @media (max-width: 768px) {
+    /* 1. Force the container to be a vertical list, not a grid */
+    .articles-grid {
+        display: flex !important;
+        flex-direction: column !important; 
+        gap: 0; 
+        width: 100%;
+    }
+
+/* More Articles Section */
+.more-articles-section {
+    padding: 40px 20px;
+    background-color: var(--dark);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.more-articles-title {
+    color: var(--primary); /* Using your green variable */
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.more-articles-list {
+    list-style: none;
+}
+
+.more-article-item {
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.more-article-item:hover {
+    background-color: #252525;
+}
+
+.pointer {
+    color: #ff4d4d; /* Red pointer from your image */
+    font-weight: bold;
+    margin-right: 15px;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.more-article-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+}
+
+</style>
+
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">PearlNurses</a>
+            <button class="hamburger" id="hamburger">
+    <div class="bar-container">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="javascript:void(0)" onclick="openAbout()">About Us</a></li>
+
+                <li><a href = "nursing-in-uganda.html">Nursing in Uganda</a></li>
+                <li><a href="#" onclick="window.location.href='schoolguide.html'">Nursing School Guide</a></li>
+                <li><a href="#" onclick="window.location.href='equip.html'" >Equipment & Reviews</a></li>
+            </ul>
+        </div>
+<div class="search-container">
+    <input type="text" id="siteSearch" placeholder="Search guides or equipment..." onkeyup="filterContent()">
+    <i class="fas fa-search search-icon"></i>
+</div>
+
+    </header>
+   <div id="menu-overlay" class="menu-overlay"></div>
+
+
+
+
+    <!-- Featured Posts -->
+    <section class="featured-posts">
+
+        <div class="posts-grid">
+            <div class="post-card"  onclick="window.location.href='a day in life.html'">
+                <div class="post-image" style="background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%), #4682B4;"></div>
+                <div class="post-content">
+                    <span class="post-category">Nursing in Uganda</span>
+                    <h3 class="post-title"  onclick="window.location.href='a day in life.html'">A Day in the Life of a Rural Nurse in Northern Uganda</h3>
+                    <p class="post-excerpt">Follow Nurse Sarah as she navigates challenges and triumphs in a remote health center...</p>
+                    <div class="post-meta">May 15, 2023</div>
+                </div>
+            </div>
+            <div class="post-card" onclick="window.location.href='esstools.html'">
+                <div class="post-image" style="background: linear-gradient(to bottom, transparent 70%, #2a2a2a 100%), #2E8B57;"></div>
+                <div class="post-content">
+                    <span class="post-category">Equipment & Reviews</span>
+                    <h3 class="post-title" onclick="window.location.href='esstools.html'">5 Essential Tools for New Nurses in Uganda</h3>
+                    <p class="post-excerpt">Starting your nursing career? Here are the must-have equipment and how to maintain them on a budget...</p>
+                    <div class="post-meta">April 28, 2023</div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Recent Articles -->
+    <section class="recent-articles">
+        <h2 class="section-title"  onclick="window.location.href='articles.html'">Recent Articles and News</h2>
+        <div class="articles-grid">
+            <div class="article-card"  onclick="window.location.href='managingburnout.html'">
+                <div class="article-image" style="background-color: #4682B4;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='managingburnout.html'">Managing Burnout: Self-Care Strategies for Ugandan Nurses</h3>
+                    <div class="article-meta">
+                        <i class="fas fa-search"></i> Nursing Equipment • May 5, 2023
+                    </div>
+                </div>
+            </div>
+            <div class="article-card" onclick="window.location.href='localvimported.html'">
+                <div class="article-image" style="background-color: #2E8B57;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='localvimported.html'">Comparing Local vs Imported Medical Supplies</h3>
+                    <div class="article-meta">April 18, 2023</div>
+                </div>
+            </div>
+            <div class="article-card" onclick="window.location.href='curricupdates.html'">
+                <div class="article-image" style="background-color: #4682B4;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='curricupdates.html'">New Nursing Curriculum Updates from Uganda Nurses Council</h3>
+                    <div class="article-meta">April 18, 2023</div>
+                </div>
+            </div>
+            <div class="article-card"  onclick="window.location.href='articles.html'">
+                <div class="article-image" style="background-color: #2E8B57;"></div>
+                <div class="article-content">
+                    <h3 class="article-title"  onclick="window.location.href='articles.html'">Ugandan Nurses in International Health Organizations</h3>
+                    <div class="article-meta">April 5, 2023</div>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="more-articles-section">
+    <h2 class="more-articles-title">More articles and news</h2>
+
+    <div class="more-articles-list">
+        <div class="more-article-item" onclick="window.location.href='perfume-safety.html'">
+            <span class="pointer">&gt;</span>
+            <span class="more-article-text">Dermatologists Warn Public on Safe Perfume Use as Fragrance Trend Grows</span>
+        </div>
+
+        <div class="more-article-item" onclick="window.location.href='patio-bella.html'">
+            <span class="pointer">&gt;</span>
+            <span class="more-article-text">Nurses in leadership</span>
+        </div>
+
+        <div class="more-article-item" onclick="window.location.href='miss-uganda.html'">
+            <span class="pointer">&gt;</span>
+            <span class="more-article-text">New Meds on market</span>
+        </div>
+    </div>
+</section>
+
