@@ -249,15 +249,42 @@
             hamburger.addEventListener('click', toggleMenu);
             overlay.addEventListener('click', toggleMenu);
 
-            // --- Search Logic ---
-            siteSearch.addEventListener('keyup', () => {
-                let filter = siteSearch.value.toLowerCase();
-                let cards = document.querySelectorAll('.post-card, .more-article-item');
-                cards.forEach(card => {
-                    let text = card.innerText.toLowerCase();
-                    card.style.display = text.includes(filter) ? "" : "none";
-                });
-            });
+            // --- CMS Integration ---
+const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0/edit?usp=drivesdk'; // Replace with your ID
+const BASE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+async function loadCMSContent() {
+    try {
+        const response = await fetch(BASE_URL);
+        const text = await response.text();
+        // Google returns JSON wrapped in a function; this line cleans it
+        const data = JSON.parse(text.substr(47).slice(0, -2));
+        
+        const container = document.getElementById('featured-posts');
+        container.innerHTML = ''; // Clear the loading state
+
+        data.table.rows.forEach(row => {
+            const [title, category, excerpt, img, link, date] = row.c.map(cell => cell ? cell.v : '');
+            
+            container.innerHTML += `
+                <div class="post-card" onclick="location.href='${link}'">
+                    <img src="${img}" class="post-image" alt="${title}">
+                    <div class="post-content">
+                        <span class="post-category" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:0.8rem;">${category}</span>
+                        <h3 style="margin-top:10px;">${title}</h3>
+                        <p style="color:#ccc; font-size:0.9rem; margin:10px 0;">${excerpt}</p>
+                        <div style="color:#888; font-size:0.8rem;">${date}</div>
+                    </div>
+                </div>`;
+        });
+    } catch (error) {
+        console.error("Error loading CMS:", error);
+    }
+}
+
+// Run the loader
+loadCMSContent();
+
 
             // --- Modal & Banner Functions ---
             window.openAbout = () => {
