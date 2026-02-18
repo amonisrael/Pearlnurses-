@@ -301,6 +301,16 @@ loadCMSContent();
                 document.getElementById('newsletter-slidein').style.display = 'none';
             };
         });
+siteSearch.addEventListener('keyup', () => {
+    let filter = siteSearch.value.toLowerCase();
+    // We search inside the container we just populated
+    let cards = document.querySelectorAll('.post-card'); 
+    cards.forEach(card => {
+        let text = card.innerText.toLowerCase();
+        card.style.display = text.includes(filter) ? "block" : "none";
+    });
+});
+
     </script>
 </body>
 </html>
