@@ -310,6 +310,46 @@ siteSearch.addEventListener('keyup', () => {
         card.style.display = text.includes(filter) ? "block" : "none";
     });
 });
+async function loadCMSContent() {
+    const container = document.getElementById('featured-posts');
+    container.innerHTML = '<p style="text-align:center; padding:20px;">Checking for new articles...</p>';
+
+    try {
+        const response = await fetch(BASE_URL);
+        if (!response.ok) throw new Error('Sheet not published to web');
+        
+        const text = await response.text();
+        const data = JSON.parse(text.substr(47).slice(0, -2));
+        
+        container.innerHTML = ''; // Clear loading text
+
+        data.table.rows.forEach(row => {
+            // This pulls the data from your columns A, B, C, D, E, and F
+            const title = row.c[0] ? row.c[0].v : 'Untitled';
+            const category = row.c[1] ? row.c[1].v : 'News';
+            const excerpt = row.c[2] ? row.c[2].v : '';
+            const img = row.c[3] ? row.c[3].v : 'https://via.placeholder.com/500';
+            const link = row.c[4] ? row.c[4].v : '#';
+            const date = row.c[5] ? row.c[5].v : '';
+            
+            container.innerHTML += `
+                <div class="post-card" onclick="location.href='${link}'">
+                    <img src="${img}" class="post-image" alt="${title}">
+                    <div class="post-content">
+                        <span class="post-category">${category}</span>
+                        <h3 style="margin-top:10px;">${title}</h3>
+                        <p style="color:#ccc; font-size:0.9rem; margin:10px 0;">${excerpt}</p>
+                        <div style="color:#888; font-size:0.8rem;">${date}</div>
+                    </div>
+                </div>`;
+        });
+    } catch (error) {
+        container.innerHTML = `<p style="color:red; text-align:center;">CMS Error: Make sure your Sheet is "Published to Web".</p>`;
+        console.error("CMS Error:", error);
+    }
+}
+
+
 
     </script>
 </body>
