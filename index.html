@@ -6,154 +6,59 @@
     <title>PearlNurses | Supporting Uganda's Nurses</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
 
-        :root {
-            --primary: #2E8B57;
-            --secondary: #4682B4;
-            --dark: #1a1a1a;
-            --light: #f8f9fa;
-            --gray: #5f6368;
-            --white: #ffffff;
-        }
+        body { background-color: var(--dark); color: var(--white); line-height: 1.6; overflow-x: hidden; }
 
-        body {
-            background-color: var(--dark);
-            color: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        /* --- Header & Search --- */
+        header { background-color: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--white); text-decoration: none; }
+        
+        .search-container { position: relative; max-width: 250px; margin: 10px 20px; }
+        #siteSearch { width: 100%; padding: 8px 15px 8px 35px; border-radius: 20px; border: none; background: rgba(0,0,0,0.1); color: white; outline: none; border: 1px solid rgba(255,255,255,0.2); }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.7); }
 
-        /* --- Header & Navigation --- */
-        header {
-            background-color: var(--primary);
-            padding: 10px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
+        /* --- Mobile Nav & Hamburger --- */
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--white);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        /* Search Bar */
-        .search-container {
-            position: relative;
-            max-width: 250px;
-            margin: 10px 20px;
-        }
-
-        #siteSearch {
-            width: 100%;
-            padding: 8px 15px 8px 35px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(0,0,0,0.1);
-            color: white;
-            outline: none;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Mobile Slide-in Menu */
         @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background-color: var(--primary);
-                flex-direction: column;
-                padding: 100px 30px;
-                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 999;
-                box-shadow: -10px 0 20px rgba(0,0,0,0.3);
-            }
-
+            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--primary); flex-direction: column; padding: 100px 30px; transition: 0.4s ease; z-index: 999; }
             .nav-links.active { right: 0; }
+            .hamburger { display: block !important; }
         }
 
-        /* Hamburger "X" Animation */
-        .hamburger {
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1001;
-            display: none;
-        }
-
-        @media (max-width: 768px) { .hamburger { display: block; } }
-
+        .hamburger { background: none; border: none; cursor: pointer; z-index: 1001; display: none; }
         .bar-container { width: 25px; height: 18px; display: flex; flex-direction: column; justify-content: space-between; }
-        .bar-container span { display: block; width: 100%; height: 3px; background: white; transition: 0.3s; border-radius: 2px; }
-
+        .bar-container span { display: block; width: 100%; height: 3px; background: white; transition: 0.3s; }
         .hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-        /* --- Content Sections --- */
-        .section-title { padding: 40px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); }
-        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        .post-card { background: #2a2a2a; border-radius: 12px; overflow: hidden; transition: 0.3s; cursor: pointer; border: 1px solid #333; }
-        .post-card:hover { transform: translateY(-8px); border-color: var(--primary); }
-        .post-image { height: 200px; width: 100%; object-fit: cover; }
-        .post-content { padding: 20px; }
-        
-        /* More Articles List */
-        .more-article-item { display: flex; padding: 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; }
-        .more-article-item:hover { background: #222; }
-        .pointer { color: #ff4d4d; margin-right: 15px; font-weight: bold; }
+        /* --- Content Layout --- */
+        .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
+        .post-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .post-image { height: 180px; width: 100%; object-fit: cover; }
+        .post-content { padding: 15px; }
+        .post-category { background: var(--primary); font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; }
 
-        /* --- Footer & Modals --- */
-        footer { background: #111; padding: 60px 20px; border-top: 4px solid var(--primary); }
+        /* --- Footer --- */
+        footer { background: #111; padding: 40px 20px; margin-top: 50px; border-top: 2px solid #333; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+        .footer-links ul { list-style: none; margin-top: 10px; }
+        .footer-links li { margin: 8px 0; color: #ccc; cursor: pointer; font-size: 0.9rem; }
+        .footer-links li:hover { color: var(--secondary); }
+
+        /* --- Modals & Banners --- */
         .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
         .menu-overlay.active { display: block; }
-
-        .newsletter-banner { position: fixed; bottom: 20px; right: 20px; background: var(--secondary); padding: 20px; border-radius: 12px; z-index: 2000; max-width: 320px; }
-        
-        /* Modal */
+        .newsletter-banner { position: fixed; bottom: 20px; right: 20px; background: var(--secondary); padding: 15px; border-radius: 10px; z-index: 2000; max-width: 280px; }
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
-        .modal-content { background: #222; padding: 40px; border-radius: 15px; max-width: 500px; position: relative; border: 1px solid var(--primary); }
+        .modal-content { background: #222; padding: 30px; border-radius: 15px; max-width: 450px; position: relative; border: 1px solid var(--primary); margin: 20px; }
     </style>
 </head>
 <body>
@@ -161,58 +66,49 @@
     <header>
         <div class="header-container">
             <a href="#" class="logo">PearlNurses</a>
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="siteSearch" placeholder="Search...">
-            </div>
             <button class="hamburger" id="hamburger">
-                <div class="bar-container">
-                    <span></span><span></span><span></span>
-                </div>
+                <div class="bar-container"><span></span><span></span><span></span></div>
             </button>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#" onclick="openAbout()">About Us</a></li>
+                <li><a onclick="openAbout()">About Us</a></li>
                 <li><a href="uganda.html">Nursing in Uganda</a></li>
                 <li><a href="guides.html">School Guide</a></li>
                 <li><a href="equip.html">Equipment</a></li>
             </ul>
         </div>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="siteSearch" placeholder="Search guides or articles...">
+        </div>
     </header>
 
     <div id="menu-overlay" class="menu-overlay"></div>
 
-    <h2 class="section-title">Featured Stories</h2>
+    <h2 class="section-title">Latest Resources</h2>
     <section id="featured-posts" class="posts-grid">
-        <div class="post-card" onclick="location.href='article.html'">
-            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500" class="post-image">
-            <div class="post-content">
-                <h3>A Day in the Life: Rural Nurse</h3>
-                <p>Challenges and triumphs in Northern Uganda...</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="more-articles-section" style="max-width:1200px; margin: 0 auto; padding: 40px 20px;">
-        <h2 style="color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px;">More News</h2>
-        <div class="more-article-item" onclick="location.href='news1.html'">
-            <span class="pointer">></span>
-            <span>Nurses in Leadership: The New Wave</span>
-        </div>
+        <p style="grid-column: 1/-1; text-align: center;">Loading clinical resources...</p>
     </section>
 
     <footer>
-        <div class="footer-content" style="max-width:1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px;">
-            <div style="flex: 1; min-width: 250px;">
+        <div class="footer-grid">
+            <div>
                 <h3 style="color: var(--primary);">PearlNurses</h3>
-                <p>Empowering the heartbeat of Uganda's healthcare.</p>
+                <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">Empowering, informing, and connecting Uganda's nursing community.</p>
             </div>
-            <div style="flex: 1; min-width: 250px;">
-                <h4>Contact Us</h4>
-                <form action="#" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-                    <input type="email" placeholder="Email" style="padding: 10px; border-radius: 5px; border: none;">
-                    <textarea placeholder="Message" style="padding: 10px; border-radius: 5px; border: none; height: 80px;"></textarea>
-                    <button type="submit" style="background: var(--primary); color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Send</button>
-                </form>
+            <div class="footer-links">
+                <h4 style="color: var(--primary);">Categories</h4>
+                <ul>
+                    <li onclick="location.href='articles.html'">Nursing News</li>
+                    <li onclick="location.href='clinicalskills.html'">Clinical Skills</li>
+                    <li onclick="location.href='nursingschoollife.html'">Nursing School Life</li>
+                    <li onclick="location.href='careerdev.html'">Career Development</li>
+                    <li onclick="location.href='communitynwellness.html'">Community & Wellness</li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--primary);">Contact</h4>
+                <p style="font-size: 0.8rem; color: #ccc; margin-top: 10px;">Reach out for collaborations or clinical queries.</p>
+                <button onclick="openAbout()" style="background:none; border: 1px solid var(--primary); color: white; padding: 5px 15px; margin-top: 10px; cursor: pointer; border-radius: 5px;">About Our Mission</button>
             </div>
         </div>
     </footer>
@@ -220,144 +116,82 @@
     <div id="aboutModal" class="modal-overlay">
         <div class="modal-content">
             <button style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; font-size: 2rem; cursor:pointer;" onclick="closeAbout()">&times;</button>
-            <h2 style="color: var(--primary);">About PearlNurses</h2>
-            <p style="margin-top: 20px;">We provide localized clinical knowledge and community support for the Ugandan nursing profession.</p>
+            <h2 style="color: var(--primary);">Welcome to PearlNurses</h2>
+            <p style="margin-top: 15px; color: #ccc;">Nursing is the backbone of our healthcare system. We provide a digital space for localized clinical knowledge and community support in Uganda.</p>
         </div>
     </div>
 
     <div id="newsletter-slidein" class="newsletter-banner">
         <button onclick="closeBanner()" style="float:right; background:none; border:none; color:white; cursor:pointer;">&times;</button>
-        <p><strong>Join 500+ Nurses</strong></p>
-        <input type="email" placeholder="Your email" style="width: 100%; margin: 10px 0; padding: 5px;">
-        <button style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor:pointer;">Join</button>
+        <p style="font-size: 0.9rem;"><strong>Join 500+ Nurses</strong></p>
+        <input type="email" placeholder="Your email" style="width: 100%; margin: 8px 0; padding: 5px; border-radius: 4px; border:none;">
+        <button style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor:pointer; width: 100%;">Join Free</button>
     </div>
 
     <script>
+        // REPLACE THIS WITH YOUR GOOGLE SHEET ID
+        const SHEET_ID = 'YOUR_ACTUAL_ID_HERE'; 
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+
         document.addEventListener('DOMContentLoaded', () => {
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('nav-links');
             const overlay = document.getElementById('menu-overlay');
-            const siteSearch = document.getElementById('siteSearch');
 
             // --- Menu Logic ---
-            const toggleMenu = () => {
+            hamburger.onclick = () => {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 overlay.classList.toggle('active');
             };
+            overlay.onclick = hamburger.onclick;
 
-            hamburger.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
+            // --- CMS Fetcher (Mobile CSV Version) ---
+            async function loadCMS() {
+                const container = document.getElementById('featured-posts');
+                try {
+                    const response = await fetch(CSV_URL);
+                    const data = await response.text();
+                    const rows = data.split('\n').slice(1);
+                    container.innerHTML = '';
 
-            // --- CMS Integration ---
-const SHEET_ID = 1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0/edit?usp=drivesdk; // Replace with your ID
-const BASE_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+                    rows.forEach(row => {
+                        const cols = row.split(',');
+                        if (cols.length < 4) return;
+                        container.innerHTML += `
+                            <div class="post-card" onclick="location.href='${cols[4]}'">
+                                <img src="${cols[3]}" class="post-image">
+                                <div class="post-content">
+                                    <span class="post-category">${cols[1]}</span>
+                                    <h3 style="margin: 10px 0 5px;">${cols[0]}</h3>
+                                    <p style="font-size: 0.85rem; color: #ccc;">${cols[2]}</p>
+                                </div>
+                            </div>`;
+                    });
+                } catch (e) {
+                    container.innerHTML = '<p>Ensure Sheet is shared as "Anyone with link".</p>';
+                }
+            }
+            loadCMS();
 
-async function loadCMSContent() {
-    try {
-        const response = await fetch(BASE_URL);
-        const text = await response.text();
-        // Google returns JSON wrapped in a function; this line cleans it
-        const data = JSON.parse(text.substr(47).slice(0, -2));
-        
-        const container = document.getElementById('featured-posts');
-        container.innerHTML = ''; // Clear the loading state
-
-        data.table.rows.forEach(row => {
-            const [title, category, excerpt, img, link, date] = row.c.map(cell => cell ? cell.v : '');
-            
-            container.innerHTML += `
-                <div class="post-card" onclick="location.href='${link}'">
-                    <img src="${img}" class="post-image" alt="${title}">
-                    <div class="post-content">
-                        <span class="post-category" style="background:var(--primary); color:white; padding:2px 8px; border-radius:4px; font-size:0.8rem;">${category}</span>
-                        <h3 style="margin-top:10px;">${title}</h3>
-                        <p style="color:#ccc; font-size:0.9rem; margin:10px 0;">${excerpt}</p>
-                        <div style="color:#888; font-size:0.8rem;">${date}</div>
-                    </div>
-                </div>`;
-        });
-    } catch (error) {
-        console.error("Error loading CMS:", error);
-    }
-}
-
-// Run the loader
-loadCMSContent();
-
-
-            // --- Modal & Banner Functions ---
-            window.openAbout = () => {
-                document.getElementById('aboutModal').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
+            // --- Search ---
+            document.getElementById('siteSearch').onkeyup = function() {
+                let filter = this.value.toLowerCase();
+                document.querySelectorAll('.post-card').forEach(card => {
+                    card.style.display = card.innerText.toLowerCase().includes(filter) ? "" : "none";
+                });
             };
 
-            window.closeAbout = () => {
-                document.getElementById('aboutModal').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            };
-
-            window.closeBanner = () => {
-                document.getElementById('newsletter-slidein').style.display = 'none';
-            };
+            // --- Modal/Banner Helpers ---
+            window.openAbout = () => { document.getElementById('aboutModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; };
+            window.closeAbout = () => { document.getElementById('aboutModal').style.display = 'none'; document.body.style.overflow = 'auto'; };
+            window.closeBanner = () => document.getElementById('newsletter-slidein').style.display = 'none';
         });
-siteSearch.addEventListener('keyup', () => {
-    let filter = siteSearch.value.toLowerCase();
-    // We search inside the container we just populated
-    let cards = document.querySelectorAll('.post-card'); 
-    cards.forEach(card => {
-        let text = card.innerText.toLowerCase();
-        card.style.display = text.includes(filter) ? "block" : "none";
-    });
-});
-async function loadCMSContent() {
-    const container = document.getElementById('featured-posts');
-    container.innerHTML = '<p style="text-align:center; padding:20px;">Checking for new articles...</p>';
-
-    try {
-        const response = await fetch(BASE_URL);
-        if (!response.ok) throw new Error('Sheet not published to web');
-        
-        const text = await response.text();
-        const data = JSON.parse(text.substr(47).slice(0, -2));
-        
-        container.innerHTML = ''; // Clear loading text
-
-        data.table.rows.forEach(row => {
-            // This pulls the data from your columns A, B, C, D, E, and F
-            const title = row.c[0] ? row.c[0].v : 'Untitled';
-            const category = row.c[1] ? row.c[1].v : 'News';
-            const excerpt = row.c[2] ? row.c[2].v : '';
-            const img = row.c[3] ? row.c[3].v : 'https://via.placeholder.com/500';
-            const link = row.c[4] ? row.c[4].v : '#';
-            const date = row.c[5] ? row.c[5].v : '';
-            
-            container.innerHTML += `
-                <div class="post-card" onclick="location.href='${link}'">
-                    <img src="${img}" class="post-image" alt="${title}">
-                    <div class="post-content">
-                        <span class="post-category">${category}</span>
-                        <h3 style="margin-top:10px;">${title}</h3>
-                        <p style="color:#ccc; font-size:0.9rem; margin:10px 0;">${excerpt}</p>
-                        <div style="color:#888; font-size:0.8rem;">${date}</div>
-                    </div>
-                </div>`;
-        });
-    } catch (error) {
-        container.innerHTML = `<p style="color:red; text-align:center;">CMS Error: Make sure your Sheet is "Published to Web".</p>`;
-        console.error("CMS Error:", error);
-    }
-}
-
-
-
     </script>
 </body>
 </html>
 
-
-        
-         
-    
+     
+                   
 
     
