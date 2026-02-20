@@ -3,62 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PearlNurses | Supporting Uganda's Nurses</title>
+    <title>PearlNurses | Uganda's Nursing Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
-
-        body { background-color: var(--dark); color: var(--white); line-height: 1.6; overflow-x: hidden; }
-
-        /* --- Header & Search --- */
-        header { background-color: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--white); text-decoration: none; }
+        body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
         
-        .search-container { position: relative; max-width: 250px; margin: 10px 20px; }
-        #siteSearch { width: 100%; padding: 8px 15px 8px 35px; border-radius: 20px; border: none; background: rgba(0,0,0,0.1); color: white; outline: none; border: 1px solid rgba(255,255,255,0.2); }
-        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.7); }
-
-        /* --- Mobile Nav & Hamburger --- */
-        .nav-links { display: flex; list-style: none; gap: 20px; }
+        /* Header & Nav */
+        header { background: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 15px; }
         .nav-links a { color: white; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
-
+        
         @media (max-width: 768px) {
-            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--primary); flex-direction: column; padding: 100px 30px; transition: 0.4s ease; z-index: 999; }
+            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--primary); flex-direction: column; padding: 100px 30px; transition: 0.4s; z-index: 999; }
             .nav-links.active { right: 0; }
-            .hamburger { display: block !important; }
         }
 
-        .hamburger { background: none; border: none; cursor: pointer; z-index: 1001; display: none; }
+        .hamburger { background: none; border: none; cursor: pointer; display: none; z-index: 1001; }
+        @media (max-width: 768px) { .hamburger { display: block; } }
         .bar-container { width: 25px; height: 18px; display: flex; flex-direction: column; justify-content: space-between; }
         .bar-container span { display: block; width: 100%; height: 3px; background: white; transition: 0.3s; }
         .hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-        /* --- Content Layout --- */
+        /* General Styling */
         .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); }
         .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
-        .post-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
         .post-image { height: 180px; width: 100%; object-fit: cover; }
         .post-content { padding: 15px; }
-        .post-category { background: var(--primary); font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; }
+        
+        /* Calculators */
+        .calc-container { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #444; margin-bottom: 20px; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: none; }
+        .calc-btn { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; color: white; }
 
-        /* --- Footer --- */
-        footer { background: #111; padding: 40px 20px; margin-top: 50px; border-top: 2px solid #333; }
+        /* Footer */
+        footer { background: #111; padding: 40px 20px; border-top: 2px solid #333; margin-top: 40px; }
         .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .footer-links ul { list-style: none; margin-top: 10px; }
-        .footer-links li { margin: 8px 0; color: #ccc; cursor: pointer; font-size: 0.9rem; }
-        .footer-links li:hover { color: var(--secondary); }
-
-        /* --- Modals & Banners --- */
-        .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
-        .menu-overlay.active { display: block; }
-        .newsletter-banner { position: fixed; bottom: 20px; right: 20px; background: var(--secondary); padding: 15px; border-radius: 10px; z-index: 2000; max-width: 280px; }
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; }
-        .modal-content { background: #222; padding: 30px; border-radius: 15px; max-width: 450px; position: relative; border: 1px solid var(--primary); margin: 20px; }
     </style>
 </head>
 <body>
@@ -66,262 +52,126 @@
     <header>
         <div class="header-container">
             <a href="#" class="logo">PearlNurses</a>
-            <button class="hamburger" id="hamburger">
-                <div class="bar-container"><span></span><span></span><span></span></div>
-            </button>
+            <button class="hamburger" id="hamburger"><div class="bar-container"><span></span><span></span><span></span></div></button>
             <ul class="nav-links" id="nav-links">
                 <li><a onclick="openAbout()">About Us</a></li>
-                <li><a href="uganda.html">Nursing in Uganda</a></li>
                 <li><a href="guides.html">School Guide</a></li>
                 <li><a href="equip.html">Equipment</a></li>
             </ul>
         </div>
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="siteSearch" placeholder="Search guides or articles...">
-        </div>
     </header>
 
-    <div id="menu-overlay" class="menu-overlay"></div>
-
-    <h2 class="section-title">Featured Posts</h2>
+    <h2 class="section-title">Latest Articles</h2>
     <section id="featured-posts" class="posts-grid">
-        <p style="grid-column: 1/-1; text-align: center;">Loading clinical resources...</p>
+        <p style="text-align: center; grid-column: 1/-1;">Loading resources...</p>
     </section>
-  <section class="clinical-tool" style="max-width: 1200px; margin: 40px auto; padding: 20px;">
-    <div style="background: #222; padding: 25px; border-radius: 15px; border: 1px solid var(--secondary);">
-        <h2 style="color: var(--secondary); margin-bottom: 15px;"><i class="fas fa-calculator"></i> IV Drip Rate Calculator</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div>
-                <label style="font-size: 0.8rem; color: #ccc;">Volume (mL)</label>
-                <input type="number" id="vol" placeholder="e.g. 500" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
-            </div>
-            <div>
-                <label style="font-size: 0.8rem; color: #ccc;">Time (Hours)</label>
-                <input type="number" id="hr" placeholder="e.g. 4" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
-            </div>
-            <div style="grid-column: 1 / -1;">
-                <label style="font-size: 0.8rem; color: #ccc;">Drop Factor (gtt/mL)</label>
-                <select id="factor" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
-                    <option value="20">Standard Set (20 gtt/mL)</option>
-                    <option value="15">Blood Set (15 gtt/mL)</option>
-                    <option value="60">Micro-drip (60 gtt/mL)</option>
-                </select>
-            </div>
-            <button onclick="calcDrip()" style="grid-column: 1 / -1; background: var(--secondary); color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Calculate Rate</button>
-        </div>
-        <div id="result" style="margin-top: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary);"></div>
-    </div>
-</section>
-  
-<section class="clinical-tool" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
-    <div style="background: #222; padding: 25px; border-radius: 15px; border: 1px solid var(--primary);">
-        <h2 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-weight"></i> BMI Calculator</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div>
-                <label style="font-size: 0.8rem; color: #ccc;">Weight (kg)</label>
-                <input type="number" id="bmiWeight" placeholder="e.g. 70" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
-            </div>
-            <div>
-                <label style="font-size: 0.8rem; color: #ccc;">Height (cm)</label>
-                <input type="number" id="bmiHeight" placeholder="e.g. 170" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
-            </div>
-            <button onclick="calcBMI()" style="grid-column: 1 / -1; background: var(--primary); color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Calculate BMI</button>
-        </div>
-        <div id="bmiResult" style="margin-top: 20px; text-align: center;">
-            <div id="bmiValue" style="font-size: 1.5rem; font-weight: bold;"></div>
-            <div id="bmiStatus" style="font-size: 1rem; margin-top: 5px;"></div>
-        </div>
-    </div>
-</section>
 
+    <section style="max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div class="calc-container">
+            <h3 style="color:var(--secondary);">IV Drip Rate</h3>
+            <input type="number" id="vol" placeholder="Volume (mL)">
+            <input type="number" id="hr" placeholder="Time (Hours)">
+            <select id="factor">
+                <option value="20">Standard (20 gtt/mL)</option>
+                <option value="15">Blood (15 gtt/mL)</option>
+                <option value="60">Micro (60 gtt/mL)</option>
+            </select>
+            <button class="calc-btn" style="background:var(--secondary);" onclick="calcDrip()">Calculate</button>
+            <div id="dripResult" style="margin-top:10px; font-weight:bold; color:var(--primary);"></div>
+        </div>
 
-    
-    <h2 class="section-title">Nursing Job Board</h2>
-<section class="job-board" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-    <div id="job-container" style="display: flex; flex-direction: column; gap: 10px;">
-        <p>Searching for local openings...</p>
-    </div>
-</section>
+        <div class="calc-container">
+            <h3 style="color:var(--primary);">BMI Calculator</h3>
+            <input type="number" id="bmiW" placeholder="Weight (kg)">
+            <input type="number" id="bmiH" placeholder="Height (cm)">
+            <button class="calc-btn" style="background:var(--primary);" onclick="calcBMI()">Calculate</button>
+            <div id="bmiResult" style="margin-top:10px; font-weight:bold;"></div>
+        </div>
+    </section>
 
+    <h2 class="section-title">Nursing Jobs</h2>
+    <section id="job-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; gap: 10px;">
+        <p>Checking for vacancies...</p>
+    </section>
 
     <footer>
         <div class="footer-grid">
+            <div><h3 style="color:var(--primary);">PearlNurses</h3><p>Supporting Uganda's Healthcare.</p></div>
             <div>
-                <h3 style="color: var(--primary);">PearlNurses</h3>
-                <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">Empowering, informing, and connecting Uganda's nursing community.</p>
-            </div>
-            <div class="footer-links">
-                <h4 style="color: var(--primary);">Categories</h4>
-                <ul>
+                <h4 style="color:var(--primary);">Quick Links</h4>
+                <ul style="list-style:none; color:#ccc; font-size:0.9rem;">
                     <li onclick="location.href='articles.html'">Nursing News</li>
                     <li onclick="location.href='clinicalskills.html'">Clinical Skills</li>
                     <li onclick="location.href='nursingschoollife.html'">Nursing School Life</li>
-                    <li onclick="location.href='careerdev.html'">Career Development</li>
-                    <li onclick="location.href='communitynwellness.html'">Community & Wellness</li>
                 </ul>
-            </div>
-            <div>
-                <h4 style="color: var(--primary);">Contact</h4>
-                <p style="font-size: 0.8rem; color: #ccc; margin-top: 10px;">Reach out for collaborations or clinical queries.</p>
-                <button onclick="openAbout()" style="background:none; border: 1px solid var(--primary); color: white; padding: 5px 15px; margin-top: 10px; cursor: pointer; border-radius: 5px;">About Our Mission</button>
             </div>
         </div>
     </footer>
 
-    <div id="aboutModal" class="modal-overlay">
-        <div class="modal-content">
-            <button style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; font-size: 2rem; cursor:pointer;" onclick="closeAbout()">&times;</button>
-            <h2 style="color: var(--primary);">Welcome to PearlNurses</h2>
-            <p style="margin-top: 15px; color: #ccc;">Nursing is the backbone of our healthcare system. We provide a digital space for localized clinical knowledge and community support in Uganda.</p>
-        </div>
-    </div>
-
-    <div id="newsletter-slidein" class="newsletter-banner">
-        <button onclick="closeBanner()" style="float:right; background:none; border:none; color:white; cursor:pointer;">&times;</button>
-        <p style="font-size: 0.9rem;"><strong>Join 500+ Nurses</strong></p>
-        <input type="email" placeholder="Your email" style="width: 100%; margin: 8px 0; padding: 5px; border-radius: 4px; border:none;">
-        <button style="background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor:pointer; width: 100%;">Join Free</button>
-    </div>
-
     <script>
-        // REPLACE THIS WITH YOUR GOOGLE SHEET ID
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
- 
-        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('nav-links');
-            const overlay = document.getElementById('menu-overlay');
-
-            // --- Menu Logic ---
-            hamburger.onclick = () => {
-                hamburger.classList.toggle('active');
-                navLinks.classList.toggle('active');
-                overlay.classList.toggle('active');
-            };
-            overlay.onclick = hamburger.onclick;
-
-            // --- CMS Fetcher (Mobile CSV Version) ---
-            async function loadCMS() {
-                const container = document.getElementById('featured-posts');
-                try {
-                    const response = await fetch(CSV_URL);
-                    const data = await response.text();
-                    const rows = data.split('\n').slice(1);
-                    container.innerHTML = '';
-
-                    rows.forEach(row => {
-                        const cols = row.split(',');
-                        if (cols.length < 4) return;
-                        container.innerHTML += `
-                            <div class="post-card" onclick="location.href='${cols[4]}'">
-                                <img src="${cols[3]}" class="post-image">
-                                <div class="post-content">
-                                    <span class="post-category">${cols[1]}</span>
-                                    <h3 style="margin: 10px 0 5px;">${cols[0]}</h3>
-                                    <p style="font-size: 0.85rem; color: #ccc;">${cols[2]}</p>
-                                </div>
-                            </div>`;
-                    });
-                } catch (e) {
-                    container.innerHTML = '<p>Ensure Sheet is shared as "Anyone with link".</p>';
-                }
-            }
-            loadCMS();
-async function loadJobs() {
-    // This tells Google to look specifically at the 'Jobs' tab (gid=0 usually, but we use the sheet name)
-    const JOBS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Jobs`;
-    const container = document.getElementById('job-container');
-
-    try {
-        const response = await fetch(JOBS_URL);
-        const data = await response.text();
-        const rows = data.split('\n').slice(1);
-        container.innerHTML = '';
-
-        rows.forEach(row => {
-            const cols = row.split(',');
-            if (cols.length < 4) return;
-            // Remove quotes that Google adds to CSV fields
-            const clean = (str) => str.replace(/^"(.*)"$/, '$1');
-
-            container.innerHTML += `
-                <div style="background:#222; padding:15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border-left: 4px solid var(--secondary);">
-                    <div>
-                        <h4 style="color:var(--white);">${clean(cols[0])}</h4>
-                        <p style="font-size:0.8rem; color:#ccc;">${clean(cols[2])} • ${clean(cols[1])}</p>
-                    </div>
-                    <div style="text-align:right;">
-                        <p style="font-size:0.7rem; color:#ff4d4d;">Deadline: ${clean(cols[3])}</p>
-                        <a href="${clean(cols[4])}" style="color:var(--primary); font-size:0.9rem; text-decoration:none; font-weight:bold;">Apply Now</a>
-                    </div>
-                </div>`;
-        });
-    } catch (e) {
-        container.innerHTML = '<p>No current openings found.</p>';
-    }
-}
-loadJobs(); // Call the job loader
-
-
-            // --- Search ---
-            document.getElementById('siteSearch').onkeyup = function() {
-                let filter = this.value.toLowerCase();
-                document.querySelectorAll('.post-card').forEach(card => {
-                    card.style.display = card.innerText.toLowerCase().includes(filter) ? "" : "none";
+        
+        // --- CMS Articles Loader ---
+        async function loadCMS() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Posts`;
+            const container = document.getElementById('featured-posts');
+            try {
+                const res = await fetch(url);
+                const data = await res.text();
+                const rows = data.split('\n').slice(1);
+                container.innerHTML = '';
+                rows.forEach(r => {
+                    const c = r.split(',').map(s => s.replace(/^"(.*)"$/, '$1'));
+                    if(c.length < 4) return;
+                    container.innerHTML += `<div class="post-card"><img src="${c[3]}" class="post-image"><div class="post-content"><h3>${c[0]}</h3><p style="font-size:0.8rem;color:#ccc;">${c[2]}</p></div></div>`;
                 });
-            };
+            } catch(e) { container.innerHTML = "Error loading posts."; }
+        }
 
-            // --- Modal/Banner Helpers ---
-            window.openAbout = () => { document.getElementById('aboutModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; };
-            window.closeAbout = () => { document.getElementById('aboutModal').style.display = 'none'; document.body.style.overflow = 'auto'; };
-            window.closeBanner = () => document.getElementById('newsletter-slidein').style.display = 'none';
-        });
- function calcDrip() {
-    const vol = document.getElementById('vol').value;
-    const time = document.getElementById('hr').value * 60; // Convert hours to minutes
-    const factor = document.getElementById('factor').value;
-    const display = document.getElementById('result');
+        // --- Job Board Loader ---
+        async function loadJobs() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Jobs`;
+            const container = document.getElementById('job-container');
+            try {
+                const res = await fetch(url);
+                const data = await res.text();
+                const rows = data.split('\n').slice(1);
+                container.innerHTML = '';
+                rows.forEach(r => {
+                    const c = r.split(',').map(s => s.replace(/^"(.*)"$/, '$1'));
+                    if(c.length < 4) return;
+                    container.innerHTML += `<div style="background:#222;padding:15px;border-radius:8px;border-left:4px solid var(--secondary);display:flex;justify-content:space-between;"><div><h4>${c[0]}</h4><p style="font-size:0.8rem;color:#ccc;">${c[2]}</p></div><a href="${c[4]}" style="color:var(--primary);text-decoration:none;">Apply</a></div>`;
+                });
+            } catch(e) { container.innerHTML = "No jobs found."; }
+        }
 
-    if (vol > 0 && time > 0) {
-        const rate = Math.round((vol * factor) / time);
-        display.innerHTML = `Infusion Rate: ${rate} drops / minute`;
-    } else {
-        display.innerHTML = `<span style="color: #ff4d4d; font-size: 0.9rem;">Please enter valid volume and time.</span>`;
-    }
-}
+        // --- Calculators ---
+        function calcDrip() {
+            const v = document.getElementById('vol').value;
+            const h = document.getElementById('hr').value * 60;
+            const f = document.getElementById('factor').value;
+            document.getElementById('dripResult').innerText = v && h ? Math.round((v*f)/h) + " drops/min" : "Invalid input";
+        }
+        function calcBMI() {
+            const w = document.getElementById('bmiW').value;
+            const h = document.getElementById('bmiH').value / 100;
+            if(w && h) {
+                const bmi = (w/(h*h)).toFixed(1);
+                document.getElementById('bmiResult').innerText = "BMI: " + bmi;
+            }
+        }
 
-function calcBMI() {
-    const weight = document.getElementById('bmiWeight').value;
-    const heightCm = document.getElementById('bmiHeight').value;
-    const heightM = heightCm / 100; // Convert cm to meters
-    const valDisplay = document.getElementById('bmiValue');
-    const statusDisplay = document.getElementById('bmiStatus');
+        // Menu Toggle
+        document.getElementById('hamburger').onclick = () => {
+            document.getElementById('nav-links').classList.toggle('active');
+            document.getElementById('hamburger').classList.toggle('active');
+        };
 
-    if (weight > 0 && heightM > 0) {
-        const bmi = (weight / (heightM * heightM)).toFixed(1);
-        let status = "";
-        let color = "";
-
-        if (bmi < 18.5) { status = "Underweight"; color = "#4682B4"; }
-        else if (bmi < 25) { status = "Normal Weight"; color = "#2E8B57"; }
-        else if (bmi < 30) { status = "Overweight"; color = "#f1c40f"; }
-        else { status = "Obese"; color = "#ff4d4d"; }
-
-        valDisplay.innerHTML = `BMI: ${bmi}`;
-        statusDisplay.innerHTML = status;
-        statusDisplay.style.color = color;
-    } else {
-        statusDisplay.innerHTML = `<span style="color: #ff4d4d; font-size: 0.8rem;">Please enter valid height and weight.</span>`;
-    }
-}
-
-
+        window.onload = () => { loadCMS(); loadJobs(); };
     </script>
 </body>
 </html>
+
 
      
                    
