@@ -3,55 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nursing Jobs in Uganda | PearlNurses</title>
+    <title>Nursing Jobs Uganda | PearlNurses</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
-        body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
-
-        header { background: var(--primary); padding: 6px 0; position: sticky; top: 0; z-index: 1000; }
+        body { background-color: var(--dark); color: var(--white); }
+        header { background: var(--primary); padding: 8px 0; }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.1rem; font-weight: 700; color: white; text-decoration: none; }
-        .back-home { color: white; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.4); padding: 4px 10px; border-radius: 20px; }
-
-        .jobs-hero { padding: 30px 20px; text-align: center; background: linear-gradient(to bottom, #2E8B57, #1a1a1a); }
-        .jobs-hero h1 { font-size: 1.5rem; }
-        .jobs-hero p { color: #ccc; font-size: 0.9rem; margin-top: 5px; }
-
-        .jobs-container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-        .job-card { 
-            background: #222; border-radius: 10px; padding: 15px; margin-bottom: 12px; 
-            border-left: 4px solid var(--secondary); display: flex; justify-content: space-between; align-items: center; 
-        }
-        .job-info h3 { font-size: 1rem; margin-bottom: 3px; }
-        .job-info p { font-size: 0.8rem; color: #888; }
-        .deadline { font-size: 0.7rem; color: #ff4d4d; display: block; margin-top: 5px; }
-        
-        .action-area { display: flex; flex-direction: column; gap: 8px; text-align: center; }
-        .apply-btn { background: var(--primary); color: white; text-decoration: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        .wa-share { color: #25D366; text-decoration: none; font-size: 1.1rem; }
-
-        @media (max-width: 600px) { .job-card { flex-direction: column; align-items: flex-start; gap: 12px; } .action-area { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; } }
+        .logo { font-size: 1.2rem; font-weight: 700; color: white; text-decoration: none; }
+        .back-home { color: white; text-decoration: none; font-size: 0.8rem; border: 1px solid white; padding: 3px 10px; border-radius: 20px; }
+        .job-card { background: #222; margin: 15px; padding: 15px; border-radius: 10px; border-left: 4px solid var(--secondary); display: flex; justify-content: space-between; align-items: center; }
+        .apply-btn { background: var(--primary); color: white; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="header-container">
-            <a href="index.html" class="logo">PearlNurses</a>
-            <a href="index.html" class="back-home"><i class="fas fa-home"></i> Home</a>
-        </div>
-    </header>
-
-    <section class="jobs-hero">
-        <h1>Vacancies for Nurses & Midwives</h1>
-        <p>Your next career step in Uganda's healthcare system.</p>
-    </section>
-
-    <div class="jobs-container" id="jobs-list">
-        <p style="text-align: center; color: #555;">Loading latest openings...</p>
-    </div>
+    <header><div class="header-container"><a href="index.html" class="logo">PearlNurses</a><a href="index.html" class="back-home">Home</a></div></header>
+    <h2 style="padding: 20px; text-align: center;">Healthcare Vacancies</h2>
+    <div id="jobs-list"></div>
 
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
@@ -59,33 +28,16 @@
 
         async function loadJobs() {
             const container = document.getElementById('jobs-list');
-            try {
-                const response = await fetch(JOBS_URL);
-                const data = await response.text();
-                const rows = data.split('\n').slice(1);
-                container.innerHTML = '';
-
-                rows.forEach(row => {
-                    const c = row.split(',').map(s => s.replace(/^"(.*)"$/, '$1'));
-                    if (c.length >= 4) {
-                        const shareMsg = encodeURIComponent(`Nurse Job Alert: ${c[0]} at ${c[2]}. See details here: `);
-                        const waUrl = `https://wa.me/?text=${shareMsg}${window.location.href}`;
-
-                        container.innerHTML += `
-                            <div class="job-card">
-                                <div class="job-info">
-                                    <h3>${c[0]}</h3>
-                                    <p>${c[2]} • ${c[1]}</p>
-                                    <span class="deadline">Closing: ${c[3]}</span>
-                                </div>
-                                <div class="action-area">
-                                    <a href="${c[4]}" class="apply-btn">Apply</a>
-                                    <a href="${waUrl}" class="wa-share" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                                </div>
-                            </div>`;
-                    }
-                });
-            } catch (e) { container.innerHTML = "Unable to load jobs."; }
+            const response = await fetch(JOBS_URL);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);
+            rows.forEach(row => {
+                const c = row.split(',').map(s => s.replace(/^"(.*)"$/, '$1'));
+                if (c.length >= 4) {
+                    const waUrl = `https://wa.me/?text=Job Alert: ${c[0]} at ${c[2]}. View on PearlNurses: ${window.location.href}`;
+                    container.innerHTML += `<div class="job-card"><div><h3>${c[0]}</h3><p>${c[2]}</p></div><div style="text-align:right;"><a href="${c[4]}" class="apply-btn">Apply</a><br><a href="${waUrl}" style="color:#25D366; font-size:1.2rem; margin-top:10px; display:inline-block;"><i class="fab fa-whatsapp"></i></a></div></div>`;
+                }
+            });
         }
         window.onload = loadJobs;
     </script>
