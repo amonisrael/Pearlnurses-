@@ -10,7 +10,7 @@
         :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
         body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
         
-        /* Fixed Slim Header */
+        /* Slim Header Design */
         header { background: var(--primary); padding: 6px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
         .logo { font-size: 1.15rem; font-weight: 700; color: white; text-decoration: none; }
@@ -19,7 +19,7 @@
         .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
         .nav-links a { color: white; text-decoration: none; font-size: 0.82rem; cursor: pointer; font-weight: 500; }
 
-        /* Search Icon Animation */
+        /* Search Animation */
         .search-box { display: flex; flex-direction: row-reverse; align-items: center; }
         #siteSearch { 
             width: 0; opacity: 0; border: none; background: rgba(255, 255, 255, 0.2); 
@@ -28,7 +28,7 @@
         #siteSearch.active { width: 140px; opacity: 1; padding: 4px 12px; margin-right: 8px; border: 1px solid rgba(255,255,255,0.3); }
         .search-trigger { color: white; cursor: pointer; font-size: 1rem; padding: 5px; }
 
-        /* Hamburger Animation (From Original) */
+        /* Hamburger (Original Animation) */
         .hamburger { background: none; border: none; cursor: pointer; display: none; z-index: 1001; }
         .bar-container { width: 25px; height: 18px; display: flex; flex-direction: column; justify-content: space-between; }
         .bar-container span { display: block; width: 100%; height: 3px; background: white; transition: 0.3s; }
@@ -42,27 +42,30 @@
             .hamburger { display: block; }
         }
 
-        /* CMS Grid */
+        /* CMS Layout */
         .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); font-size: 1.3rem; }
         .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; border: 1px solid #333; cursor: pointer; transition: 0.3s; }
+        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; border: 1px solid #333; cursor: pointer; }
         .post-image { height: 180px; width: 100%; object-fit: cover; }
 
-        /* Original Footer Structure */
+        /* Modals */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #222; padding: 30px; border-radius: 15px; width: 90%; max-width: 450px; position: relative; border: 1px solid var(--primary); text-align: center; }
+        .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; color: white; font-size: 1.5rem; font-weight: bold; }
+        
+        /* Your Original Form Styles */
+        form input, form textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #444; background: #333; color: white; }
+        .submit-btn { background: var(--primary); color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        
+        /* Footer Links (Actual Links) */
         footer { background: #111; padding: 40px 20px; border-top: 2px solid #333; margin-top: 50px; }
         .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .footer-links h4 { color: var(--primary); margin-bottom: 15px; }
-        .footer-links ul { list-style: none; }
-        .footer-links li a { color: #ccc; text-decoration: none; font-size: 0.9rem; transition: 0.2s; display: block; margin: 8px 0; }
-        .footer-links li a:hover { color: var(--secondary); padding-left: 5px; }
-
-        /* Contact Popup (From Original) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #222; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--primary); }
-        .close-btn { float: right; cursor: pointer; color: white; font-size: 1.5rem; }
+        .footer-links li a { color: #ccc; text-decoration: none; font-size: 0.9rem; display: block; margin: 8px 0; }
+        .footer-links li a:hover { color: var(--secondary); padding-left: 5px; transition: 0.2s; }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">PearlNurses</a>
@@ -73,7 +76,7 @@
                 </div>
                 <button class="hamburger" id="hamburger"><div class="bar-container"><span></span><span></span><span></span></div></button>
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a onclick="openAbout()">About Us</a></li>
                     <li><a href="uganda.html">Nursing in Uganda</a></li>
                     <li><a href="guides.html">School Guide</a></li>
                     <li><a href="tools.html">Calculators</a></li>
@@ -84,17 +87,14 @@
         </div>
     </header>
 
-    <h2 class="section-title">Latest Resources & News</h2>
+    <h2 class="section-title">Latest Articles</h2>
     <section id="featured-posts" class="posts-grid">
-        <p style="text-align: center; grid-column: 1/-1;">Loading clinical articles...</p>
+        <p style="text-align: center; grid-column: 1/-1;">Connecting to PearlNurses CMS...</p>
     </section>
 
     <footer>
         <div class="footer-grid">
-            <div>
-                <h3 style="color: var(--primary);">PearlNurses</h3>
-                <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">Supporting Uganda's Healthcare.</p>
-            </div>
+            <div><h3 style="color: var(--primary);">PearlNurses</h3><p style="font-size: 0.9rem; color: #ccc;">Leading nursing portal in Uganda.</p></div>
             <div class="footer-links">
                 <h4>Categories</h4>
                 <ul>
@@ -102,29 +102,40 @@
                     <li><a href="clinicalskills.html">Clinical Skills</a></li>
                     <li><a href="nursingschoollife.html">Nursing School Life</a></li>
                     <li><a href="careerdev.html">Career Development</a></li>
-                    <li><a href="communitynwellness.html">Community & Wellness</a></li>
                 </ul>
             </div>
             <div>
                 <h4>Stay Connected</h4>
-                <button onclick="toggleModal()" style="background:var(--primary); color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; margin-top: 15px;">Contact Us</button>
+                <button onclick="openContact()" style="background:var(--primary); color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;">Contact Form</button>
             </div>
         </div>
     </footer>
 
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
+            <h2 style="color: var(--primary);">About PearlNurses</h2>
+            <p style="margin-top: 15px;">PearlNurses is Uganda's premier digital hub for healthcare professionals. We provide clinical tools, ward guides, and career resources to support nurses and midwives in their professional journey.</p>
+        </div>
+    </div>
+
     <div id="contactModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="toggleModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
             <h2 style="color: var(--primary);">Contact Us</h2>
-            <p style="margin: 15px 0;">Email: info@pearlnurses.ug</p>
-            <p>WhatsApp: +256 700 000000</p>
+            <form action="https://formspree.io/f/mqakppov" method="POST">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <textarea name="message" placeholder="Type your message here..." rows="4" required></textarea>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
         </div>
     </div>
 
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
-        
-        // Search Expansion Logic
+
+        // Expanded Search Animation
         const searchBtn = document.getElementById('searchBtn');
         const searchInput = document.getElementById('siteSearch');
         searchBtn.onclick = () => {
@@ -132,7 +143,7 @@
             if (searchInput.classList.contains('active')) searchInput.focus();
         };
 
-        // Hamburger Animation & Menu Toggle
+        // Hamburger X-Animation & Menu
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
         hamburger.onclick = () => {
@@ -141,12 +152,16 @@
         };
 
         // Modal Logic
-        function toggleModal() {
-            const modal = document.getElementById('contactModal');
-            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-        }
+        function openAbout() { document.getElementById('aboutModal').style.display = 'flex'; }
+        function openContact() { document.getElementById('contactModal').style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // Google Sheets Loader
+        // Automatic Pop-up on Page Load & CMS Loading
+        window.onload = () => {
+            setTimeout(() => { openContact(); }, 3000); // 3-second delay
+            loadCMS();
+        };
+
         async function loadCMS() {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Posts`;
             const container = document.getElementById('featured-posts');
@@ -162,19 +177,16 @@
                         <div class="post-card" onclick="location.href='${c[4]}'">
                             <img src="${c[3]}" class="post-image">
                             <div style="padding:15px;">
-                                <span style="background:var(--primary); font-size:0.7rem; padding:2px 8px; border-radius:4px;">${c[1]}</span>
-                                <h3 style="margin-top:10px; font-size:1.1rem; color:white;">${c[0]}</h3>
-                                <p style="color:#aaa; font-size:0.85rem; margin-top:6px;">${c[2]}</p>
+                                <h3 style="font-size:1.05rem; color:white;">${c[0]}</h3>
+                                <p style="color:#aaa; font-size:0.8rem; margin-top:5px;">${c[2]}</p>
                             </div>
                         </div>`;
                 });
-            } catch(e) { container.innerHTML = "Offline."; }
+            } catch(e) { container.innerHTML = "Error loading CMS."; }
         }
-        window.onload = loadCMS;
     </script>
 </body>
 </html>
 
-        
         
          
