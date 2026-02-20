@@ -10,40 +10,56 @@
         :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
         body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
         
-        /* Slim Header */
-        header { background: var(--primary); padding: 8px 0; position: sticky; top: 0; z-index: 1000; }
+        /* Fixed Slim Header */
+        header { background: var(--primary); padding: 6px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.2rem; font-weight: 700; color: white; text-decoration: none; }
+        .logo { font-size: 1.15rem; font-weight: 700; color: white; text-decoration: none; }
         
         .nav-right { display: flex; align-items: center; gap: 12px; }
         .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
-        .nav-links a { color: white; text-decoration: none; font-size: 0.85rem; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.82rem; cursor: pointer; font-weight: 500; }
 
+        /* Search Icon Animation */
         .search-box { display: flex; flex-direction: row-reverse; align-items: center; }
-        #siteSearch { width: 0; opacity: 0; border: none; background: rgba(255, 255, 255, 0.2); color: white; border-radius: 20px; transition: 0.4s; outline: none; }
+        #siteSearch { 
+            width: 0; opacity: 0; border: none; background: rgba(255, 255, 255, 0.2); 
+            color: white; border-radius: 20px; transition: 0.4s ease; outline: none; padding: 0;
+        }
         #siteSearch.active { width: 140px; opacity: 1; padding: 4px 12px; margin-right: 8px; border: 1px solid rgba(255,255,255,0.3); }
-        .search-trigger { color: white; cursor: pointer; font-size: 1rem; }
+        .search-trigger { color: white; cursor: pointer; font-size: 1rem; padding: 5px; }
+
+        /* Hamburger Animation (From Original) */
+        .hamburger { background: none; border: none; cursor: pointer; display: none; z-index: 1001; }
+        .bar-container { width: 25px; height: 18px; display: flex; flex-direction: column; justify-content: space-between; }
+        .bar-container span { display: block; width: 100%; height: 3px; background: white; transition: 0.3s; }
+        .hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
         @media (max-width: 768px) {
             .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--primary); flex-direction: column; padding: 80px 30px; transition: 0.4s; z-index: 999; }
             .nav-links.active { right: 0; }
-            .hamburger { display: block !important; }
+            .hamburger { display: block; }
         }
 
-        .hamburger { background: none; border: none; cursor: pointer; display: none; z-index: 1001; }
-        .bar-container { width: 22px; height: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-        .bar-container span { display: block; width: 100%; height: 2px; background: white; transition: 0.3s; }
-
-        .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); }
+        /* CMS Grid */
+        .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; color: var(--primary); font-size: 1.3rem; }
         .posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+        .post-card { background: #2a2a2a; border-radius: 10px; overflow: hidden; border: 1px solid #333; cursor: pointer; transition: 0.3s; }
         .post-image { height: 180px; width: 100%; object-fit: cover; }
 
-        /* Footer */
+        /* Original Footer Structure */
         footer { background: #111; padding: 40px 20px; border-top: 2px solid #333; margin-top: 50px; }
         .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .footer-links ul { list-style: none; margin-top: 10px; }
-        .footer-links li { margin: 8px 0; color: #ccc; cursor: pointer; font-size: 0.9rem; }
+        .footer-links h4 { color: var(--primary); margin-bottom: 15px; }
+        .footer-links ul { list-style: none; }
+        .footer-links li a { color: #ccc; text-decoration: none; font-size: 0.9rem; transition: 0.2s; display: block; margin: 8px 0; }
+        .footer-links li a:hover { color: var(--secondary); padding-left: 5px; }
+
+        /* Contact Popup (From Original) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #222; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--primary); }
+        .close-btn { float: right; cursor: pointer; color: white; font-size: 1.5rem; }
     </style>
 </head>
 <body>
@@ -52,61 +68,85 @@
             <a href="index.html" class="logo">PearlNurses</a>
             <div class="nav-right">
                 <div class="search-box">
-                    <input type="text" id="siteSearch" placeholder="Search...">
+                    <input type="text" id="siteSearch" placeholder="Search guides...">
                     <i class="fas fa-search search-trigger" id="searchBtn"></i>
                 </div>
                 <button class="hamburger" id="hamburger"><div class="bar-container"><span></span><span></span><span></span></div></button>
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="guides.html">Guides</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="uganda.html">Nursing in Uganda</a></li>
+                    <li><a href="guides.html">School Guide</a></li>
                     <li><a href="tools.html">Calculators</a></li>
-                    <li><a href="jobs.html">Jobs</a></li>
+                    <li><a href="jobs.html" style="color: #f1c40f; font-weight: bold;">Jobs</a></li>
                     <li><a href="equip.html">Equipment</a></li>
                 </ul>
             </div>
         </div>
     </header>
 
-    <h2 class="section-title">Clinical Resources & News</h2>
+    <h2 class="section-title">Latest Resources & News</h2>
     <section id="featured-posts" class="posts-grid">
-        <p style="text-align: center; grid-column: 1/-1;">Loading articles...</p>
+        <p style="text-align: center; grid-column: 1/-1;">Loading clinical articles...</p>
     </section>
 
     <footer>
         <div class="footer-grid">
             <div>
                 <h3 style="color: var(--primary);">PearlNurses</h3>
-                <p style="font-size: 0.85rem; color: #ccc; margin-top: 10px;">The heartbeat of Uganda's nursing community.</p>
+                <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">Supporting Uganda's Healthcare.</p>
             </div>
             <div class="footer-links">
-                <h4 style="color: var(--primary);">Categories</h4>
+                <h4>Categories</h4>
                 <ul>
-                    <li>Nursing News</li>
-                    <li>Clinical Skills</li>
-                    <li>School Life</li>
-                    <li>Career Development</li>
+                    <li><a href="articles.html">Nursing News</a></li>
+                    <li><a href="clinicalskills.html">Clinical Skills</a></li>
+                    <li><a href="nursingschoollife.html">Nursing School Life</a></li>
+                    <li><a href="careerdev.html">Career Development</a></li>
+                    <li><a href="communitynwellness.html">Community & Wellness</a></li>
                 </ul>
             </div>
             <div>
-                <h4 style="color: var(--primary);">Legal</h4>
-                <ul style="list-style: none; font-size: 0.85rem; color: #ccc; margin-top: 10px;">
-                    <li>Privacy Policy</li>
-                    <li>Terms of Use</li>
-                </ul>
+                <h4>Stay Connected</h4>
+                <button onclick="toggleModal()" style="background:var(--primary); color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; margin-top: 15px;">Contact Us</button>
             </div>
         </div>
     </footer>
 
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal()">&times;</span>
+            <h2 style="color: var(--primary);">Contact Us</h2>
+            <p style="margin: 15px 0;">Email: info@pearlnurses.ug</p>
+            <p>WhatsApp: +256 700 000000</p>
+        </div>
+    </div>
+
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
-        // Search Logic
+        
+        // Search Expansion Logic
         const searchBtn = document.getElementById('searchBtn');
         const searchInput = document.getElementById('siteSearch');
-        searchBtn.onclick = () => { searchInput.classList.toggle('active'); if (searchInput.classList.contains('active')) searchInput.focus(); };
-        
-        // Menu Logic
-        document.getElementById('hamburger').onclick = () => { document.getElementById('nav-links').classList.toggle('active'); };
+        searchBtn.onclick = () => {
+            searchInput.classList.toggle('active');
+            if (searchInput.classList.contains('active')) searchInput.focus();
+        };
 
+        // Hamburger Animation & Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        hamburger.onclick = () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        };
+
+        // Modal Logic
+        function toggleModal() {
+            const modal = document.getElementById('contactModal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // Google Sheets Loader
         async function loadCMS() {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Posts`;
             const container = document.getElementById('featured-posts');
@@ -118,7 +158,15 @@
                 rows.forEach(r => {
                     const c = r.split(',').map(s => s.replace(/^"(.*)"$/, '$1'));
                     if(c.length < 4) return;
-                    container.innerHTML += `<div class="post-card"><img src="${c[3]}" class="post-image"><div style="padding:15px;"><h3>${c[0]}</h3></div></div>`;
+                    container.innerHTML += `
+                        <div class="post-card" onclick="location.href='${c[4]}'">
+                            <img src="${c[3]}" class="post-image">
+                            <div style="padding:15px;">
+                                <span style="background:var(--primary); font-size:0.7rem; padding:2px 8px; border-radius:4px;">${c[1]}</span>
+                                <h3 style="margin-top:10px; font-size:1.1rem; color:white;">${c[0]}</h3>
+                                <p style="color:#aaa; font-size:0.85rem; margin-top:6px;">${c[2]}</p>
+                            </div>
+                        </div>`;
                 });
             } catch(e) { container.innerHTML = "Offline."; }
         }
@@ -127,8 +175,6 @@
 </body>
 </html>
 
-
-
- 
-    
-
+        
+        
+         
