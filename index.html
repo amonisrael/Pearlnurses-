@@ -6,21 +6,41 @@
     <title>PearlNurses | Uganda</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
-        body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: background 0.3s, color 0.3s; }
+        
+        /* THEME VARIABLES */
+        :root { 
+            --primary: #2E8B57; 
+            --bg: #1a1a1a; 
+            --text: #ffffff; 
+            --card-bg: #262626; 
+            --border: #333;
+            --bullet-arrow: #ff3b30;
+        }
+
+        /* LIGHT MODE OVERRIDES */
+        body.light-mode {
+            --bg: #f4f7f6;
+            --text: #1a1a1a;
+            --card-bg: #ffffff;
+            --border: #ddd;
+        }
+
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
 
         /* Slim Header */
-        header { background: var(--primary); padding: 8px 0; position: sticky; top: 0; z-index: 1000; }
+        header { background: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.2rem; font-weight: 700; color: white; text-decoration: none; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: white; text-decoration: none; }
         
-        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
         .nav-links { display: flex; list-style: none; gap: 15px; }
-        .nav-links a { color: white; text-decoration: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
 
-        /* Hamburger Menu */
-        .hamburger { display: none; background: none; border: none; cursor: pointer; color: white; font-size: 1.4rem; }
+        /* Mode Toggle Button */
+        #theme-toggle { background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; }
+
+        .hamburger { display: none; background: none; border: none; cursor: pointer; color: white; font-size: 1.6rem; }
 
         @media (max-width: 768px) {
             .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary); padding: 20px; text-align: center; }
@@ -28,30 +48,28 @@
             .hamburger { display: block; }
         }
 
-        /* SECTION: Side-by-Side News (Nursing Times Style) */
-        .section-label { padding: 20px 15px 5px; color: var(--primary); font-weight: bold; font-size: 1.1rem; text-transform: uppercase; }
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; max-width: 1200px; margin: 0 auto; }
-        .grid-card { background: #262626; border: 1px solid #333; overflow: hidden; cursor: pointer; border-radius: 4px; }
-        .grid-card img { width: 100%; height: 130px; object-fit: cover; background: #333; }
-        .grid-card h3 { padding: 10px; font-size: 0.85rem; color: white; line-height: 1.3; font-weight: 500; }
+        /* SECTION: 2-Column News Grid */
+        .section-label { padding: 25px 15px 10px; color: var(--primary); font-weight: bold; font-size: 1.2rem; text-transform: uppercase; }
+        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
+        .grid-card { background: var(--card-bg); border: 1px solid var(--border); overflow: hidden; cursor: pointer; border-radius: 6px; }
+        .grid-card img { width: 100%; height: 160px; object-fit: cover; background: #ccc; display: block; }
+        .grid-card h3 { padding: 12px; font-size: 0.9rem; color: var(--text); line-height: 1.4; }
 
-        /* SECTION: Bullet Articles (NilePost Style) */
+        /* SECTION: Bullet Articles */
         .bullet-list { padding: 10px 15px; max-width: 1200px; margin: 0 auto; }
-        .bullet-item { display: flex; align-items: flex-start; gap: 12px; padding: 15px 0; border-bottom: 1px solid #333; text-decoration: none; color: #eee; }
-        .bullet-item span { color: #ff3b30; font-weight: bold; font-size: 1.1rem; }
-        .bullet-item h4 { font-size: 0.95rem; font-weight: 500; }
+        .bullet-item { display: flex; align-items: flex-start; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); }
+        .bullet-item span { color: var(--bullet-arrow); font-weight: bold; font-size: 1.2rem; }
+        .bullet-item h4 { font-size: 1rem; font-weight: 500; }
 
         /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #222; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid var(--primary); text-align: center; }
-        .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #777; }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 15px; width: 92%; max-width: 400px; border: 1px solid var(--primary); text-align: center; color: var(--text); position: relative; }
+        .close-btn { position: absolute; top: 10px; right: 20px; cursor: pointer; font-size: 2rem; }
 
         /* Full Footer */
-        footer { background: #111; padding: 40px 15px; border-top: 1px solid #333; margin-top: 40px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .footer-links h4 { color: var(--primary); margin-bottom: 15px; font-size: 1rem; }
-        .footer-links a { color: #aaa; text-decoration: none; display: block; margin: 8px 0; font-size: 0.9rem; }
-        .footer-links a:hover { color: var(--secondary); }
+        footer { background: #111; padding: 50px 15px; border-top: 1px solid #333; margin-top: 50px; color: white; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-links a { color: #aaa; text-decoration: none; display: block; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -60,43 +78,39 @@
         <div class="header-container">
             <a href="index.html" class="logo">PearlNurses</a>
             <div class="nav-right">
+                <button id="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun"></i> Mode</button>
                 <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
                 <ul class="nav-links" id="nav-menu">
                     <li><a onclick="openModal('aboutModal')">About Us</a></li>
                     <li><a href="uganda.html">Nursing in Uganda</a></li>
                     <li><a href="guides.html">School Guide</a></li>
                     <li><a href="tools.html">Calculators</a></li>
-                    <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
+                    <li><a href="jobs.html" style="color:#f1c40f; font-weight: bold;">Jobs</a></li>
                     <li><a href="equip.html">Equipment</a></li>
                 </ul>
             </div>
         </div>
     </header>
 
+    
+
     <div class="section-label">Featured Posts</div>
-    <div class="news-grid" id="gridContainer">
-        </div>
+    <div class="news-grid" id="gridContainer"></div>
 
     <div class="section-label">Latest Updates</div>
-    <div class="bullet-list" id="bulletContainer">
-        </div>
+    <div class="bullet-list" id="bulletContainer"></div>
 
     <footer>
         <div class="footer-grid">
-            <div>
-                <h3 style="color:var(--primary)">PearlNurses</h3>
-                <p style="color:#777; margin-top:10px; font-size:0.9rem;">Supporting the backbone of Uganda's Healthcare.</p>
-            </div>
+            <div><h3 style="color:var(--primary)">PearlNurses</h3><p>Supporting Uganda's Nurses.</p></div>
             <div class="footer-links">
-                <h4>Categories</h4>
+                <h4 style="color:var(--primary)">Categories</h4>
                 <a href="articles.html">Nursing News</a>
                 <a href="clinicalskills.html">Clinical Skills</a>
                 <a href="nursingschoollife.html">Nursing School Life</a>
-                <a href="careerdev.html">Career Development</a>
             </div>
             <div>
-                <h4>Support</h4>
-                <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:10px 20px; cursor:pointer; margin-top:10px; border-radius:4px;">Contact Us</button>
+                <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:12px 25px; cursor:pointer; border-radius:6px;">Contact Us</button>
             </div>
         </div>
     </footer>
@@ -105,7 +119,7 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
             <h2 style="color:var(--primary)">About Us</h2>
-            <p style="margin-top:15px; color:#ccc;">PearlNurses is Uganda's premier portal for clinical resources and nursing school guides.</p>
+            <p style="margin-top:20px;">PearlNurses is Uganda's premier portal for clinical resources and school guides.</p>
         </div>
     </div>
 
@@ -113,10 +127,10 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
             <h2 style="color:var(--primary)">Contact Us</h2>
-            <form action="https://formspree.io/f/mqakppov" method="POST" style="margin-top:15px;">
-                <input type="text" name="name" placeholder="Full Name" required style="width:100%; padding:10px; margin-bottom:10px; background:#333; border:none; color:white;">
-                <textarea name="message" placeholder="Your Message" rows="4" required style="width:100%; padding:10px; background:#333; border:none; color:white;"></textarea>
-                <button type="submit" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; font-weight:bold; margin-top:10px;">Send Message</button>
+            <form action="https://formspree.io/f/mqakppov" method="POST" style="margin-top:20px;">
+                <input type="text" name="name" placeholder="Full Name" required style="width:100%; padding:12px; margin-bottom:12px; background:rgba(128,128,128,0.2); border:1px solid var(--border); color:var(--text);">
+                <textarea name="message" placeholder="Your Message" rows="4" required style="width:100%; padding:12px; background:rgba(128,128,128,0.2); border:1px solid var(--border); color:var(--text);"></textarea>
+                <button type="submit" style="width:100%; padding:14px; background:var(--primary); color:white; border:none; font-weight:bold; cursor: pointer;">Send Message</button>
             </form>
         </div>
     </div>
@@ -124,10 +138,23 @@
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
 
+        // MENU & MODALS
         function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
+        // THEME TOGGLE
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            document.getElementById('theme-toggle').innerHTML = isLight ? '<i class="fas fa-moon"></i> Mode' : '<i class="fas fa-sun"></i> Mode';
+        }
+
+        // LOAD PREFERENCE
+        if (localStorage.getItem('theme') === 'light') toggleTheme();
+
+        // DATA LOADER
         async function loadData() {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
             try {
@@ -143,33 +170,19 @@
                     if (!row.c[0]) return;
                     const title = row.c[0].v;
                     const cat = row.c[1] ? row.c[1].v.toLowerCase() : "";
-                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/300x150?text=No+Image";
+                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/400x200";
                     const link = row.c[4] ? row.c[4].v : "#";
 
-                    // Side-by-Side Grid (Nursing Times Style)
                     if (cat === 'news' || cat === 'featured') {
-                        grid.innerHTML += `
-                            <div class="grid-card" onclick="location.href='${link}'">
-                                <img src="${img}">
-                                <h3>${title}</h3>
-                            </div>`;
-                    } 
-                    // Bullet List (NilePost Style)
-                    else {
-                        list.innerHTML += `
-                            <a href="${link}" class="bullet-item">
-                                <span>&gt;</span>
-                                <h4>${title}</h4>
-                            </a>`;
+                        grid.innerHTML += `<div class="grid-card" onclick="location.href='${link}'"><img src="${img}"><h3>${title}</h3></div>`;
+                    } else {
+                        list.innerHTML += `<a href="${link}" class="bullet-item"><span>&gt;</span><h4>${title}</h4></a>`;
                     }
                 });
-            } catch (err) { console.error("Load failed", err); }
+            } catch (err) { console.error(err); }
         }
 
-        window.onload = () => {
-            loadData();
-            setTimeout(() => openModal('contactModal'), 3000);
-        };
+        window.onload = () => { loadData(); setTimeout(() => openModal('contactModal'), 3000); };
     </script>
 </body>
 </html>
