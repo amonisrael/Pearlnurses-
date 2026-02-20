@@ -3,61 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nursing & Midwifery Jobs in Uganda | PearlNurses</title>
+    <title>Nursing Jobs in Uganda | PearlNurses</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
-        
         body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
 
-        /* Slim Header to match Home */
-        header { background: var(--primary); padding: 8px 0; position: sticky; top: 0; z-index: 1000; }
+        header { background: var(--primary); padding: 6px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.2rem; font-weight: 700; color: white; text-decoration: none; }
-        
-        .back-home { color: white; text-decoration: none; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.4); padding: 4px 12px; border-radius: 20px; transition: 0.3s; }
-        .back-home:hover { background: rgba(255,255,255,0.1); }
+        .logo { font-size: 1.1rem; font-weight: 700; color: white; text-decoration: none; }
+        .back-home { color: white; text-decoration: none; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.4); padding: 4px 10px; border-radius: 20px; }
 
-        /* Hero / SEO Title */
-        .jobs-hero { padding: 40px 20px; text-align: center; background: linear-gradient(to bottom, #2E8B57, #1a1a1a); }
-        .jobs-hero h1 { font-size: 1.8rem; margin-bottom: 10px; }
-        .jobs-hero p { color: #ccc; font-size: 1rem; }
+        .jobs-hero { padding: 30px 20px; text-align: center; background: linear-gradient(to bottom, #2E8B57, #1a1a1a); }
+        .jobs-hero h1 { font-size: 1.5rem; }
+        .jobs-hero p { color: #ccc; font-size: 0.9rem; margin-top: 5px; }
 
-        /* Job List Styling */
-        .jobs-container { max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        .jobs-container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
         .job-card { 
-            background: #252525; 
-            border-radius: 12px; 
-            padding: 20px; 
-            margin-bottom: 15px; 
-            border-left: 5px solid var(--secondary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: 0.3s;
+            background: #222; border-radius: 10px; padding: 15px; margin-bottom: 12px; 
+            border-left: 4px solid var(--secondary); display: flex; justify-content: space-between; align-items: center; 
         }
-        .job-card:hover { transform: scale(1.02); background: #2a2a2a; }
+        .job-info h3 { font-size: 1rem; margin-bottom: 3px; }
+        .job-info p { font-size: 0.8rem; color: #888; }
+        .deadline { font-size: 0.7rem; color: #ff4d4d; display: block; margin-top: 5px; }
         
-        .job-info h3 { font-size: 1.1rem; color: var(--white); margin-bottom: 5px; }
-        .job-info p { font-size: 0.85rem; color: #aaa; }
-        
-        .apply-btn { 
-            background: var(--primary); 
-            color: white; 
-            text-decoration: none; 
-            padding: 8px 16px; 
-            border-radius: 5px; 
-            font-size: 0.85rem; 
-            font-weight: bold; 
-        }
+        .action-area { display: flex; flex-direction: column; gap: 8px; text-align: center; }
+        .apply-btn { background: var(--primary); color: white; text-decoration: none; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .wa-share { color: #25D366; text-decoration: none; font-size: 1.1rem; }
 
-        .deadline-text { font-size: 0.75rem; color: #ff4d4d; margin-top: 5px; display: block; }
-
-        @media (max-width: 600px) {
-            .job-card { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .apply-btn { width: 100%; text-align: center; }
-        }
+        @media (max-width: 600px) { .job-card { flex-direction: column; align-items: flex-start; gap: 12px; } .action-area { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; } }
     </style>
 </head>
 <body>
@@ -65,25 +40,20 @@
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">PearlNurses</a>
-            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Home</a>
+            <a href="index.html" class="back-home"><i class="fas fa-home"></i> Home</a>
         </div>
     </header>
 
     <section class="jobs-hero">
-        <h1>Nursing Jobs in Uganda</h1>
-        <p>Find the latest vacancies in hospitals and clinics across the country.</p>
+        <h1>Vacancies for Nurses & Midwives</h1>
+        <p>Your next career step in Uganda's healthcare system.</p>
     </section>
 
     <div class="jobs-container" id="jobs-list">
-        <p style="text-align: center; color: #888;">Fetching the latest openings...</p>
+        <p style="text-align: center; color: #555;">Loading latest openings...</p>
     </div>
 
-    <footer style="text-align: center; padding: 40px; color: #666; font-size: 0.8rem;">
-        &copy; 2026 PearlNurses Uganda | Focused on Clinical Excellence
-    </footer>
-
     <script>
-        // Use the same ID as your Home page
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
         const JOBS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Jobs`;
 
@@ -92,45 +62,31 @@
             try {
                 const response = await fetch(JOBS_URL);
                 const data = await response.text();
-                
-                // Parse CSV rows
                 const rows = data.split('\n').slice(1);
-                container.innerHTML = ''; // Clear loading message
-
-                if (rows.length === 0 || rows[0].trim() === "") {
-                    container.innerHTML = "<p style='text-align:center;'>No active vacancies at the moment. Check back soon!</p>";
-                    return;
-                }
+                container.innerHTML = '';
 
                 rows.forEach(row => {
-                    // Split by comma but handle potential quotes from Google CSV
-                    const cols = row.split(',').map(cell => cell.replace(/^"(.*)"$/, '$1'));
-                    
-                    if (cols.length >= 4) {
-                        const title = cols[0];
-                        const location = cols[1];
-                        const hospital = cols[2];
-                        const deadline = cols[3];
-                        const link = cols[4] || '#';
+                    const c = row.split(',').map(s => s.replace(/^"(.*)"$/, '$1'));
+                    if (c.length >= 4) {
+                        const shareMsg = encodeURIComponent(`Nurse Job Alert: ${c[0]} at ${c[2]}. See details here: `);
+                        const waUrl = `https://wa.me/?text=${shareMsg}${window.location.href}`;
 
                         container.innerHTML += `
                             <div class="job-card">
                                 <div class="job-info">
-                                    <h3>${title}</h3>
-                                    <p><i class="fas fa-hospital"></i> ${hospital} | <i class="fas fa-map-marker-alt"></i> ${location}</p>
-                                    <span class="deadline-text">Closing: ${deadline}</span>
+                                    <h3>${c[0]}</h3>
+                                    <p>${c[2]} • ${c[1]}</p>
+                                    <span class="deadline">Closing: ${c[3]}</span>
                                 </div>
-                                <a href="${link}" class="apply-btn">View Details</a>
-                            </div>
-                        `;
+                                <div class="action-area">
+                                    <a href="${c[4]}" class="apply-btn">Apply</a>
+                                    <a href="${waUrl}" class="wa-share" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                                </div>
+                            </div>`;
                     }
                 });
-            } catch (error) {
-                console.error("Error loading jobs:", error);
-                container.innerHTML = "<p style='text-align:center; color:red;'>Unable to load jobs. Please refresh the page.</p>";
-            }
+            } catch (e) { container.innerHTML = "Unable to load jobs."; }
         }
-
         window.onload = loadJobs;
     </script>
 </body>
