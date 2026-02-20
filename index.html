@@ -7,53 +7,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        :root { --primary: #2E8B57; --dark: #1a1a1a; --white: #ffffff; }
+        :root { --primary: #2E8B57; --secondary: #4682B4; --dark: #1a1a1a; --white: #ffffff; }
         body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
 
-        /* HEADER & MOBILE NAV */
-        header { background: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
+        /* Slim Header */
+        header { background: var(--primary); padding: 8px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.4rem; font-weight: 700; color: white; text-decoration: none; }
+        .logo { font-size: 1.2rem; font-weight: 700; color: white; text-decoration: none; }
         
+        .nav-right { display: flex; align-items: center; gap: 15px; }
         .nav-links { display: flex; list-style: none; gap: 15px; }
         .nav-links a { color: white; text-decoration: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; }
-        
-        .hamburger { display: none; background: none; border: none; cursor: pointer; color: white; font-size: 1.5rem; }
+
+        /* Hamburger Menu */
+        .hamburger { display: none; background: none; border: none; cursor: pointer; color: white; font-size: 1.4rem; }
 
         @media (max-width: 768px) {
-            .hamburger { display: block; }
-            .nav-links { 
-                display: none; position: absolute; top: 100%; left: 0; width: 100%; 
-                background: var(--primary); flex-direction: column; padding: 20px; text-align: center;
-            }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary); padding: 20px; text-align: center; }
             .nav-links.active { display: flex; }
+            .hamburger { display: block; }
         }
 
-        /* SECTION 1: THE FEATURED BOX (SLIDER) */
-        .slider-container { width: 100%; max-width: 1200px; margin: 0 auto; position: relative; overflow: hidden; height: 300px; background: #222; }
-        .slider { display: flex; transition: transform 0.5s ease-in-out; height: 100%; }
-        .slide { min-width: 100%; position: relative; cursor: pointer; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
-        .slide-overlay { position: absolute; bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 20px; width: 100%; }
+        /* SECTION: Side-by-Side News (Nursing Times Style) */
+        .section-label { padding: 20px 15px 5px; color: var(--primary); font-weight: bold; font-size: 1.1rem; text-transform: uppercase; }
+        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; max-width: 1200px; margin: 0 auto; }
+        .grid-card { background: #262626; border: 1px solid #333; overflow: hidden; cursor: pointer; border-radius: 4px; }
+        .grid-card img { width: 100%; height: 130px; object-fit: cover; background: #333; }
+        .grid-card h3 { padding: 10px; font-size: 0.85rem; color: white; line-height: 1.3; font-weight: 500; }
 
-        /* SECTION 2: GRID NEWS (2 COLUMNS) */
-        .section-title { padding: 20px 15px 5px; color: var(--primary); font-size: 1.1rem; font-weight: bold; }
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; }
-        .grid-card { background: #262626; border: 1px solid #333; cursor: pointer; }
-        .grid-card img { width: 100%; height: 120px; object-fit: cover; }
-        .grid-card h3 { padding: 10px; font-size: 0.85rem; color: white; }
+        /* SECTION: Bullet Articles (NilePost Style) */
+        .bullet-list { padding: 10px 15px; max-width: 1200px; margin: 0 auto; }
+        .bullet-item { display: flex; align-items: flex-start; gap: 12px; padding: 15px 0; border-bottom: 1px solid #333; text-decoration: none; color: #eee; }
+        .bullet-item span { color: #ff3b30; font-weight: bold; font-size: 1.1rem; }
+        .bullet-item h4 { font-size: 0.95rem; font-weight: 500; }
 
-        /* SECTION 3: BULLET LIST */
-        .bullet-list { padding: 15px; }
-        .bullet-item { display: flex; padding: 12px 0; border-bottom: 1px solid #333; text-decoration: none; color: #eee; font-size: 0.95rem; }
-        .bullet-item::before { content: ">"; color: red; font-weight: bold; margin-right: 10px; }
-
-        /* MODALS */
+        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #222; padding: 25px; border-radius: 10px; width: 90%; max-width: 400px; border: 1px solid var(--primary); }
-        .close-btn { float: right; cursor: pointer; font-size: 1.5rem; color: white; }
+        .modal-content { background: #222; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid var(--primary); text-align: center; }
+        .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; color: #777; }
 
-        footer { background: #111; padding: 30px 15px; border-top: 1px solid #333; margin-top: 20px; }
+        /* Full Footer */
+        footer { background: #111; padding: 40px 15px; border-top: 1px solid #333; margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .footer-links h4 { color: var(--primary); margin-bottom: 15px; font-size: 1rem; }
+        .footer-links a { color: #aaa; text-decoration: none; display: block; margin: 8px 0; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--secondary); }
     </style>
 </head>
 <body>
@@ -61,100 +59,115 @@
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">PearlNurses</a>
-            <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-            <ul class="nav-links" id="menu">
-                <li><a onclick="openModal('aboutModal')">About Us</a></li>
-                <li><a href="uganda.html">Nursing in Uganda</a></li>
-                <li><a href="guides.html">School Guide</a></li>
-                <li><a href="tools.html">Calculators</a></li>
-                <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
-                <li><a href="equip.html">Equipment</a></li>
-            </ul>
+            <div class="nav-right">
+                <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <ul class="nav-links" id="nav-menu">
+                    <li><a onclick="openModal('aboutModal')">About Us</a></li>
+                    <li><a href="uganda.html">Nursing in Uganda</a></li>
+                    <li><a href="guides.html">School Guide</a></li>
+                    <li><a href="tools.html">Calculators</a></li>
+                    <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
+                    <li><a href="equip.html">Equipment</a></li>
+                </ul>
+            </div>
         </div>
     </header>
 
-    <div class="slider-container"><div class="slider" id="mainSlider"></div></div>
+    <div class="section-label">Featured Posts</div>
+    <div class="news-grid" id="gridContainer">
+        </div>
 
-    <div class="section-title">Featured Posts</div>
-    <div class="news-grid" id="gridContainer"></div>
-
-    <div class="bullet-list" id="bulletContainer"></div>
+    <div class="section-label">Latest Updates</div>
+    <div class="bullet-list" id="bulletContainer">
+        </div>
 
     <footer>
-        <div class="header-container" style="flex-wrap: wrap; gap: 20px;">
-            <div><h3>PearlNurses</h3><p style="color:#777">Leading Nursing Portal</p></div>
+        <div class="footer-grid">
             <div>
-                <a href="articles.html" style="color:#aaa; display:block">Nursing News</a>
-                <a href="clinicalskills.html" style="color:#aaa; display:block">Clinical Skills</a>
+                <h3 style="color:var(--primary)">PearlNurses</h3>
+                <p style="color:#777; margin-top:10px; font-size:0.9rem;">Supporting the backbone of Uganda's Healthcare.</p>
             </div>
-            <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:10px 15px;">Contact Us</button>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <a href="articles.html">Nursing News</a>
+                <a href="clinicalskills.html">Clinical Skills</a>
+                <a href="nursingschoollife.html">Nursing School Life</a>
+                <a href="careerdev.html">Career Development</a>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:10px 20px; cursor:pointer; margin-top:10px; border-radius:4px;">Contact Us</button>
+            </div>
         </div>
     </footer>
 
-    <div id="aboutModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('aboutModal')">&times;</span><h2>About Us</h2><p>Your nursing resource hub.</p></div></div>
-    <div id="contactModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('contactModal')">&times;</span><h2>Contact</h2><form action="https://formspree.io/f/mqakppov" method="POST"><input type="text" name="name" placeholder="Name" required style="width:100%; padding:10px; margin:10px 0;"><textarea name="message" placeholder="Message" required style="width:100%; padding:10px; margin:10px 0;"></textarea><button type="submit" style="width:100%; padding:10px; background:var(--primary); color:white; border:none;">Send</button></form></div></div>
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
+            <h2 style="color:var(--primary)">About Us</h2>
+            <p style="margin-top:15px; color:#ccc;">PearlNurses is Uganda's premier portal for clinical resources and nursing school guides.</p>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
+            <h2 style="color:var(--primary)">Contact Us</h2>
+            <form action="https://formspree.io/f/mqakppov" method="POST" style="margin-top:15px;">
+                <input type="text" name="name" placeholder="Full Name" required style="width:100%; padding:10px; margin-bottom:10px; background:#333; border:none; color:white;">
+                <textarea name="message" placeholder="Your Message" rows="4" required style="width:100%; padding:10px; background:#333; border:none; color:white;"></textarea>
+                <button type="submit" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; font-weight:bold; margin-top:10px;">Send Message</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
-        
-        // HAMBURGER LOGIC
-        function toggleMenu() {
-            document.getElementById('menu').classList.toggle('active');
-        }
 
-        // MODAL LOGIC
+        function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // DATA LOADER
-        async function fetchSheet() {
+        async function loadData() {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
             try {
                 const response = await fetch(url);
                 const text = await response.text();
-                // Google JSON response cleanup
                 const jsonData = JSON.parse(text.substring(47).slice(0, -2));
                 const rows = jsonData.table.rows;
 
-                const slider = document.getElementById('mainSlider');
                 const grid = document.getElementById('gridContainer');
                 const list = document.getElementById('bulletContainer');
 
                 rows.forEach(row => {
-                    const title = row.c[0] ? row.c[0].v : "";
+                    if (!row.c[0]) return;
+                    const title = row.c[0].v;
                     const cat = row.c[1] ? row.c[1].v.toLowerCase() : "";
-                    const desc = row.c[2] ? row.c[2].v : "";
-                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/400x200";
+                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/300x150?text=No+Image";
                     const link = row.c[4] ? row.c[4].v : "#";
 
-                    if (cat === "featured") {
-                        slider.innerHTML += `<div class="slide" onclick="location.href='${link}'"><img src="${img}"><div class="slide-overlay"><h2>${title}</h2><p>${desc}</p></div></div>`;
-                    } else if (cat === "news") {
-                        grid.innerHTML += `<div class="grid-card" onclick="location.href='${link}'"><img src="${img}"><h3>${title}</h3></div>`;
-                    } else if (cat === "update") {
-                        list.innerHTML += `<a href="${link}" class="bullet-item"><h4>${title}</h4></a>`;
+                    // Side-by-Side Grid (Nursing Times Style)
+                    if (cat === 'news' || cat === 'featured') {
+                        grid.innerHTML += `
+                            <div class="grid-card" onclick="location.href='${link}'">
+                                <img src="${img}">
+                                <h3>${title}</h3>
+                            </div>`;
+                    } 
+                    // Bullet List (NilePost Style)
+                    else {
+                        list.innerHTML += `
+                            <a href="${link}" class="bullet-item">
+                                <span>&gt;</span>
+                                <h4>${title}</h4>
+                            </a>`;
                     }
                 });
-
-                startSlider();
-            } catch (err) {
-                console.error("Critical Error:", err);
-            }
-        }
-
-        let slideIdx = 0;
-        function startSlider() {
-            const slides = document.querySelectorAll('.slide');
-            if (slides.length > 0) {
-                setInterval(() => {
-                    slideIdx = (slideIdx + 1) % slides.length;
-                    document.getElementById('mainSlider').style.transform = `translateX(-${slideIdx * 100}%)`;
-                }, 4000);
-            }
+            } catch (err) { console.error("Load failed", err); }
         }
 
         window.onload = () => {
-            fetchSheet();
+            loadData();
             setTimeout(() => openModal('contactModal'), 3000);
         };
     </script>
