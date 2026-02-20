@@ -182,6 +182,41 @@
                 }
             }
             loadCMS();
+async function loadJobs() {
+    // This tells Google to look specifically at the 'Jobs' tab (gid=0 usually, but we use the sheet name)
+    const JOBS_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Jobs`;
+    const container = document.getElementById('job-container');
+
+    try {
+        const response = await fetch(JOBS_URL);
+        const data = await response.text();
+        const rows = data.split('\n').slice(1);
+        container.innerHTML = '';
+
+        rows.forEach(row => {
+            const cols = row.split(',');
+            if (cols.length < 4) return;
+            // Remove quotes that Google adds to CSV fields
+            const clean = (str) => str.replace(/^"(.*)"$/, '$1');
+
+            container.innerHTML += `
+                <div style="background:#222; padding:15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border-left: 4px solid var(--secondary);">
+                    <div>
+                        <h4 style="color:var(--white);">${clean(cols[0])}</h4>
+                        <p style="font-size:0.8rem; color:#ccc;">${clean(cols[2])} • ${clean(cols[1])}</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <p style="font-size:0.7rem; color:#ff4d4d;">Deadline: ${clean(cols[3])}</p>
+                        <a href="${clean(cols[4])}" style="color:var(--primary); font-size:0.9rem; text-decoration:none; font-weight:bold;">Apply Now</a>
+                    </div>
+                </div>`;
+        });
+    } catch (e) {
+        container.innerHTML = '<p>No current openings found.</p>';
+    }
+}
+loadJobs(); // Call the job loader
+
 
             // --- Search ---
             document.getElementById('siteSearch').onkeyup = function() {
