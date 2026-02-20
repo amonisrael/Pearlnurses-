@@ -88,6 +88,32 @@
     <section id="featured-posts" class="posts-grid">
         <p style="grid-column: 1/-1; text-align: center;">Loading clinical resources...</p>
     </section>
+  <section class="clinical-tool" style="max-width: 1200px; margin: 40px auto; padding: 20px;">
+    <div style="background: #222; padding: 25px; border-radius: 15px; border: 1px solid var(--secondary);">
+        <h2 style="color: var(--secondary); margin-bottom: 15px;"><i class="fas fa-calculator"></i> IV Drip Rate Calculator</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+                <label style="font-size: 0.8rem; color: #ccc;">Volume (mL)</label>
+                <input type="number" id="vol" placeholder="e.g. 500" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
+            </div>
+            <div>
+                <label style="font-size: 0.8rem; color: #ccc;">Time (Hours)</label>
+                <input type="number" id="hr" placeholder="e.g. 4" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
+            </div>
+            <div style="grid-column: 1 / -1;">
+                <label style="font-size: 0.8rem; color: #ccc;">Drop Factor (gtt/mL)</label>
+                <select id="factor" style="width:100%; padding:10px; border-radius:5px; border:none; margin-top:5px;">
+                    <option value="20">Standard Set (20 gtt/mL)</option>
+                    <option value="15">Blood Set (15 gtt/mL)</option>
+                    <option value="60">Micro-drip (60 gtt/mL)</option>
+                </select>
+            </div>
+            <button onclick="calcDrip()" style="grid-column: 1 / -1; background: var(--secondary); color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Calculate Rate</button>
+        </div>
+        <div id="result" style="margin-top: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary);"></div>
+    </div>
+</section>
+
     
     <h2 class="section-title">Nursing Job Board</h2>
 <section class="job-board" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
@@ -231,6 +257,20 @@ loadJobs(); // Call the job loader
             window.closeAbout = () => { document.getElementById('aboutModal').style.display = 'none'; document.body.style.overflow = 'auto'; };
             window.closeBanner = () => document.getElementById('newsletter-slidein').style.display = 'none';
         });
+ function calcDrip() {
+    const vol = document.getElementById('vol').value;
+    const time = document.getElementById('hr').value * 60; // Convert hours to minutes
+    const factor = document.getElementById('factor').value;
+    const display = document.getElementById('result');
+
+    if (vol > 0 && time > 0) {
+        const rate = Math.round((vol * factor) / time);
+        display.innerHTML = `Infusion Rate: ${rate} drops / minute`;
+    } else {
+        display.innerHTML = `<span style="color: #ff4d4d; font-size: 0.9rem;">Please enter valid volume and time.</span>`;
+    }
+}
+
     </script>
 </body>
 </html>
