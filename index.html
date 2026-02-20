@@ -3,61 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PearlNurses | Supporting Uganda's Nurses</title>
+    <title>PearlNurses | Uganda</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         :root { --primary: #2E8B57; --dark: #1a1a1a; --white: #ffffff; }
-        body { background-color: var(--dark); color: var(--white); line-height: 1.6; overflow-x: hidden; }
-        
-        /* RESTORED: Original Slim Header */
-        header { background: var(--primary); padding: 8px 0; position: sticky; top: 0; z-index: 1000; }
+        body { background-color: var(--dark); color: var(--white); line-height: 1.6; }
+
+        /* HEADER & MOBILE NAV */
+        header { background: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.3rem; font-weight: 700; color: white; text-decoration: none; }
-        .nav-right { display: flex; align-items: center; gap: 15px; }
-        .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
-        .nav-links a { color: white; text-decoration: none; font-size: 0.85rem; cursor: pointer; font-weight: 500; }
+        .logo { font-size: 1.4rem; font-weight: 700; color: white; text-decoration: none; }
+        
+        .nav-links { display: flex; list-style: none; gap: 15px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; }
+        
+        .hamburger { display: none; background: none; border: none; cursor: pointer; color: white; font-size: 1.5rem; }
 
-        /* Search Logic */
-        .search-box { display: flex; align-items: center; }
-        #siteSearch { width: 0; opacity: 0; border: none; background: rgba(255, 255, 255, 0.2); color: white; border-radius: 20px; transition: 0.4s; outline: none; }
-        #siteSearch.active { width: 140px; opacity: 1; padding: 4px 12px; margin-right: 8px; }
-        .search-trigger { color: white; cursor: pointer; font-size: 1.1rem; }
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links { 
+                display: none; position: absolute; top: 100%; left: 0; width: 100%; 
+                background: var(--primary); flex-direction: column; padding: 20px; text-align: center;
+            }
+            .nav-links.active { display: flex; }
+        }
 
-        /* Hamburger */
-        .hamburger { background: none; border: none; cursor: pointer; display: none; }
-        .bar-container span { display: block; width: 25px; height: 3px; background: white; margin: 4px 0; transition: 0.3s; }
-        @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: block; } }
-
-        /* SECTION 1: Featured Slider (The one box you asked for) */
-        .slider-container { width: 100%; max-width: 1200px; margin: 0 auto; position: relative; overflow: hidden; height: 300px; background: #000; }
+        /* SECTION 1: THE FEATURED BOX (SLIDER) */
+        .slider-container { width: 100%; max-width: 1200px; margin: 0 auto; position: relative; overflow: hidden; height: 300px; background: #222; }
         .slider { display: flex; transition: transform 0.5s ease-in-out; height: 100%; }
-        .slide { min-width: 100%; position: relative; cursor: pointer; height: 100%; }
+        .slide { min-width: 100%; position: relative; cursor: pointer; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
-        .slide-content { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 20px; }
-        .slide-content h2 { font-size: 1.4rem; margin-bottom: 5px; color: #fff; }
-        .slide-content p { font-size: 0.9rem; color: #ccc; }
+        .slide-overlay { position: absolute; bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 20px; width: 100%; }
 
-        /* SECTION 2: Grid News (Nursing Times Style - 2 columns) */
-        .section-label { padding: 20px 15px 5px; color: var(--primary); font-weight: bold; font-size: 1.1rem; text-transform: uppercase; }
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; max-width: 1200px; margin: 0 auto; }
-        .grid-card { background: #262626; border: 1px solid #333; overflow: hidden; }
-        .grid-card img { width: 100%; height: 120px; object-fit: cover; background: #333; }
-        .grid-card h3 { padding: 8px; font-size: 0.85rem; color: white; line-height: 1.2; }
+        /* SECTION 2: GRID NEWS (2 COLUMNS) */
+        .section-title { padding: 20px 15px 5px; color: var(--primary); font-size: 1.1rem; font-weight: bold; }
+        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; }
+        .grid-card { background: #262626; border: 1px solid #333; cursor: pointer; }
+        .grid-card img { width: 100%; height: 120px; object-fit: cover; }
+        .grid-card h3 { padding: 10px; font-size: 0.85rem; color: white; }
 
-        /* SECTION 3: Bullet List (NilePost Style) */
-        .bullet-list { padding: 10px 15px; max-width: 1200px; margin: 0 auto; }
-        .bullet-item { display: flex; align-items: flex-start; gap: 10px; padding: 15px 0; border-bottom: 1px solid #333; text-decoration: none; }
-        .bullet-item span { color: red; font-weight: bold; font-size: 1.1rem; }
-        .bullet-item h4 { color: #eee; font-size: 0.95rem; font-weight: 500; }
+        /* SECTION 3: BULLET LIST */
+        .bullet-list { padding: 15px; }
+        .bullet-item { display: flex; padding: 12px 0; border-bottom: 1px solid #333; text-decoration: none; color: #eee; font-size: 0.95rem; }
+        .bullet-item::before { content: ">"; color: red; font-weight: bold; margin-right: 10px; }
 
-        /* Modals & Footer */
+        /* MODALS */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #222; padding: 25px; border-radius: 10px; width: 90%; max-width: 400px; border: 1px solid var(--primary); text-align: center; }
-        .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.5rem; }
-        footer { background: #111; padding: 40px 15px; margin-top: 30px; border-top: 1px solid #333; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .footer-links a { color: #aaa; text-decoration: none; display: block; margin: 5px 0; font-size: 0.9rem; }
+        .modal-content { background: #222; padding: 25px; border-radius: 10px; width: 90%; max-width: 400px; border: 1px solid var(--primary); }
+        .close-btn { float: right; cursor: pointer; font-size: 1.5rem; color: white; }
+
+        footer { background: #111; padding: 30px 15px; border-top: 1px solid #333; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -65,127 +61,102 @@
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">PearlNurses</a>
-            <div class="nav-right">
-                <div class="search-box">
-                    <input type="text" id="siteSearch" placeholder="Search...">
-                    <i class="fas fa-search search-trigger" onclick="document.getElementById('siteSearch').classList.toggle('active')"></i>
-                </div>
-                <button class="hamburger">
-                    <div class="bar-container"><span></span><span></span><span></span></div>
-                </button>
-                <ul class="nav-links">
-                    <li><a onclick="openModal('aboutModal')">About Us</a></li>
-                    <li><a href="uganda.html">Nursing in Uganda</a></li>
-                    <li><a href="guides.html">School Guide</a></li>
-                    <li><a href="tools.html">Calculators</a></li>
-                    <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
-                    <li><a href="equip.html">Equipment</a></li>
-                </ul>
-            </div>
+            <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="menu">
+                <li><a onclick="openModal('aboutModal')">About Us</a></li>
+                <li><a href="uganda.html">Nursing in Uganda</a></li>
+                <li><a href="guides.html">School Guide</a></li>
+                <li><a href="tools.html">Calculators</a></li>
+                <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
+                <li><a href="equip.html">Equipment</a></li>
+            </ul>
         </div>
     </header>
 
-    <div class="slider-container" id="sliderContainer">
-        <div class="slider" id="mainSlider"></div>
-    </div>
+    <div class="slider-container"><div class="slider" id="mainSlider"></div></div>
 
-    <div class="section-label">Featured Posts</div>
+    <div class="section-title">Featured Posts</div>
     <div class="news-grid" id="gridContainer"></div>
 
     <div class="bullet-list" id="bulletContainer"></div>
 
     <footer>
-        <div class="footer-grid">
-            <div><h3 style="color:var(--primary)">PearlNurses</h3><p style="color:#666">Supporting Uganda's Ward Stars.</p></div>
-            <div class="footer-links">
-                <h4 style="color:white">Categories</h4>
-                <a href="articles.html">Nursing News</a>
-                <a href="clinicalskills.html">Clinical Skills</a>
-                <a href="nursingschoollife.html">Nursing School Life</a>
-                <a href="careerdev.html">Career Development</a>
-            </div>
+        <div class="header-container" style="flex-wrap: wrap; gap: 20px;">
+            <div><h3>PearlNurses</h3><p style="color:#777">Leading Nursing Portal</p></div>
             <div>
-                <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:10px 20px; cursor:pointer">Contact Us</button>
+                <a href="articles.html" style="color:#aaa; display:block">Nursing News</a>
+                <a href="clinicalskills.html" style="color:#aaa; display:block">Clinical Skills</a>
             </div>
+            <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:10px 15px;">Contact Us</button>
         </div>
     </footer>
 
-    <div id="aboutModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('aboutModal')">&times;</span><h2>About Us</h2><p>PearlNurses is your professional digital hub.</p></div></div>
-    <div id="contactModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('contactModal')">&times;</span><h2>Contact Us</h2>
-        <form action="https://formspree.io/f/mqakppov" method="POST">
-            <input type="text" name="name" placeholder="Name" required style="width:100%; margin:10px 0; padding:8px; background:#333; color:white; border:none;">
-            <textarea name="message" placeholder="Message" required style="width:100%; margin:10px 0; padding:8px; background:#333; color:white; border:none;"></textarea>
-            <button type="submit" style="width:100%; background:var(--primary); color:white; border:none; padding:10px;">Send</button>
-        </form>
-    </div></div>
+    <div id="aboutModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('aboutModal')">&times;</span><h2>About Us</h2><p>Your nursing resource hub.</p></div></div>
+    <div id="contactModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('contactModal')">&times;</span><h2>Contact</h2><form action="https://formspree.io/f/mqakppov" method="POST"><input type="text" name="name" placeholder="Name" required style="width:100%; padding:10px; margin:10px 0;"><textarea name="message" placeholder="Message" required style="width:100%; padding:10px; margin:10px 0;"></textarea><button type="submit" style="width:100%; padding:10px; background:var(--primary); color:white; border:none;">Send</button></form></div></div>
 
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
-        let currentSlide = 0;
-        let startX = 0;
+        
+        // HAMBURGER LOGIC
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
 
+        // MODAL LOGIC
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        async function loadData() {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Posts`;
+        // DATA LOADER
+        async function fetchSheet() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
             try {
-                const res = await fetch(url);
-                const csvText = await res.text();
-                // Improved CSV parser to handle quotes and commas better
-                const rows = csvText.split('\n').slice(1).map(line => {
-                    const matches = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-                    return matches ? matches.map(m => m.replace(/^"|"$/g, '')) : [];
-                });
+                const response = await fetch(url);
+                const text = await response.text();
+                // Google JSON response cleanup
+                const jsonData = JSON.parse(text.substring(47).slice(0, -2));
+                const rows = jsonData.table.rows;
 
                 const slider = document.getElementById('mainSlider');
                 const grid = document.getElementById('gridContainer');
-                const bullet = document.getElementById('bulletContainer');
+                const list = document.getElementById('bulletContainer');
 
-                rows.forEach(col => {
-                    if (col.length < 5) return;
-                    const [title, category, desc, img, link] = col;
+                rows.forEach(row => {
+                    const title = row.c[0] ? row.c[0].v : "";
+                    const cat = row.c[1] ? row.c[1].v.toLowerCase() : "";
+                    const desc = row.c[2] ? row.c[2].v : "";
+                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/400x200";
+                    const link = row.c[4] ? row.c[4].v : "#";
 
-                    if (category.toLowerCase() === 'featured') {
-                        slider.innerHTML += `<div class="slide" onclick="location.href='${link}'">
-                            <img src="${img}" onerror="this.src='https://via.placeholder.com/600x300?text=No+Image'">
-                            <div class="slide-content"><h2>${title}</h2><p>${desc}</p></div>
-                        </div>`;
-                    } else if (category.toLowerCase() === 'news') {
-                        grid.innerHTML += `<div class="grid-card" onclick="location.href='${link}'">
-                            <img src="${img}" onerror="this.src='https://via.placeholder.com/200x120?text=News'">
-                            <h3>${title}</h3>
-                        </div>`;
-                    } else {
-                        bullet.innerHTML += `<a href="${link}" class="bullet-item"><span>&gt;</span><h4>${title}</h4></a>`;
+                    if (cat === "featured") {
+                        slider.innerHTML += `<div class="slide" onclick="location.href='${link}'"><img src="${img}"><div class="slide-overlay"><h2>${title}</h2><p>${desc}</p></div></div>`;
+                    } else if (cat === "news") {
+                        grid.innerHTML += `<div class="grid-card" onclick="location.href='${link}'"><img src="${img}"><h3>${title}</h3></div>`;
+                    } else if (cat === "update") {
+                        list.innerHTML += `<a href="${link}" class="bullet-item"><h4>${title}</h4></a>`;
                     }
                 });
 
                 startSlider();
-            } catch (e) { console.error("Data Load Error", e); }
+            } catch (err) {
+                console.error("Critical Error:", err);
+            }
         }
 
+        let slideIdx = 0;
         function startSlider() {
             const slides = document.querySelectorAll('.slide');
-            if (slides.length === 0) return;
-            setInterval(() => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                document.getElementById('mainSlider').style.transform = `translateX(-${currentSlide * 100}%)`;
-            }, 5000);
+            if (slides.length > 0) {
+                setInterval(() => {
+                    slideIdx = (slideIdx + 1) % slides.length;
+                    document.getElementById('mainSlider').style.transform = `translateX(-${slideIdx * 100}%)`;
+                }, 4000);
+            }
         }
 
-        // Swipe logic
-        const sCont = document.getElementById('sliderContainer');
-        sCont.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-        sCont.addEventListener('touchend', e => {
-            let endX = e.changedTouches[0].clientX;
-            const slides = document.querySelectorAll('.slide');
-            if (startX - endX > 50) currentSlide = (currentSlide + 1) % slides.length;
-            else if (startX - endX < -50) currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            document.getElementById('mainSlider').style.transform = `translateX(-${currentSlide * 100}%)`;
-        });
-
-        window.onload = () => { loadData(); setTimeout(() => openModal('contactModal'), 3000); };
+        window.onload = () => {
+            fetchSheet();
+            setTimeout(() => openModal('contactModal'), 3000);
+        };
     </script>
 </body>
 </html>
