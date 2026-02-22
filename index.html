@@ -6,14 +6,14 @@
     <title>PearlNurses | Uganda</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: background 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; transition: background 0.3s, color 0.3s; }
         
         :root { 
             --primary: #2E8B57; 
             --bg: #1a1a1a; 
             --text: #ffffff; 
             --border: #333;
-            --link-blue: #00a8e8; /* Editorial blue for titles */
+            --link-blue: #00a8e8;
         }
 
         body.light-mode {
@@ -25,7 +25,7 @@
 
         body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
 
-        /* Slim Header */
+        /* Header */
         header { background: var(--primary); padding: 10px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
         .logo { font-size: 1.4rem; font-weight: 700; color: white; text-decoration: none; }
@@ -43,34 +43,29 @@
             .hamburger { display: block; }
         }
 
-        /* SECTION: Nursing Times Editorial Grid */
-        .section-label { padding: 25px 15px 10px; color: var(--text); font-weight: bold; font-size: 1.2rem; text-transform: uppercase; border-bottom: 2px solid var(--primary); margin: 0 15px 15px; display: inline-block; }
+        /* Editorial Grid */
+        .section-label { padding: 25px 15px 10px; color: var(--text); font-weight: bold; font-size: 1.1rem; text-transform: uppercase; border-bottom: 2px solid var(--primary); margin: 0 15px 15px; display: inline-block; }
+        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
         
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
+        .grid-item { cursor: pointer; display: flex; flex-direction: column; text-decoration: none; color: inherit; margin-bottom: 10px; }
         
-        /* The Container - No Box background anymore */
-        .grid-item { cursor: pointer; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
-        
-        /* Only the Image is in a Box */
-        .image-box { width: 100%; height: 140px; overflow: hidden; background: #333; margin-bottom: 10px; }
-        .image-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .grid-item:hover img { transform: scale(1.05); }
+        /* Category Tag Above Image */
+        .category-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--primary); margin-bottom: 4px; display: block; letter-spacing: 0.5px; }
 
-        /* Headline Text - Floating below */
-        .grid-item h3 { font-size: 0.95rem; color: var(--link-blue); line-height: 1.3; font-weight: 600; padding: 0; margin: 0; }
+        /* Slimmed Image Box */
+        .image-box { width: 100%; height: 115px; overflow: hidden; background: #333; margin-bottom: 6px; border: 1px solid var(--border); }
+        .image-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* SECTION: NilePost Bullet List */
+        /* Headline below Image */
+        .grid-item h3 { font-size: 0.88rem; color: var(--link-blue); line-height: 1.25; font-weight: 600; padding: 0; margin: 0; }
+
+        /* Bullet List (NilePost Style) */
         .bullet-list { padding: 15px; max-width: 1200px; margin: 0 auto; }
         .bullet-item { display: flex; align-items: flex-start; gap: 10px; padding: 15px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); }
         .bullet-item span { color: #ff3b30; font-weight: bold; font-size: 1.1rem; }
         .bullet-item h4 { font-size: 1rem; font-weight: 500; }
 
-        /* Modals & Footer */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: var(--bg); padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; border: 1px solid var(--primary); text-align: center; }
-        .close-btn { float: right; cursor: pointer; font-size: 1.5rem; }
-        
-        footer { background: #111; padding: 40px 15px; border-top: 1px solid #333; margin-top: 40px; color: white; }
+        footer { background: #111; padding: 40px 15px; border-top: 1px solid #333; margin-top: 40px; color: white; text-align: center; }
     </style>
 </head>
 <body>
@@ -82,10 +77,8 @@
                 <button id="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
                 <button class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
                 <ul class="nav-links" id="nav-menu">
-                    <li><a onclick="openModal('aboutModal')">About Us</a></li>
                     <li><a href="uganda.html">Uganda</a></li>
                     <li><a href="guides.html">Guides</a></li>
-                    <li><a href="tools.html">Calculators</a></li>
                     <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
                     <li><a href="equip.html">Equipment</a></li>
                 </ul>
@@ -93,28 +86,21 @@
         </div>
     </header>
 
-    <div class="section-label">News</div>
+    <div class="section-label">Featured News</div>
     <div class="news-grid" id="gridContainer"></div>
 
     <div class="section-label">Latest Updates</div>
     <div class="bullet-list" id="bulletContainer"></div>
 
     <footer>
-        <div class="header-container" style="flex-direction: column; gap: 20px; text-align: center;">
-            <div><h3>PearlNurses</h3><p style="color:#777">Leading Nursing Portal in Uganda</p></div>
-            <button onclick="openModal('contactModal')" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:4px;">Contact Us</button>
-        </div>
+        <h3>PearlNurses</h3>
+        <p style="color:#777; font-size: 0.9rem;">Empowering Nurses Across Uganda</p>
     </footer>
-
-    <div id="aboutModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('aboutModal')">&times;</span><h2>About Us</h2><p>Professional nursing resources.</p></div></div>
-    <div id="contactModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('contactModal')">&times;</span><h2>Contact</h2><form action="https://formspree.io/f/mqakppov" method="POST"><input type="text" name="name" placeholder="Name" required style="width:100%; padding:10px; margin:10px 0;"><textarea name="message" placeholder="Message" required style="width:100%; padding:10px; margin:10px 0;"></textarea><button type="submit" style="width:100%; padding:10px; background:var(--primary); color:white; border:none;">Send</button></form></div></div>
 
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
 
         function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
@@ -138,13 +124,14 @@
                 rows.forEach(row => {
                     if (!row.c[0]) return;
                     const title = row.c[0].v;
-                    const cat = row.c[1] ? row.c[1].v.toLowerCase() : "";
-                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/400x250?text=Nursing+Times";
+                    const cat = row.c[1] ? row.c[1].v : "General";
+                    const img = row.c[3] ? row.c[3].v : "https://via.placeholder.com/400x250?text=PearlNurses";
                     const link = row.c[4] ? row.c[4].v : "#";
 
-                    if (cat === 'news' || cat === 'featured') {
+                    if (cat.toLowerCase() === 'news' || cat.toLowerCase() === 'featured') {
                         grid.innerHTML += `
                             <a href="${link}" class="grid-item">
+                                <span class="category-tag">${cat}</span>
                                 <div class="image-box"><img src="${img}"></div>
                                 <h3>${title}</h3>
                             </a>`;
@@ -156,7 +143,7 @@
                             </a>`;
                     }
                 });
-            } catch (err) { console.error(err); }
+            } catch (err) { console.error("Error loading sheet:", err); }
         }
 
         window.onload = loadData;
