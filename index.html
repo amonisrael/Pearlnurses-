@@ -3,113 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PearlNurses | Original</title>
+    <title>PearlNurses | Uganda</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* THEME VARIABLES - Suggested Nursing Palette */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; transition: background 0.2s; }
-        :root { --primary: #2E8B57; --bg: #1a1a1a; --text: #ffffff; --border: #333; --accent: #00a8e8; --bullet: #ff3b30; }
-        body.light-mode { --bg: #ffffff; --text: #1a1a1a; --border: #eeeeee; --accent: #0056b3; }
+        :root { 
+            --primary: #2E8B57; 
+            --bg: #121212; 
+            --text: #E0E0E0; 
+            --border: #222; 
+            --accent: #0077B6; 
+            --bullet: #D90429; 
+        }
+        body.light-mode { 
+            --bg: #F0F4F3; 
+            --text: #1a1a1a; 
+            --border: #DDE5E3; 
+            --accent: #005682; 
+        }
         body { background-color: var(--bg); color: var(--text); line-height: 1.4; }
 
+        /* HEADER: CENTERED LOGO + ORIGINAL LINKS */
         header { background: var(--primary); padding: 12px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 15px; max-width: 1200px; margin: 0 auto; }
-        .logo { grid-column: 2; font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; text-transform: lowercase; }
+        .logo { grid-column: 2; font-size: 1.6rem; font-weight: 800; color: white; text-decoration: none; text-transform: lowercase; }
         
         .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 15px; }
         .btn-icon { background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; }
         
-        #search-bar { display: none; width: 100%; padding: 10px; background: #222; border: none; color: white; }
+        #search-bar { display: none; width: 100%; padding: 10px; background: rgba(0,0,0,0.2); border: none; color: white; text-align: center; }
         #search-bar.active { display: block; }
 
-        .nav-links { display: none; list-style: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary); padding: 20px 0; text-align: center; }
+        /* Navigation Overlay */
+        .nav-links { display: none; list-style: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary); padding: 20px 0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .nav-links.active { display: block; }
-        .nav-links a { color: white; text-decoration: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; display: block; padding: 10px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 1rem; font-weight: bold; text-transform: uppercase; display: block; padding: 12px; }
 
-        .section-label { padding: 20px 15px 8px; color: var(--primary); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
+        /* SECTIONS */
+        .section-label { padding: 25px 15px 8px; color: var(--primary); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
+        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; max-width: 1200px; margin: 0 auto; }
         .grid-item { text-decoration: none; color: inherit; margin-bottom: 15px; }
         .category-tag { font-size: 0.6rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 3px; display: block; }
         .image-box { width: 100%; height: 110px; background: #333; margin-bottom: 5px; overflow: hidden; }
         .image-box img { width: 100%; height: 100%; object-fit: cover; }
         .grid-item h3 { font-size: 0.85rem; color: var(--accent); line-height: 1.2; font-weight: 600; }
 
-        .bullet-list { padding: 0 15px 30px; }
-        .bullet-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); }
+        /* NILEPOST STYLE BULLETS */
+        .bullet-list { padding: 0 15px 30px; max-width: 1200px; margin: 0 auto; }
+        .bullet-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); }
         .bullet-item span { color: var(--bullet); font-weight: bold; }
-        .bullet-item h4 { font-size: 0.9rem; font-weight: 500; }
+        .bullet-item h4 { font-size: 0.95rem; font-weight: 500; }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: var(--bg); padding: 25px; width: 90%; max-width: 400px; border: 1px solid var(--primary); color: var(--text); }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #333; border: 1px solid var(--border); color: white; }
+        /* FULL FOOTER RESTORED */
+        footer { background: #000; padding: 50px 15px; margin-top: 40px; border-top: 1px solid var(--border); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: var(--primary); margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; }
+        .footer-col a { color: #888; text-decoration: none; display: block; margin: 10px 0; font-size: 0.9rem; }
+        .footer-col a:hover { color: white; }
 
-        footer { background: #000; padding: 30px; text-align: center; color: #555; font-size: 0.8rem; }
+        /* MODAL */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-content { background: var(--bg); padding: 30px; width: 92%; max-width: 400px; border: 1px solid var(--primary); position: relative; }
+        .modal-content h3 { margin-bottom: 15px; color: var(--primary); }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: rgba(128,128,128,0.1); border: 1px solid var(--border); color: var(--text); }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #777; }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-container">
             <button class="btn-icon" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-            <a href="#" class="logo">pearlnurses</a>
+            <a href="index.html" class="logo">pearlnurses</a>
             <div class="header-right">
                 <button class="btn-icon" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
                 <button class="btn-icon" onclick="toggleTheme()"><i class="fas fa-adjust"></i></button>
             </div>
             <ul class="nav-links" id="nav-menu">
-                <li><a href="uganda.html">Uganda</a></li>
-                <li><a href="guides.html">Guides</a></li>
+                <li><a href="uganda.html">Nursing in Uganda</a></li>
+                <li><a href="guides.html">School Guide</a></li>
+                <li><a href="tools.html">Calculators</a></li>
                 <li><a href="jobs.html" style="color:#f1c40f">Jobs</a></li>
                 <li><a href="equip.html">Equipment</a></li>
+                <li><a onclick="openModal()">Contact</a></li>
             </ul>
         </div>
-        <input type="text" id="search-bar" placeholder="Search articles...">
+        <input type="text" id="search-bar" placeholder="Search Nursing Resources...">
     </header>
 
     <div class="section-label">Featured Posts</div>
     <div class="news-grid" id="gridContainer"></div>
+
     <div class="section-label">Latest Updates</div>
     <div class="bullet-list" id="bulletContainer"></div>
 
-    <footer onclick="openModal()">
-        <p>Contact | PearlNurses Uganda</p>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3 style="color:var(--primary); margin-bottom:10px;">PearlNurses</h3>
+                <p style="color:#666; font-size: 0.9rem;">The independent portal for Ugandan nurses and students.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <a href="articles.html">Nursing News</a>
+                <a href="clinicalskills.html">Clinical Skills</a>
+                <a href="nursingschoollife.html">Nursing School Life</a>
+                <a href="careerdev.html">Career Development</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a onclick="openModal()" style="cursor:pointer; color:var(--primary); font-weight:bold;">Contact Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
     </footer>
 
     <div id="contactModal" class="modal">
         <div class="modal-content">
-            <h3>Contact Us</h3>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3>Send a Message</h3>
             <form action="https://formspree.io/f/mqakppov" method="POST">
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Message" rows="4" required></textarea>
-                <button type="submit" style="background:var(--primary); color:white; width:100%; padding:10px; border:none;">Send</button>
-                <button type="button" onclick="closeModal()" style="background:none; color:var(--text); margin-top:10px; border:none; width:100%;">Close</button>
+                <input type="email" name="email" placeholder="Your Email Address" required>
+                <textarea name="message" placeholder="How can we help you?" rows="5" required></textarea>
+                <button type="submit" style="background:var(--primary); color:white; width:100%; padding:14px; border:none; font-weight:bold; cursor:pointer;">Send Message</button>
             </form>
         </div>
     </div>
 
     <script>
         const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
+
         function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
         function toggleSearch() { document.getElementById('search-bar').classList.toggle('active'); }
         function openModal() { document.getElementById('contactModal').style.display = 'flex'; }
         function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
-        function toggleTheme() { document.body.classList.toggle('light-mode'); }
+        
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        if (localStorage.getItem('theme') === 'light') toggleTheme();
 
         async function loadData() {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
-            const response = await fetch(url);
-            const text = await response.text();
-            const data = JSON.parse(text.substring(47).slice(0, -2)).table.rows;
-            const grid = document.getElementById('gridContainer');
-            const list = document.getElementById('bulletContainer');
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substring(47).slice(0, -2)).table.rows;
+                const grid = document.getElementById('gridContainer');
+                const list = document.getElementById('bulletContainer');
 
-            data.forEach(row => {
-                if (!row.c[0]) return;
-                const title = row.c[0].v, cat = row.c[1]?.v || "News", img = row.c[3]?.v || "https://via.placeholder.com/300", link = row.c[4]?.v || "#";
-                if (cat.toLowerCase() === 'news' || cat.toLowerCase() === 'featured') {
-                    grid.innerHTML += `<a href="${link}" class="grid-item"><span class="category-tag">${cat}</span><div class="image-box"><img src="${img}"></div><h3>${title}</h3></a>`;
-                } else {
-                    list.innerHTML += `<a href="${link}" class="bullet-item"><span>&gt;</span><h4>${title}</h4></a>`;
-                }
-            });
+                data.forEach(row => {
+                    if (!row.c[0]) return;
+                    const title = row.c[0].v;
+                    const cat = row.c[1]?.v || "News";
+                    const img = row.c[3]?.v || "https://via.placeholder.com/300x160?text=PearlNurses";
+                    const link = row.c[4]?.v || "#";
+
+                    if (cat.toLowerCase() === 'news' || cat.toLowerCase() === 'featured') {
+                        grid.innerHTML += `
+                            <a href="${link}" class="grid-item">
+                                <span class="category-tag">${cat}</span>
+                                <div class="image-box"><img src="${img}"></div>
+                                <h3>${title}</h3>
+                            </a>`;
+                    } else {
+                        list.innerHTML += `
+                            <a href="${link}" class="bullet-item">
+                                <span>&gt;</span>
+                                <h4>${title}</h4>
+                            </a>`;
+                    }
+                });
+            } catch (err) { console.error("Data Sync Error", err); }
         }
         window.onload = loadData;
     </script>
