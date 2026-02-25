@@ -6,21 +6,20 @@
     <title>PearlNurses | Uganda's Nursing Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* GLOBAL STYLES - PERMANENT LIGHT THEME */
+        /* GLOBAL STYLES */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: 0.3s; }
         :root { 
             --primary: #0056b3; 
             --accent: #00a8e8; 
             --bg: #ffffff; 
-            --card-bg: #f8f9fa; 
             --text: #222222; 
-            --border: #dee2e6; 
+            --border: #eeeeee; 
         }
         
         body { background-color: var(--bg); color: var(--text); line-height: 1.5; }
 
         /* HEADER */
-        header { background: var(--primary); padding: 12px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header { background: var(--primary); padding: 12px 0; position: sticky; top: 0; z-index: 1000; }
         .header-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
         .logo { grid-column: 2; font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; letter-spacing: -0.5px; }
 
@@ -28,47 +27,46 @@
         .btn-icon { background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; padding: 5px; }
 
         /* SEARCH BAR */
-        #search-container { display: none; background: white; padding: 15px; border-bottom: 2px solid var(--primary); }
+        #search-container { display: none; background: white; padding: 15px; border-bottom: 1px solid var(--border); }
         #search-container.active { display: block; }
         #search-input { width: 100%; max-width: 800px; margin: 0 auto; display: block; padding: 12px; border: 1px solid var(--border); border-radius: 25px; outline: none; }
 
         /* NAVIGATION MENU */
-        .nav-links { display: none; list-style: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border-bottom: 3px solid var(--primary); padding: 10px 0; text-align: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .nav-links { display: none; list-style: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border-bottom: 3px solid var(--primary); padding: 10px 0; text-align: center; box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
         .nav-links.active { display: block; }
-        .nav-links li { padding: 12px; border-bottom: 1px solid #eee; }
+        .nav-links li { padding: 12px; }
         .nav-links a { color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer; display: block; }
 
-        /* SECTIONS & GRIDS */
-        .section-label { padding: 30px 20px 10px; font-weight: 800; font-size: 1.1rem; color: var(--primary); border-bottom: 2px solid #eee; margin-bottom: 20px; max-width: 1200px; margin-inline: auto; }
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
+        /* SECTIONS & MINIMAL GRIDS */
+        .section-label { padding: 35px 20px 10px; font-weight: 800; font-size: 1.1rem; color: var(--primary); border-bottom: 1px solid var(--border); margin-bottom: 20px; max-width: 1200px; margin-inline: auto; }
+        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
 
-        .grid-item { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .grid-item:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--accent); }
+        /* THE "NO BOX" GRID ITEM */
+        .grid-item { text-decoration: none; color: inherit; display: flex; flex-direction: column; background: none; border: none; }
         
-        .image-box { width: 100%; height: 130px; background: #eee; overflow: hidden; }
+        .image-box { width: 100%; height: 130px; background: #f0f0f0; border-radius: 8px; overflow: hidden; margin-bottom: 8px; border: 1px solid var(--border); }
         .image-box img { width: 100%; height: 100%; object-fit: cover; }
         
-        .card-content { padding: 12px; flex-grow: 1; }
-        .category-tag { font-size: 0.65rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 5px; display: block; }
-        .grid-item h3 { font-size: 0.95rem; line-height: 1.3; font-weight: 700; color: #333; }
+        .card-content { padding: 0; } /* Removed padding so text aligns with image edge */
+        .category-tag { font-size: 0.65rem; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; display: block; }
+        .grid-item h3 { font-size: 0.95rem; line-height: 1.3; font-weight: 600; color: var(--text); }
 
-        .more-link { display: block; text-align: right; padding: 15px 20px; color: var(--accent); font-weight: bold; text-decoration: none; max-width: 1200px; margin: 0 auto; }
+        .more-link { display: block; text-align: right; padding: 15px 20px; color: var(--primary); font-weight: bold; text-decoration: none; max-width: 1200px; margin: 0 auto; font-size: 0.9rem; }
 
         /* TOPIC CHIPS */
         .topic-grid { display: flex; gap: 10px; padding: 10px 20px; overflow-x: auto; max-width: 1200px; margin: 0 auto; }
-        .topic-chip { background: white; border: 1.5px solid var(--primary); color: var(--primary); padding: 8px 20px; border-radius: 20px; white-space: nowrap; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
-        .topic-chip:hover { background: var(--primary); color: white; }
+        .topic-chip { background: #f8f9fa; border: 1px solid var(--border); color: var(--text); padding: 8px 18px; border-radius: 20px; white-space: nowrap; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
 
         /* MODALS */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .modal-content { background: white; padding: 30px; width: 90%; max-width: 450px; border-radius: 15px; text-align: center; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-content { background: white; padding: 30px; width: 90%; max-width: 450px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
         .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 4px; outline: none; }
 
         /* FOOTER */
-        footer { background: #1a1a1a; color: #fff; padding: 40px 20px; margin-top: 50px; }
+        footer { background: #ffffff; color: #1a1a1a; padding: 40px 20px; margin-top: 50px; border-top: 1px solid var(--border); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .footer-col h4 { color: var(--accent); margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; }
-        .footer-col a { color: #ccc; text-decoration: none; display: block; margin: 8px 0; font-size: 0.85rem; cursor: pointer; }
+        .footer-col h4 { color: var(--primary); margin-bottom: 12px; font-size: 0.85rem; text-transform: uppercase; }
+        .footer-col a { color: #555; text-decoration: none; display: block; margin: 8px 0; font-size: 0.85rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -90,7 +88,7 @@
             </ul>
         </div>
         <div id="search-container">
-            <input type="text" id="search-input" placeholder="Search news or articles..." onkeyup="filterPosts()">
+            <input type="text" id="search-input" placeholder="Search..." onkeyup="filterPosts()">
         </div>
     </header>
 
@@ -112,7 +110,7 @@
     <div id="aboutModal" class="modal" onclick="closeModal('aboutModal')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2 style="color:var(--primary)">About PearlNurses</h2>
-            <p style="margin:20px 0; color:#444;">PearlNurses is a dedicated hub for Ugandan nurses, offering clinical insights, career growth opportunities, and healthcare news.</p>
+            <p style="margin:20px 0; color:#444;">PearlNurses is a digital space for Ugandan nurses to access clinical guides, healthcare news, and professional growth tools.</p>
             <button onclick="closeModal('aboutModal')" style="background:var(--primary); color:white; border:none; padding:10px 25px; border-radius:5px; cursor:pointer">Close</button>
         </div>
     </div>
@@ -122,7 +120,7 @@
             <h2 style="color:var(--primary)">Contact Us</h2>
             <form action="https://formspree.io/f/mqakppov" method="POST">
                 <input type="email" name="email" placeholder="Your Email Address" required>
-                <textarea name="message" placeholder="How can we help you?" rows="5" required></textarea>
+                <textarea name="message" placeholder="Message" rows="5" required></textarea>
                 <button type="submit" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer">Send Message</button>
             </form>
             <button onclick="closeModal('contactModal')" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer">Cancel</button>
@@ -132,10 +130,10 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <h4 style="color:white">PearlNurses</h4>
-                <p style="color:#888; font-size:0.8rem">Empowering Uganda's healthcare backbone.</p>
+                <h4 style="color:var(--primary)">PearlNurses</h4>
+                <p style="color:#555; font-size:0.8rem">Empowering Uganda's healthcare backbone.</p>
                 <div style="margin-top:15px">
-                    <a href="https://x.com/pearlnurses" target="_blank" style="color:var(--accent); display:inline;"><i class="fab fa-x-twitter"></i> Follow on X</a>
+                    <a href="https://x.com/pearlnurses" target="_blank" style="color:var(--accent);"><i class="fab fa-x-twitter"></i> Follow on X</a>
                 </div>
             </div>
             <div class="footer-col">
@@ -145,7 +143,7 @@
                 <a href="privacy.html">Privacy Policy</a>
             </div>
             <div class="footer-col">
-                <p style="color:#555; font-size:0.75rem; margin-top:20px">&copy; 2024 PearlNurses. All rights reserved.</p>
+                <p style="color:#999; font-size:0.75rem; margin-top:20px">&copy; 2024 PearlNurses. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -162,7 +160,6 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // Live search filter
         function filterPosts() {
             const query = document.getElementById('search-input').value.toLowerCase();
             const items = document.querySelectorAll('.grid-item');
