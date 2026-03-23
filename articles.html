@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Articles | PearlNurses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CONSISTENT PALETTE */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: 0.3s; }
+        :root { --primary: #0056b3; --accent: #00a8e8; --bg: #ffffff; --text: #222222; --border: #eeeeee; }
+        
+        body { background-color: var(--bg); color: var(--text); line-height: 1.5; }
+
+        /* HEADER (Same as Homepage/News) */
+        header { background: var(--primary); padding: 12px 0; position: sticky; top: 0; z-index: 1000; }
+        .header-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
+        .logo { grid-column: 2; font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; }
+        .btn-icon { background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; padding: 5px; }
+
+        /* DARKER NAV DROPDOWN */
+        .nav-links { display: none; list-style: none; position: absolute; top: 100%; left: 0; width: 100%; background: #e9ecef; border-bottom: 3px solid var(--primary); padding: 10px 0; text-align: center; }
+        .nav-links.active { display: block; }
+        .nav-links a { color: var(--primary); text-decoration: none; font-weight: 600; display: block; padding: 12px; }
+
+        /* SEARCH BAR FOR ARTICLES */
+        #article-search { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 20px; outline: none; }
+
+        /* LIST LAYOUT */
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .page-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 25px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+
+        .article-item { display: flex; gap: 15px; text-decoration: none; color: inherit; margin-bottom: 25px; align-items: center; border-bottom: 1px solid #f9f9f9; padding-bottom: 15px; }
+        .article-img { width: 90px; height: 90px; background: #f0f0f0; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--border); }
+        .article-img img { width: 100%; height: 100%; object-fit: cover; }
+        .article-info h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); }
+        .article-cat { font-size: 0.7rem; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 3px; display: block; }
+
+        /* DARKER FOOTER */
+        footer { background: #1a1a1a; color: #ffffff; padding: 40px 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { color: var(--accent); margin-bottom: 12px; font-size: 0.85rem; }
+        .footer-col a { color: #bbb; text-decoration: none; display: block; margin: 8px 0; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="header-left"><button class="btn-icon" onclick="toggleMenu()"><i class="fas fa-bars"></i></button></div>
+            <a href="index.html" class="logo">PearlNurses</a>
+            <div class="header-right"><a href="index.html" class="btn-icon"><i class="fas fa-home"></i></a></div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="uganda.html">Uganda</a></li>
+                <li><a href="guides.html">Guides</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Trending Articles</h1>
+        <input type="text" id="article-search" placeholder="Search articles..." onkeyup="filterArticles()">
+        <div id="articleList">
+            </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>PearlNurses</h4>
+                <p style="font-size: 0.8rem; color: #888;">Professional resources for Ugandan nurses.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <a href="school.html">School Life</a>
+                <a href="equip.html">Equipment</a>
+                <a href="updates.html">Updates</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
+        function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
+
+        function filterArticles() {
+            const query = document.getElementById('article-search').value.toLowerCase();
+            const items = document.querySelectorAll('.article-item');
+            items.forEach(item => {
+                const title = item.querySelector('h3').innerText.toLowerCase();
+                item.style.display = title.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        async function loadArticles() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substring(47).slice(0, -2)).table.rows;
+                const list = document.getElementById('articleList');
+
+                data.forEach(row => {
+                    if (!row.c[0]) return;
+                    const cat = row.c[1]?.v || "";
+                    
+                    // Filters out 'News' and 'Featured' so only long-form articles show
+                    if (cat.toLowerCase() !== 'news' && cat.toLowerCase() !== 'featured') {
+                        const title = row.c[0].v, img = row.c[3]?.v || "https://via.placeholder.com/100", link = row.c[4]?.v || "#";
+                        
+                        list.innerHTML += `
+                            <a href="${link}" class="article-item">
+                                <div class="article-img"><img src="${img}" loading="lazy"></div>
+                                <div class="article-info">
+                                    <span class="article-cat">${cat}</span>
+                                    <h3>${title}</h3>
+                                </div>
+                            </a>`;
+                    }
+                });
+            } catch (e) { console.error(e); }
+        }
+        window.onload = loadArticles;
+    </script>
+</body>
+</html>
