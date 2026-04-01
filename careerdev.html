@@ -92,6 +92,35 @@
         </div>
     </header>
 
+
+    <div class="section-label">Browse by Topic</div>
+    <div class="topic-grid">
+        <a href="school.html" class="topic-chip">Nursing School Life</a>
+        <a href="updates.html" class="topic-chip">Latest Updates</a>
+        <a href="equip.html" class="topic-chip">Medical Equipment</a>
+        <a href="careerdev.html" class="topic-chip">Careers</a>
+    </div>
+
+    <div id="aboutModal" class="modal" onclick="closeModal('aboutModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 style="color:var(--primary)">About PearlNurses</h2>
+            <p style="margin:20px 0; color:#444;">PearlNurses is a digital space for Ugandan nurses to access clinical guides, healthcare news, and professional growth tools.</p>
+            <button onclick="closeModal('aboutModal')" style="background:var(--primary); color:white; border:none; padding:10px 25px; border-radius:5px; cursor:pointer">Close</button>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal" onclick="closeModal('contactModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 style="color:var(--primary)">Contact Us</h2>
+            <form action="https://formspree.io/f/mqakppov" method="POST">
+                <input type="email" name="email" placeholder="Your Email Address" required>
+                <textarea name="message" placeholder="Message" rows="5" required></textarea>
+                <button type="submit" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer">Send Message</button>
+            </form>
+            <button onclick="closeModal('contactModal')" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer">Cancel</button>
+        </div>
+    </div>
+
    <footer>
         <div class="footer-grid">
             <div class="footer-col">
