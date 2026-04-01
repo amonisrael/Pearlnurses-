@@ -37,6 +37,15 @@
         .nav-links li { padding: 12px; }
         .nav-links a { color: var(--primary); text-decoration: none; font-weight: 600; cursor: pointer; display: block; }
 
+        /* TOPIC CHIPS */
+        .topic-grid { display: flex; gap: 10px; padding: 10px 20px; overflow-x: auto; max-width: 1200px; margin: 0 auto; }
+        .topic-chip { background: #f8f9fa; border: 1px solid var(--border); color: var(--text); padding: 8px 18px; border-radius: 20px; white-space: nowrap; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-content { background: white; padding: 30px; width: 90%; max-width: 450px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
+        .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 4px; outline: none; }
+
         /* FOOTER */
         footer { background: #121212; color: #ffffff; padding: 40px 20px; margin-top: 50px; border-top: 1px solid var(--border); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
