@@ -68,3 +68,26 @@
     </style>
 </head>
 <body>
+
+   <header>
+        <div class="header-container">
+            <div class="header-left">
+                <button class="btn-icon" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            </div>
+            <a href="index.html" class="logo">PearlNurses</a>
+            <div class="header-right">
+                <button class="btn-icon" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="uganda.html">Nursing in Uganda</a></li>
+                <li><a href="schoolguide.html">School Guide</a></li>
+                <li><a href="jobs.html">JOBS</a></li>
+                 <li><a href="equip.html">Equipment & Reviews</a></li>
+                <li><a href="tools.html">Calculators</a></li>
+                <li><a onclick="openModal('aboutModal')">About Us</a></li>
+            </ul>
+        </div>
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Search..." onkeyup="filterPosts()">
+        </div>
+    </header>
