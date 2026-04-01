@@ -91,3 +91,105 @@
             <input type="text" id="search-input" placeholder="Search..." onkeyup="filterPosts()">
         </div>
     </header>
+
+   <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="color:var(--primary)">PearlNurses</h4>
+                <p style="color:#555; font-size:0.8rem">Empowering Uganda's healthcare backbone.</p>
+                <div style="margin-top:15px">
+                    <a href="https://x.com/pearlnurses" target="_blank" style="color:var(--accent);"><i class="fab fa-x-twitter"></i> Follow on X</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a onclick="openModal('aboutModal')">About Us</a>
+                <a onclick="openModal('contactModal')">Contact Us</a>
+                <a href="privatepolicy.html">Privacy Policy</a>
+            </div>
+            <div class="footer-col">
+                <p style="color:#999; font-size:0.75rem; margin-top:20px">&copy; 2024 PearlNurses. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
+
+        function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
+        function toggleSearch() { 
+            const sc = document.getElementById('search-container');
+            sc.classList.toggle('active');
+            if(sc.classList.contains('active')) document.getElementById('search-input').focus();
+        }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function filterPosts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const items = document.querySelectorAll('.grid-item');
+            items.forEach(item => {
+                const text = item.querySelector('h3').innerText.toLowerCase();
+                item.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        async function loadData() {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substring(47).slice(0, -2)).table.rows;
+                
+                const newsGrid = document.getElementById('newsGrid');
+                const trendingGrid = document.getElementById('trendingGrid');
+
+                data.forEach(row => {
+                    if (!row.c[0]) return;
+                    const title = row.c[0].v;
+                    const cat = row.c[1]?.v || "General";
+                    const img = row.c[3]?.v || "https://via.placeholder.com/300";
+                    const link = row.c[4]?.v || "#";
+
+                    const cardHTML = `
+                        <a href="${link}" class="grid-item">
+                            <div class="image-box"><img src="${img}" alt="${title}" loading="lazy"></div>
+                            <div class="card-content">
+                                <span class="category-tag">${cat}</span>
+                                <h3>${title}</h3>
+                            </div>
+                        </a>`;
+
+                    if (cat.toLowerCase() === 'news' || cat.toLowerCase() === 'featured') {
+                        newsGrid.innerHTML += cardHTML;
+                    } else {
+                        trendingGrid.innerHTML += cardHTML;
+                    }
+                });
+            } catch (e) { console.error("Data load error:", e); }
+        }
+
+        window.onload = loadData;
+        window.onscroll = function() {
+    const btn = document.getElementById("backToTop");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.style.display = "block";
+    } else {
+        btn.style.display = "none";
+    }
+};
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+    </script>
+<button id="backToTop" onclick="scrollToTop()" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+</body>
+</html>
