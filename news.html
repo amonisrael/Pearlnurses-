@@ -460,3 +460,296 @@
 </footer>
 
 <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
+<script>
+    // ---------- GOOGLE SHEETS CONFIG ----------
+    const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
+    let allNewsItems = [];      // store all fetched items (chronological desc)
+    let displayedCount = 0;
+    const ITEMS_PER_BATCH = 8;
+    let isLoading = false;
+    let hasMore = true;
+    let currentFilterQuery = "";
+
+    // Helper: escape HTML
+    function escapeText(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Format date (fallback if no date from sheet, we simulate based on row index? We'll just show "Recent" if no date)
+    function formatDate() {
+        // Since sheet doesn't have explicit date column, we'll use a relative "Posted recently"
+        // For better UX, we add a generic timestamp. But to make it dynamic, we add a small variation.
+        return new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Create news article DOM element
+    function createNewsArticle(item, index) {
+        const article = document.createElement('a');
+        article.className = 'news-article';
+        article.href = item.link && item.link !== '#' ? item.link : '#';
+        article.target = (item.link && item.link.startsWith('http')) ? '_blank' : '_self';
+        article.setAttribute('data-idx', index);
+
+        // Category badge
+        const categorySpan = document.createElement('span');
+        categorySpan.className = 'article-category';
+        categorySpan.textContent = escapeText(item.category) || 'News';
+
+        // Title
+        const title = document.createElement('h2');
+        title.className = 'article-title';
+        title.textContent = escapeText(item.title) || 'Untitled Article';
+
+        // Meta info (simulated date + source)
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'article-meta';
+        metaDiv.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate()} &nbsp;|&nbsp; <i class="fas fa-tag"></i> ${escapeText(item.category) || 'Update'}`;
+
+        // Image (if exists)
+        let imageDiv = null;
+        if (item.image && item.image.trim() !== '') {
+            imageDiv = document.createElement('div');
+            imageDiv.className = 'article-image';
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = escapeText(item.title);
+            img.loading = 'lazy';
+            img.onerror = () => { img.src = 'https://placehold.co/800x400/eef2f6/5b6e8c?text=Image+unavailable'; };
+            imageDiv.appendChild(img);
+        }
+
+        // Excerpt (truncated title + description fallback)
+        const excerpt = document.createElement('p');
+        excerpt.className = 'article-excerpt';
+        let excerptText = item.excerpt || '';
+        if (!excerptText && item.title) {
+            excerptText = item.title.length > 100 ? item.title.substring(0, 100) + '...' : item.title;
+        }
+        excerpt.textContent = excerptText || 'Click to read full update from PearlNurses.';
+
+        article.appendChild(categorySpan);
+        article.appendChild(title);
+        article.appendChild(metaDiv);
+        if (imageDiv) article.appendChild(imageDiv);
+        article.appendChild(excerpt);
+
+        return article;
+    }
+
+    // Render visible batch based on displayedCount + filter
+    function renderVisibleArticles() {
+        const container = document.getElementById('articlesList');
+        if (!container) return;
+
+        // Apply filter if any
+        let filtered = [...allNewsItems];
+        if (currentFilterQuery.trim() !== '') {
+            const query = currentFilterQuery.toLowerCase();
+            filtered = filtered.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                (item.category && item.category.toLowerCase().includes(query))
+            );
+            // when searching, we reset pagination to show all matches (no infinite scroll, just show all)
+            container.innerHTML = '';
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i> No news matched your search. Try different keywords.</div>';
+                document.getElementById('loadingTrigger').style.display = 'none';
+                document.getElementById('endMessage').style.display = 'none';
+                return;
+            }
+            filtered.forEach((item, idx) => {
+                container.appendChild(createNewsArticle(item, idx));
+            });
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'none';
+            return;
+        }
+
+        // Normal infinite scroll mode (no filter)
+        const itemsToShow = allNewsItems.slice(0, displayedCount);
+        container.innerHTML = '';
+        if (itemsToShow.length === 0 && allNewsItems.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i> No news articles found. Check back later!</div>';
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'none';
+            return;
+        }
+
+       itemsToShow.forEach((item, idx) => {
+            container.appendChild(createNewsArticle(item, idx));
+        });
+
+        // Manage loading & end triggers
+        if (displayedCount >= allNewsItems.length && allNewsItems.length > 0) {
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'block';
+            hasMore = false;
+        } else {
+            document.getElementById('loadingTrigger').style.display = 'block';
+            document.getElementById('endMessage').style.display = 'none';
+            hasMore = true;
+        }
+    }
+
+    // Load more items (infinite scroll)
+    function loadMoreItems() {
+        if (isLoading) return;
+        if (currentFilterQuery !== "") return; // no infinite scroll during search
+        if (!hasMore) return;
+
+        isLoading = true;
+        // simulate loading delay for smoother UX
+        setTimeout(() => {
+            const newCount = Math.min(displayedCount + ITEMS_PER_BATCH, allNewsItems.length);
+            if (newCount > displayedCount) {
+                displayedCount = newCount;
+                renderVisibleArticles();
+            }
+            isLoading = false;
+            if (displayedCount >= allNewsItems.length) {
+                hasMore = false;
+                document.getElementById('loadingTrigger').style.display = 'none';
+                document.getElementById('endMessage').style.display = 'block';
+            } else {
+                document.getElementById('loadingTrigger').style.display = 'block';
+            }
+        }, 300);
+    }
+
+    // Intersection Observer for infinite scroll
+    function initIntersectionObserver() {
+        const trigger = document.getElementById('loadingTrigger');
+        if (!trigger) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isLoading && hasMore && currentFilterQuery === "") {
+                    loadMoreItems();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(trigger);
+    }
+
+    // Filter function triggered by search input
+    window.filterNews = function() {
+        const searchInput = document.getElementById('search-input');
+        currentFilterQuery = searchInput ? searchInput.value : "";
+        if (currentFilterQuery !== "") {
+            // during search, disable infinite scroll and show all matching immediately
+            displayedCount = allNewsItems.length; // show all potential
+            renderVisibleArticles();
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'none';
+        } else {
+            // reset to infinite scroll mode
+            displayedCount = Math.min(ITEMS_PER_BATCH, allNewsItems.length);
+            hasMore = displayedCount < allNewsItems.length;
+            renderVisibleArticles();
+            if (hasMore) document.getElementById('loadingTrigger').style.display = 'block';
+            else document.getElementById('endMessage').style.display = 'block';
+        }
+    };
+
+    // Fetch data from Google Sheets (latest first)
+    async function fetchSheetData() {
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+            const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/);
+            if (!jsonMatch) throw new Error('Invalid spreadsheet response');
+            const jsonData = JSON.parse(jsonMatch[1]);
+            if (!jsonData.table || !jsonData.table.rows) return [];
+            return jsonData.table.rows;
+        } catch (err) {
+            console.error('Sheet fetch error:', err);
+            return null;
+        }
+    }
+
+    // Load & process data, ordering: we treat rows as latest first based on natural order? We'll keep descending by row index (last added first)
+    // Google Sheets returns rows in order they appear; we'll reverse to show newest first (assuming newest added at bottom)
+    async function loadNewsData() {
+        const rows = await fetchSheetData();
+        if (!rows || rows.length === 0) {
+            allNewsItems = [];
+            renderVisibleArticles();
+            return;
+        }
+
+        const items = [];
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row.c || !row.c[0] || !row.c[0].v) continue;
+            const title = row.c[0]?.v || '';
+            const category = row.c[1]?.v || 'General';
+            const image = row.c[3]?.v || '';
+            const link = row.c[4]?.v || '#';
+            // optional excerpt: we create from title/desc
+            items.push({
+                title: String(title).trim(),
+                category: String(category).trim(),
+                image: String(image).trim(),
+                link: String(link).trim(),
+                excerpt: `Read more about "${String(title).trim()}" — essential update for Ugandan nurses.`
+            });
+        }
+        // Reverse to get latest first (assuming sheet rows: oldest top, newest bottom)
+        allNewsItems = items.reverse();
+
+        // Initialize infinite scroll: first batch
+        displayedCount = Math.min(ITEMS_PER_BATCH, allNewsItems.length);
+        hasMore = displayedCount < allNewsItems.length;
+        renderVisibleArticles();
+
+        if (hasMore) {
+            initIntersectionObserver();
+        } else {
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'block';
+        }
+    }
+
+    // ----- UI Helpers (same as homepage) -----
+    function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
+    function toggleSearch() {
+        const sc = document.getElementById('search-container');
+        sc.classList.toggle('active');
+        if (sc.classList.contains('active')) document.getElementById('search-input').focus();
+    }
+    window.openModal = (id) => { document.getElementById(id).style.display = 'flex'; };
+    window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
+    window.scrollToTop = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+    // Event listeners
+    document.getElementById('menuToggleBtn').addEventListener('click', toggleMenu);
+    document.getElementById('searchToggleBtn').addEventListener('click', toggleSearch);
+    document.getElementById('footerAboutBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
+    document.getElementById('footerContactBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('contactModal'); });
+    document.getElementById('aboutNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
+    document.getElementById('privacyPolicyLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("📜 Privacy Policy: We respect your data."); });
+
+    document.querySelectorAll('.nav-links a[href]:not([href="#"])').forEach(link => {
+        // preserve actual links but prevent errors
+    });
+
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); });
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('backToTop');
+        btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+    });
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+    // start loading
+    loadNewsData();
+</script>
+</body>
+</html>
