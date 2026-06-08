@@ -607,5 +607,242 @@
         filteredArticles = filtered;
         return filteredArticles;
     }
+    
+        // Render visible articles based on displayedCount
+    function renderVisibleArticles() {
+        const container = document.getElementById('articlesList');
+        if (!container) return;
 
+        const itemsToShow = filteredArticles.slice(0, displayedCount);
+        container.innerHTML = '';
+
+        if (itemsToShow.length === 0 && filteredArticles.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i> No articles found. Try different filters or check back later!</div>';
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'none';
+            return;
+        }
+
+        if (itemsToShow.length === 0 && filteredArticles.length > 0) {
+            // This case shouldn't happen with proper logic, but just in case
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-filter"></i> No matching articles with current filters.</div>';
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'none';
+            return;
+        }
+
+        itemsToShow.forEach((item, idx) => {
+            container.appendChild(createArticleCard(item, idx));
+        });
+
+        // Manage loading & end triggers
+        if (displayedCount >= filteredArticles.length && filteredArticles.length > 0) {
+            document.getElementById('loadingTrigger').style.display = 'none';
+            document.getElementById('endMessage').style.display = 'block';
+            hasMore = false;
+        } else {
+            document.getElementById('loadingTrigger').style.display = 'block';
+            document.getElementById('endMessage').style.display = 'none';
+            hasMore = true;
+        }
+    }
+
+    // Load more items (infinite scroll)
+    function loadMoreItems() {
+        if (isLoading) return;
+        if (!hasMore) return;
+
+        isLoading = true;
+        setTimeout(() => {
+            const newCount = Math.min(displayedCount + ITEMS_PER_BATCH, filteredArticles.length);
+            if (newCount > displayedCount) {
+                displayedCount = newCount;
+                renderVisibleArticles();
+            }
+            isLoading = false;
+            if (displayedCount >= filteredArticles.length) {
+                hasMore = false;
+                document.getElementById('loadingTrigger').style.display = 'none';
+                document.getElementById('endMessage').style.display = 'block';
+            } else {
+                document.getElementById('loadingTrigger').style.display = 'block';
+            }
+        }, 300);
+    }
+
+    // Reset pagination and re-render
+    function resetAndRender() {
+        displayedCount = Math.min(ITEMS_PER_BATCH, filteredArticles.length);
+        hasMore = displayedCount < filteredArticles.length;
+        renderVisibleArticles();
+        if (hasMore) {
+            // Observer will be re-init on scroll
+        }
+    }
+
+    // Filter function (category + search combined)
+    function updateFiltersAndRender() {
+        applyFilters();
+        resetAndRender();
+        // Reset scroll observer position
+        if (window.observer) {
+            window.observer.disconnect();
+        }
+        initIntersectionObserver();
+    }
+
+    // Category filter click handler
+    function setCategory(category) {
+        currentCategory = category;
+        // Update active state on buttons
+        document.querySelectorAll('.filter-chip').forEach(btn => {
+            if (btn.getAttribute('data-category') === category) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        updateFiltersAndRender();
+    }
+
+    // Search filter
+    window.filterArticles = function() {
+        const searchInput = document.getElementById('search-input');
+        currentSearchQuery = searchInput ? searchInput.value : "";
+        updateFiltersAndRender();
+    };
+
+    // Intersection Observer for infinite scroll
+    function initIntersectionObserver() {
+        const trigger = document.getElementById('loadingTrigger');
+        if (!trigger) return;
+
+        window.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isLoading && hasMore && filteredArticles.length > displayedCount) {
+                    loadMoreItems();
+                }
+            });
+        }, { threshold: 0.5, rootMargin: "0px 0px 100px 0px" });
+
+        window.observer.observe(trigger);
+    }
+
+    // Fetch data from Google Sheets (latest first)
+    async function fetchSheetData() {
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
+        try {
+            const response = await fetch(url);
+            const text = await response.text();
+            const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/);
+            if (!jsonMatch) throw new Error('Invalid spreadsheet response');
+            const jsonData = JSON.parse(jsonMatch[1]);
+            if (!jsonData.table || !jsonData.table.rows) return [];
+            return jsonData.table.rows;
+        } catch (err) {
+            console.error('Sheet fetch error:', err);
+            return null;
+        }
+    }
+
+    // Load & process data
+    async function loadArticlesData() {
+        const rows = await fetchSheetData();
+        if (!rows || rows.length === 0) {
+            allArticles = [];
+            filteredArticles = [];
+            renderVisibleArticles();
+            return;
+        }
+
+        const items = [];
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row.c || !row.c[0] || !row.c[0].v) continue;
+            const title = row.c[0]?.v || '';
+            const category = row.c[1]?.v || 'General';
+            const image = row.c[3]?.v || '';
+            const link = row.c[4]?.v || '#';
+
+            // Map categories to filter groups
+            let mappedCategory = category;
+            const catLower = category.toLowerCase();
+            if (catLower.includes('clinical') || catLower.includes('guide')) mappedCategory = 'Clinical Guides';
+            else if (catLower.includes('career') || catLower.includes('job')) mappedCategory = 'Career & Jobs';
+            else if (catLower.includes('school') || catLower.includes('student') || catLower.includes('education')) mappedCategory = 'Education & School';
+            else if (catLower.includes('wellness') || catLower.includes('self-care')) mappedCategory = 'Nurse Wellness';
+            else if (catLower.includes('tech') || catLower.includes('digital')) mappedCategory = 'Health Tech';
+
+            items.push({
+                title: String(title).trim(),
+                category: String(mappedCategory).trim(),
+                image: String(image).trim(),
+                link: String(link).trim(),
+                excerpt: `Explore this comprehensive guide: "${String(title).trim()}" — essential knowledge for every Ugandan nursing professional.`
+            });
+        }
+        // Reverse to get latest first (newest entries at bottom of sheet become top)
+        allArticles = items.reverse();
+
+        // Apply initial filters
+        applyFilters();
+        displayedCount = Math.min(ITEMS_PER_BATCH, filteredArticles.length);
+        hasMore = displayedCount < filteredArticles.length;
+        renderVisibleArticles();
+
+        if (hasMore) {
+            initIntersectionObserver();
+        } else {
+            document.getElementById('loadingTrigger').style.display = 'none';
+            if (filteredArticles.length > 0) {
+                document.getElementById('endMessage').style.display = 'block';
+            }
+        }
+    }
+
+    // ----- UI Helpers (same as homepage) -----
+    function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
+    function toggleSearch() {
+        const sc = document.getElementById('search-container');
+        sc.classList.toggle('active');
+        if (sc.classList.contains('active')) {
+            document.getElementById('search-input').focus();
+        } else {
+            document.getElementById('search-input').value = '';
+            currentSearchQuery = "";
+            updateFiltersAndRender();
+        }
+    }
+    window.openModal = (id) => { document.getElementById(id).style.display = 'flex'; };
+    window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
+    window.scrollToTop = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+    // Event listeners
+    document.getElementById('menuToggleBtn').addEventListener('click', toggleMenu);
+    document.getElementById('searchToggleBtn').addEventListener('click', toggleSearch);
+    document.getElementById('footerAboutBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
+    document.getElementById('footerContactBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('contactModal'); });
+    document.getElementById('aboutNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
+    document.getElementById('privacyPolicyLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("📜 Privacy Policy: We respect your data. No personal information shared without consent."); });
+
+    // Category filter button listeners
+    document.querySelectorAll('.filter-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = btn.getAttribute('data-category');
+            setCategory(category);
+        });
+    });
+
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); });
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('backToTop');
+        btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+    });
+    document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+    // start loading
+    loadArticlesData();
+</script>
+</body>
+</html>
     
