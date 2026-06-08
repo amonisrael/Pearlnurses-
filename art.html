@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>PearlNurses - Articles & Resources | Uganda's Nursing Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            --primary: #0056b3;
+            --primary-dark: #003d7a;
+            --accent: #00a8e8;
+            --bg: #ffffff;
+            --text: #1e2a3e;
+            --gray-light: #f8fafc;
+            --border: #e9edf2;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* HEADER & NAVIGATION (identical to homepage) */
+        header {
+            background: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #fff 0%, #d9eaff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .btn-icon {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px 12px;
+            border-radius: 40px;
+            transition: 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(0.96);
+        }
+
+       /* SEARCH */
+        #search-container {
+            display: none;
+            background: white;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        #search-container.active {
+            display: block;
+        }
+
+        #search-input {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            display: block;
+            padding: 14px 20px;
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            outline: none;
+            font-size: 1rem;
+            background: var(--gray-light);
+        }
+
+        #search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0,168,232,0.2);
+        }
+
+        /* NAV MENU */
+        .nav-links {
+            display: none;
+            list-style: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-bottom: 3px solid var(--accent);
+            padding: 12px 0;
+            text-align: center;
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        .nav-links li {
+            padding: 12px 20px;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* MAIN CONTENT - ARTICLES PAGE */
+        .articles-header {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6edf4 100%);
+            padding: 48px 20px 32px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .articles-header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .articles-header p {
+            color: #4a627a;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Category Filter Tabs */
+        .category-filters {
+            max-width: 1000px;
+            margin: 24px auto 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .filter-chip {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:hover, .filter-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .articles-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+
+        /* Article Card - Full width style */
+        .article-card {
+            background: white;
+            border-radius: 24px;
+            margin-bottom: 28px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 0 0 1px var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08), 0 0 0 1px var(--border);
+        }
+
+        .card-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: #eef6fc;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: #6c7e97;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .card-meta i {
+            margin-right: 5px;
+            color: var(--accent);
+        }
+
+        .card-image {
+            margin: 16px 0 12px;
+            border-radius: 20px;
+            overflow: hidden;
+            max-height: 280px;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: auto;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .card-excerpt {
+            color: #334155;
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        /* Loading & End States */
+        .loading-trigger {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .end-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7c8ba0;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--gray-light);
+            border-radius: 32px;
+            color: #5b6e8c;
+        }
+
+        /* MODALS */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 32px 28px;
+            width: 90%;
+            max-width: 480px;
+            border-radius: 28px;
+            text-align: center;
+        }
+
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            outline: none;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 48px 20px 32px;
+            margin-top: 40px;
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-col h4 {
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .footer-col a, .footer-col p {
+            color: #94a3b8;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 99;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        #backToTop:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 640px) {
+            .card-title { font-size: 1.25rem; }
+            .articles-header h1 { font-size: 1.8rem; }
+            .article-card { padding: 18px; }
+        }
+    </style>
+</head>
+
+   <body>
+
+<header>
+    <div class="header-container">
+        <div class="header-left">
+            <button class="btn-icon" id="menuToggleBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        </div>
+        <a href="index.html" class="logo">PearlNurses</a>
+        <div class="header-right">
+            <button class="btn-icon" id="searchToggleBtn" aria-label="Search"><i class="fas fa-search"></i></button>
+        </div>
+        <ul class="nav-links" id="nav-menu">
+            <li><a href="uganda.html">Nursing in Uganda</a></li>
+            <li><a href="schoolguide.html">School Guide</a></li>
+            <li><a href="jobs.html">JOBS</a></li>
+            <li><a href="equip.html">Equipment & Reviews</a></li>
+            <li><a href="tools.html">Calculators</a></li>
+            <li><a id="aboutNavBtn">About Us</a></li>
+        </ul>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="🔍 Search articles by title or category..." onkeyup="filterArticles()">
+    </div>
+</header>
+
+<main>
+    <div class="articles-header">
+        <h1><i class="fas fa-book-open" style="margin-right: 12px;"></i> Articles & Resources</h1>
+        <p>In-depth guides, clinical insights, career advice, and professional development for Ugandan nurses</p>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-filters" id="categoryFilters">
+        <button class="filter-chip active" data-category="all">All Articles</button>
+        <button class="filter-chip" data-category="clinical">Clinical Guides</button>
+        <button class="filter-chip" data-category="career">Career & Jobs</button>
+        <button class="filter-chip" data-category="education">Education & School</button>
+        <button class="filter-chip" data-category="wellness">Nurse Wellness</button>
+        <button class="filter-chip" data-category="tech">Health Tech</button>
+    </div>
+
+    <div class="articles-container" id="articlesContainer">
+        <div id="articlesList"></div>
+        <div id="loadingTrigger" class="loading-trigger" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p style="margin-top: 12px;">Loading more articles...</p>
+        </div>
+        <div id="endMessage" class="end-message" style="display: none;">
+            <i class="fas fa-check-circle"></i> You've reached the end — no more articles at this time.
+        </div>
+    </div>
+</main>
+
+<!-- MODALS -->
+<div id="aboutModal" class="modal" onclick="closeModal('aboutModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <i class="fas fa-hand-holding-heart" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
+        <h2 style="color:var(--primary); margin-bottom: 12px;">About PearlNurses</h2>
+        <p style="margin:16px 0; color:#334155;">PearlNurses is Uganda’s digital home for nurses — delivering clinical insights, career opportunities, equipment reviews, and community news. Empowering the backbone of healthcare.</p>
+        <button onclick="closeModal('aboutModal')" style="background:var(--primary); color:white; border:none; padding:10px 28px; border-radius:40px; font-weight:600; cursor:pointer;">Close</button>
+    </div>
+</div>
+
+<div id="contactModal" class="modal" onclick="closeModal('contactModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h2 style="color:var(--primary); margin-bottom: 16px;">📬 Contact Us</h2>
+        <form id="contactForm" action="https://formspree.io/f/mqakppov" method="POST">
+            <input type="email" name="email" placeholder="Your email address" required>
+            <textarea name="message" placeholder="Share your thoughts or inquiries..." rows="4" required></textarea>
+            <button type="submit" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:40px; font-weight:700; cursor:pointer;">Send Message</button>
+        </form>
+        <button onclick="closeModal('contactModal')" style="background:none; border:none; margin-top:16px; color:#5b6e8c; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+   <footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>PearlNurses</h4>
+            <p>Empowering Uganda's healthcare heroes with knowledge & tools.</p>
+            <div style="margin-top: 12px;">
+                <a href="https://x.com/pearlnurses" target="_blank" style="display: inline-block;"><i class="fab fa-x-twitter"></i> Follow on X</a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a id="footerAboutBtn">About Us</a>
+            <a id="footerContactBtn">Contact Us</a>
+            <a href="#" id="privacyPolicyLink">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+            <p style="color:#94a3b8; font-size:0.75rem;">&copy; <span id="currentYear"></span> PearlNurses. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+    // ---------- GOOGLE SHEETS CONFIG ----------
+    const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
+    let allArticles = [];           // store all fetched items (latest first)
+    let filteredArticles = [];      // filtered version based on category/search
+    let displayedCount = 0;
+    const ITEMS_PER_BATCH = 8;
+    let isLoading = false;
+    let hasMore = true;
+    let currentCategory = "all";
+    let currentSearchQuery = "";
+
+    // Helper: escape HTML
+    function escapeText(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Format date
+    function formatDate() {
+        return new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Create article card DOM element
+    function createArticleCard(item, index) {
+        const article = document.createElement('a');
+        article.className = 'article-card';
+        article.href = item.link && item.link !== '#' ? item.link : '#';
+        article.target = (item.link && item.link.startsWith('http')) ? '_blank' : '_self';
+        article.setAttribute('data-idx', index);
+
+        // Category badge
+        const categorySpan = document.createElement('span');
+        categorySpan.className = 'card-category';
+        categorySpan.textContent = escapeText(item.category) || 'Article';
+
+        // Title
+        const title = document.createElement('h2');
+        title.className = 'card-title';
+        title.textContent = escapeText(item.title) || 'Untitled Article';
+
+        // Meta info
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'card-meta';
+        metaDiv.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate()} &nbsp;|&nbsp; <i class="fas fa-tag"></i> ${escapeText(item.category) || 'Resource'} &nbsp;|&nbsp; <i class="fas fa-clock"></i> 5 min read`;
+
+        // Image (if exists)
+        let imageDiv = null;
+        if (item.image && item.image.trim() !== '') {
+            imageDiv = document.createElement('div');
+            imageDiv.className = 'card-image';
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = escapeText(item.title);
+            img.loading = 'lazy';
+            img.onerror = () => { img.src = 'https://placehold.co/800x400/eef2f6/5b6e8c?text=PearlNurses'; };
+            imageDiv.appendChild(img);
+        }
+
+        // Excerpt
+        const excerpt = document.createElement('p');
+        excerpt.className = 'card-excerpt';
+        let excerptText = item.excerpt || '';
+        if (!excerptText && item.title) {
+            excerptText = item.title.length > 120 ? item.title.substring(0, 120) + '...' : item.title;
+        }
+        excerpt.textContent = excerptText || 'Click to read this insightful article from PearlNurses.';
+
+        article.appendChild(categorySpan);
+        article.appendChild(title);
+        article.appendChild(metaDiv);
+        if (imageDiv) article.appendChild(imageDiv);
+        article.appendChild(excerpt);
+
+        return article;
+    }
+
+    // Apply filters (category + search)
+    function applyFilters() {
+        let filtered = [...allArticles];
+
+        // Category filter
+        if (currentCategory !== "all") {
+            filtered = filtered.filter(item => {
+                const cat = (item.category || '').toLowerCase();
+                return cat.includes(currentCategory.toLowerCase());
+            });
+        }
+
+        // Search filter
+        if (currentSearchQuery.trim() !== "") {
+            const query = currentSearchQuery.toLowerCase();
+            filtered = filtered.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                (item.category && item.category.toLowerCase().includes(query))
+            );
+        }
+
+        filteredArticles = filtered;
+        return filteredArticles;
+    }
+
+    
