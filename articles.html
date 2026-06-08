@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>PearlNurses - News & Updates | Uganda's Nursing Hub</title>
+    <title>PearlNurses - Articles & Resources | Uganda's Nursing Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -77,7 +77,7 @@
             transform: scale(0.96);
         }
 
-        /* SEARCH */
+       /* SEARCH */
         #search-container {
             display: none;
             background: white;
@@ -140,34 +140,63 @@
             display: inline-block;
         }
 
-        /* MAIN CONTENT - INFINITE SCROLL NEWS PAGE */
-        .news-header {
+        /* MAIN CONTENT - ARTICLES PAGE */
+        .articles-header {
             background: linear-gradient(135deg, #f0f4f8 0%, #e6edf4 100%);
             padding: 48px 20px 32px;
             text-align: center;
             border-bottom: 1px solid var(--border);
         }
 
-        .news-header h1 {
+        .articles-header h1 {
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 12px;
         }
 
-        .news-header p {
+        .articles-header p {
             color: #4a627a;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .news-container {
+        /* Category Filter Tabs */
+        .category-filters {
+            max-width: 1000px;
+            margin: 24px auto 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .filter-chip {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:hover, .filter-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .articles-container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 32px 20px 60px;
         }
 
-        /* News Card - Full width article style */
-        .news-article {
+        /* Article Card - Full width style */
+        .article-card {
             background: white;
             border-radius: 24px;
             margin-bottom: 28px;
@@ -180,12 +209,12 @@
             display: block;
         }
 
-        .news-article:hover {
+        .article-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 28px rgba(0,0,0,0.08), 0 0 0 1px var(--border);
         }
 
-        .article-category {
+        .card-category {
             display: inline-block;
             font-size: 0.7rem;
             font-weight: 700;
@@ -197,7 +226,7 @@
             letter-spacing: 0.5px;
         }
 
-        .article-title {
+        .card-title {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 12px;
@@ -205,7 +234,7 @@
             line-height: 1.3;
         }
 
-        .article-meta {
+        .card-meta {
             display: flex;
             gap: 16px;
             font-size: 0.8rem;
@@ -214,27 +243,27 @@
             flex-wrap: wrap;
         }
 
-        .article-meta i {
+        .card-meta i {
             margin-right: 5px;
             color: var(--accent);
         }
 
-        .article-image {
+        .card-image {
             margin: 16px 0 12px;
             border-radius: 20px;
             overflow: hidden;
-            max-height: 320px;
+            max-height: 280px;
         }
 
-        .article-image img {
+        .card-image img {
             width: 100%;
             height: auto;
-            max-height: 320px;
+            max-height: 280px;
             object-fit: cover;
             border-radius: 20px;
         }
 
-        .article-excerpt {
+        .card-excerpt {
             color: #334155;
             line-height: 1.6;
             margin-top: 8px;
@@ -278,7 +307,7 @@
             color: #5b6e8c;
         }
 
-        /* MODAL (same as homepage) */
+        /* MODALS */
         .modal {
             display: none;
             position: fixed;
@@ -367,13 +396,14 @@
         }
 
         @media (max-width: 640px) {
-            .article-title { font-size: 1.25rem; }
-            .news-header h1 { font-size: 1.8rem; }
-            .news-article { padding: 18px; }
+            .card-title { font-size: 1.25rem; }
+            .articles-header h1 { font-size: 1.8rem; }
+            .article-card { padding: 18px; }
         }
     </style>
 </head>
-<body>
+
+   <body>
 
 <header>
     <div class="header-container">
@@ -394,24 +424,34 @@
         </ul>
     </div>
     <div id="search-container">
-        <input type="text" id="search-input" placeholder="🔍 Search news articles..." onkeyup="filterNews()">
+        <input type="text" id="search-input" placeholder="🔍 Search articles by title or category..." onkeyup="filterArticles()">
     </div>
 </header>
 
 <main>
-    <div class="news-header">
-        <h1><i class="fas fa-newspaper" style="margin-right: 12px;"></i> News & Updates</h1>
-        <p>The latest nursing news, clinical updates, and healthcare stories from Uganda and beyond</p>
+    <div class="articles-header">
+        <h1><i class="fas fa-book-open" style="margin-right: 12px;"></i> Articles & Resources</h1>
+        <p>In-depth guides, clinical insights, career advice, and professional development for Ugandan nurses</p>
     </div>
 
-    <div class="news-container" id="newsContainer">
+    <!-- Category Filters -->
+    <div class="category-filters" id="categoryFilters">
+        <button class="filter-chip active" data-category="all">All Articles</button>
+        <button class="filter-chip" data-category="clinical">Clinical Guides</button>
+        <button class="filter-chip" data-category="career">Career & Jobs</button>
+        <button class="filter-chip" data-category="education">Education & School</button>
+        <button class="filter-chip" data-category="wellness">Nurse Wellness</button>
+        <button class="filter-chip" data-category="tech">Health Tech</button>
+    </div>
+
+    <div class="articles-container" id="articlesContainer">
         <div id="articlesList"></div>
         <div id="loadingTrigger" class="loading-trigger" style="display: none;">
             <div class="loading-spinner"></div>
-            <p style="margin-top: 12px;">Loading more updates...</p>
+            <p style="margin-top: 12px;">Loading more articles...</p>
         </div>
         <div id="endMessage" class="end-message" style="display: none;">
-            <i class="fas fa-check-circle"></i> You've reached the end — no more news at this time.
+            <i class="fas fa-check-circle"></i> You've reached the end — no more articles at this time.
         </div>
     </div>
 </main>
@@ -438,7 +478,7 @@
     </div>
 </div>
 
-<footer>
+   <footer>
     <div class="footer-grid">
         <div class="footer-col">
             <h4>PearlNurses</h4>
@@ -460,297 +500,3 @@
 </footer>
 
 <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
-
-<script>
-    // ---------- GOOGLE SHEETS CONFIG ----------
-    const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
-    let allNewsItems = [];      // store all fetched items (chronological desc)
-    let displayedCount = 0;
-    const ITEMS_PER_BATCH = 8;
-    let isLoading = false;
-    let hasMore = true;
-    let currentFilterQuery = "";
-
-    // Helper: escape HTML
-    function escapeText(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-
-    // Format date (fallback if no date from sheet, we simulate based on row index? We'll just show "Recent" if no date)
-    function formatDate() {
-        // Since sheet doesn't have explicit date column, we'll use a relative "Posted recently"
-        // For better UX, we add a generic timestamp. But to make it dynamic, we add a small variation.
-        return new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-
-    // Create news article DOM element
-    function createNewsArticle(item, index) {
-        const article = document.createElement('a');
-        article.className = 'news-article';
-        article.href = item.link && item.link !== '#' ? item.link : '#';
-        article.target = (item.link && item.link.startsWith('http')) ? '_blank' : '_self';
-        article.setAttribute('data-idx', index);
-        
-        // Category badge
-        const categorySpan = document.createElement('span');
-        categorySpan.className = 'article-category';
-        categorySpan.textContent = escapeText(item.category) || 'News';
-        
-        // Title
-        const title = document.createElement('h2');
-        title.className = 'article-title';
-        title.textContent = escapeText(item.title) || 'Untitled Article';
-        
-        // Meta info (simulated date + source)
-        const metaDiv = document.createElement('div');
-        metaDiv.className = 'article-meta';
-        metaDiv.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate()} &nbsp;|&nbsp; <i class="fas fa-tag"></i> ${escapeText(item.category) || 'Update'}`;
-        
-        // Image (if exists)
-        let imageDiv = null;
-        if (item.image && item.image.trim() !== '') {
-            imageDiv = document.createElement('div');
-            imageDiv.className = 'article-image';
-            const img = document.createElement('img');
-            img.src = item.image;
-            img.alt = escapeText(item.title);
-            img.loading = 'lazy';
-            img.onerror = () => { img.src = 'https://placehold.co/800x400/eef2f6/5b6e8c?text=Image+unavailable'; };
-            imageDiv.appendChild(img);
-        }
-        
-        // Excerpt (truncated title + description fallback)
-        const excerpt = document.createElement('p');
-        excerpt.className = 'article-excerpt';
-        let excerptText = item.excerpt || '';
-        if (!excerptText && item.title) {
-            excerptText = item.title.length > 100 ? item.title.substring(0, 100) + '...' : item.title;
-        }
-        excerpt.textContent = excerptText || 'Click to read full update from PearlNurses.';
-        
-        article.appendChild(categorySpan);
-        article.appendChild(title);
-        article.appendChild(metaDiv);
-        if (imageDiv) article.appendChild(imageDiv);
-        article.appendChild(excerpt);
-        
-        return article;
-    }
-
-    // Render visible batch based on displayedCount + filter
-    function renderVisibleArticles() {
-        const container = document.getElementById('articlesList');
-        if (!container) return;
-        
-        // Apply filter if any
-        let filtered = [...allNewsItems];
-        if (currentFilterQuery.trim() !== '') {
-            const query = currentFilterQuery.toLowerCase();
-            filtered = filtered.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                (item.category && item.category.toLowerCase().includes(query))
-            );
-            // when searching, we reset pagination to show all matches (no infinite scroll, just show all)
-            container.innerHTML = '';
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i> No news matched your search. Try different keywords.</div>';
-                document.getElementById('loadingTrigger').style.display = 'none';
-                document.getElementById('endMessage').style.display = 'none';
-                return;
-            }
-            filtered.forEach((item, idx) => {
-                container.appendChild(createNewsArticle(item, idx));
-            });
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'none';
-            return;
-        }
-        
-        // Normal infinite scroll mode (no filter)
-        const itemsToShow = allNewsItems.slice(0, displayedCount);
-        container.innerHTML = '';
-        if (itemsToShow.length === 0 && allNewsItems.length === 0) {
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i> No news articles found. Check back later!</div>';
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'none';
-            return;
-        }
-        
-       itemsToShow.forEach((item, idx) => {
-            container.appendChild(createNewsArticle(item, idx));
-        });
-        
-        // Manage loading & end triggers
-        if (displayedCount >= allNewsItems.length && allNewsItems.length > 0) {
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'block';
-            hasMore = false;
-        } else {
-            document.getElementById('loadingTrigger').style.display = 'block';
-            document.getElementById('endMessage').style.display = 'none';
-            hasMore = true;
-        }
-    }
-    
-    // Load more items (infinite scroll)
-    function loadMoreItems() {
-        if (isLoading) return;
-        if (currentFilterQuery !== "") return; // no infinite scroll during search
-        if (!hasMore) return;
-        
-        isLoading = true;
-        // simulate loading delay for smoother UX
-        setTimeout(() => {
-            const newCount = Math.min(displayedCount + ITEMS_PER_BATCH, allNewsItems.length);
-            if (newCount > displayedCount) {
-                displayedCount = newCount;
-                renderVisibleArticles();
-            }
-            isLoading = false;
-            if (displayedCount >= allNewsItems.length) {
-                hasMore = false;
-                document.getElementById('loadingTrigger').style.display = 'none';
-                document.getElementById('endMessage').style.display = 'block';
-            } else {
-                document.getElementById('loadingTrigger').style.display = 'block';
-            }
-        }, 300);
-    }
-    
-    // Intersection Observer for infinite scroll
-    function initIntersectionObserver() {
-        const trigger = document.getElementById('loadingTrigger');
-        if (!trigger) return;
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !isLoading && hasMore && currentFilterQuery === "") {
-                    loadMoreItems();
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        observer.observe(trigger);
-    }
-    
-    // Filter function triggered by search input
-    window.filterNews = function() {
-        const searchInput = document.getElementById('search-input');
-        currentFilterQuery = searchInput ? searchInput.value : "";
-        if (currentFilterQuery !== "") {
-            // during search, disable infinite scroll and show all matching immediately
-            displayedCount = allNewsItems.length; // show all potential
-            renderVisibleArticles();
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'none';
-        } else {
-            // reset to infinite scroll mode
-            displayedCount = Math.min(ITEMS_PER_BATCH, allNewsItems.length);
-            hasMore = displayedCount < allNewsItems.length;
-            renderVisibleArticles();
-            if (hasMore) document.getElementById('loadingTrigger').style.display = 'block';
-            else document.getElementById('endMessage').style.display = 'block';
-        }
-    };
-    
-    // Fetch data from Google Sheets (latest first)
-    async function fetchSheetData() {
-        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
-        try {
-            const response = await fetch(url);
-            const text = await response.text();
-            const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/);
-            if (!jsonMatch) throw new Error('Invalid spreadsheet response');
-            const jsonData = JSON.parse(jsonMatch[1]);
-            if (!jsonData.table || !jsonData.table.rows) return [];
-            return jsonData.table.rows;
-        } catch (err) {
-            console.error('Sheet fetch error:', err);
-            return null;
-        }
-    }
-
-    // Load & process data, ordering: we treat rows as latest first based on natural order? We'll keep descending by row index (last added first)
-    // Google Sheets returns rows in order they appear; we'll reverse to show newest first (assuming newest added at bottom)
-    async function loadNewsData() {
-        const rows = await fetchSheetData();
-        if (!rows || rows.length === 0) {
-            allNewsItems = [];
-            renderVisibleArticles();
-            return;
-        }
-        
-        const items = [];
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            if (!row.c || !row.c[0] || !row.c[0].v) continue;
-            const title = row.c[0]?.v || '';
-            const category = row.c[1]?.v || 'General';
-            const image = row.c[3]?.v || '';
-            const link = row.c[4]?.v || '#';
-            // optional excerpt: we create from title/desc
-            items.push({
-                title: String(title).trim(),
-                category: String(category).trim(),
-                image: String(image).trim(),
-                link: String(link).trim(),
-                excerpt: `Read more about "${String(title).trim()}" — essential update for Ugandan nurses.`
-            });
-        }
-        // Reverse to get latest first (assuming sheet rows: oldest top, newest bottom)
-        allNewsItems = items.reverse();
-        
-        // Initialize infinite scroll: first batch
-        displayedCount = Math.min(ITEMS_PER_BATCH, allNewsItems.length);
-        hasMore = displayedCount < allNewsItems.length;
-        renderVisibleArticles();
-        
-        if (hasMore) {
-            initIntersectionObserver();
-        } else {
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'block';
-        }
-    }
-    
-    // ----- UI Helpers (same as homepage) -----
-    function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
-    function toggleSearch() {
-        const sc = document.getElementById('search-container');
-        sc.classList.toggle('active');
-        if (sc.classList.contains('active')) document.getElementById('search-input').focus();
-    }
-    window.openModal = (id) => { document.getElementById(id).style.display = 'flex'; };
-    window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
-    window.scrollToTop = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
-    
-    // Event listeners
-    document.getElementById('menuToggleBtn').addEventListener('click', toggleMenu);
-    document.getElementById('searchToggleBtn').addEventListener('click', toggleSearch);
-    document.getElementById('footerAboutBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
-    document.getElementById('footerContactBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('contactModal'); });
-    document.getElementById('aboutNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
-    document.getElementById('privacyPolicyLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("📜 Privacy Policy: We respect your data."); });
-    
-    document.querySelectorAll('.nav-links a[href]:not([href="#"])').forEach(link => {
-        // preserve actual links but prevent errors
-    });
-    
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); });
-    window.addEventListener('scroll', () => {
-        const btn = document.getElementById('backToTop');
-        btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
-    });
-    document.getElementById('currentYear').innerText = new Date().getFullYear();
-    
-    // start loading
-    loadNewsData();
-</script>
-</body>
-</html>
