@@ -917,7 +917,8 @@ function renderFeaturedSection() {
         const rows = await fetchSheetData();
         if (!rows || rows.length === 0) {
             allPosts = [];
-            renderAllSections();
+            renderFeaturedSection();
+renderAllSections();
             return;
         }
         const posts = [];
