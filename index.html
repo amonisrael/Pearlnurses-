@@ -774,6 +774,57 @@
     }
 
     // Render each section based on category mapping
+
+// Render Featured Hero Section (max 3 items, tagged as "featured" in Google Sheets)
+function renderFeaturedSection() {
+    const featuredItems = allPosts.filter(item => {
+        const cat = (item.category || '').toLowerCase();
+        // Check if item is explicitly tagged as "featured" in category column
+        return cat === 'featured' || cat.includes('featured') || cat === 'hero';
+    }).slice(0, 3); // Maximum 3 featured items
+    
+    const featuredHero = document.getElementById('featuredHero');
+    const featuredGrid = document.getElementById('featuredGrid');
+    
+    if (featuredItems.length === 0) {
+        featuredHero.classList.remove('visible');
+        return;
+    }
+    
+    featuredHero.classList.add('visible');
+    featuredGrid.innerHTML = '';
+    
+    featuredItems.forEach((item, index) => {
+        const card = document.createElement('a');
+        card.className = 'featured-card';
+        
+        // Determine target link
+        let targetLink = item.link && item.link !== '#' ? item.link : '#';
+        card.href = targetLink;
+        card.target = '_self';
+        
+        // Image handling
+        const imgUrl = item.image && item.image.trim() !== '' 
+            ? item.image 
+            : 'https://placehold.co/1200x800/003d7a/white?text=Featured+News';
+        
+        // Excerpt (use title as fallback excerpt)
+        const excerpt = item.excerpt || `${item.title} - Read more about this important update from PearlNurses.`;
+        
+        card.innerHTML = `
+            <img class="featured-image" src="${imgUrl}" alt="${escapeText(item.title)}" loading="eager" onerror="this.src='https://placehold.co/1200x800/003d7a/white?text=PearlNurses'">
+            <div class="featured-overlay">
+                <span class="featured-category">⭐ FEATURED</span>
+                <h2 class="featured-title">${escapeText(item.title)}</h2>
+                <p class="featured-excerpt">${escapeText(excerpt.substring(0, 120))}${excerpt.length > 120 ? '...' : ''}</p>
+            </div>
+        `;
+        
+        featuredGrid.appendChild(card);
+    });
+}
+
+
     function renderAllSections() {
         if (!allPosts.length) {
             const emptyMsg = '<div class="empty-message"><i class="fas fa-database"></i> No posts available. Add data to Google Sheet.</div>';
