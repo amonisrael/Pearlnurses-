@@ -79,7 +79,7 @@
             transform: scale(0.96);
         }
 
-        /* SEARCH */
+       /* SEARCH */
         #search-container {
             display: none;
             background: white;
@@ -144,7 +144,7 @@
             display: inline-block;
         }
 
-        /* SECTIONS - VERTICAL GRID (changed from horizontal) */
+        /* SECTIONS - VERTICAL GRID */
         .section-wrapper {
             margin: 0 0 32px 0;
         }
@@ -184,7 +184,7 @@
             color: white;
         }
 
-        /* VERTICAL GRID CONTAINER (replaced horizontal scroll) */
+        /* VERTICAL GRID CONTAINER */
         .scroll-container {
             overflow-x: visible;
             overflow-y: visible;
@@ -200,123 +200,7 @@
             white-space: normal;
         }
 
-  /* FEATURED HERO SECTION - NILE POST STYLE */
-.featured-hero {
-    margin: 0 0 32px 0;
-    display: none;
-}
-
-.featured-hero.visible {
-    display: block;
-}
-
-.featured-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.featured-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-}
-
-.featured-card {
-    position: relative;
-    text-decoration: none;
-    color: white;
-    border-radius: 24px;
-    overflow: hidden;
-    height: 420px;
-    cursor: pointer;
-    display: block;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-}
-
-.featured-card:hover {
-    transform: translateY(-5px);
-}
-
-.featured-card .featured-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.featured-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-    padding: 40px 24px 24px;
-    z-index: 2;
-}
-
-.featured-category {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 4px 14px;
-    border-radius: 30px;
-    margin-bottom: 12px;
-}
-
-.featured-title {
-    font-size: 1.6rem;
-    font-weight: 800;
-    line-height: 1.3;
-    margin-bottom: 12px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.featured-excerpt {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-@media (min-width: 768px) {
-    .featured-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .featured-card:first-child {
-        grid-column: span 2;
-    }
-    .featured-card:first-child .featured-title {
-        font-size: 2rem;
-    }
-    .featured-card:first-child {
-        height: 480px;
-    }
-}
-
-@media (max-width: 640px) {
-    .featured-card {
-        height: 380px;
-    }
-    .featured-title {
-        font-size: 1.3rem;
-    }
-}
-
-
-
-        /* CARD STYLES - Full width block cards (changed from fixed width) */
+       /* CARD STYLES */
         .grid-card {
             text-decoration: none;
             color: inherit;
@@ -380,7 +264,7 @@
             word-break: break-word;
         }
 
-        /* COVER NEWS SECTION - FEATURED STYLE (larger card, also vertical) */
+        /* COVER NEWS SECTION - FEATURED STYLE */
         .cover-card {
             text-decoration: none;
             color: inherit;
@@ -443,7 +327,7 @@
             font-size: 0.95rem;
         }
 
-        /* FOOTER */
+       /* FOOTER */
         footer {
             background: #0f172a;
             color: #e2e8f0;
@@ -560,7 +444,8 @@
         }
     </style>
 </head>
- 
+
+
 <body>
 
 <header>
@@ -576,7 +461,7 @@
             <li><a href="#" data-nav="uganda">Nursing in Uganda</a></li>
             <li><a href="#" data-nav="schoolguide">School Guide</a></li>
             <li><a href="#" data-nav="jobs">JOBS</a></li>
-            <li><a href="equip.html" data-nav="equip">Equipment & Reviews</a></li>
+            <li><a href="#" data-nav="equip">Equipment & Reviews</a></li>
             <li><a href="#" data-nav="tools">Calculators</a></li>
             <li><a id="aboutNavBtn">About Us</a></li>
         </ul>
@@ -586,22 +471,11 @@
     </div>
 </header>
 
-
-<!-- FEATURED HERO SECTION (Nile Post Style) -->
-<div class="featured-hero" id="featuredHero">
-    <div class="featured-container">
-        <div class="featured-grid" id="featuredGrid">
-            <!-- Dynamic featured items will appear here -->
-        </div>
-    </div>
-</div>
-
-
 <!-- COVER NEWS SECTION (Featured/Urgent Updates) -->
 <div class="section-wrapper">
     <div class="section-header">
         <span class="section-label">News & Updates</span>
-        <a href="news.html" class="section-more" id="coverMoreLink">View all →</a>
+        <a href="#" class="section-more" id="coverMoreLink">View all →</a>
     </div>
     <div class="scroll-container" id="coverScroll">
         <div class="horizontal-grid" id="coverGrid">
@@ -614,7 +488,7 @@
 <div class="section-wrapper">
     <div class="section-header">
         <span class="section-label">Articles</span>
-        <a href="articles.html" class="section-more" id="articlesMoreLink">More articles →</a>
+        <a href="#" class="section-more" id="articlesMoreLink">More articles →</a>
     </div>
     <div class="scroll-container" id="articlesScroll">
         <div class="horizontal-grid" id="articlesGrid">
@@ -705,9 +579,10 @@
     </div>
 </footer>
 <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
-
 <script>
-    // SHEET CONFIG
+    // ========================
+    // GOOGLE SHEETS CONFIGURATION
+    // ========================
     const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
     let allPosts = [];
 
@@ -722,25 +597,26 @@
         });
     }
 
-    // Card creator - links to news.html for news/cover items, articles.html for regular articles
+    // Card creator – enhanced to link to specialized pages based on category
     function createCard(link, imgUrl, category, title, isCover = false) {
         const wrapper = document.createElement('a');
         wrapper.className = isCover ? 'cover-card' : 'grid-card';
-        
-        // Determine target page based on category
         const catLower = (category || '').toLowerCase();
         let targetPage = link && link !== '#' ? link : '#';
         
-        // If it's a cover/news/featured item, link to news.html
-        if (isCover || catLower === 'news' || catLower === 'featured' || catLower === 'cover') {
-            targetPage = 'news.html';
-        } 
-        // For regular articles (not school/equipment specific), link to articles.html
-        else if (!catLower.includes('school') && !catLower.includes('equip') && !catLower.includes('medical') && !catLower.includes('device') && !catLower.includes('review')) {
-            targetPage = 'articles.html';
-        }
-        // If the sheet has a specific valid link, prioritize it
-        if (link && link !== '#' && link !== '' && link !== 'articles.html' && link !== 'news.html') {
+        // Intelligent routing: if link is external or internal absolute path we keep it;
+        // but for better demo experience we route categories:
+        if (!link || link === '#' || link === '') {
+            if (catLower === 'news' || catLower === 'featured' || catLower === 'cover') {
+                targetPage = 'news.html';
+            } else if (catLower.includes('school') || catLower.includes('student') || catLower === 'academy') {
+                targetPage = 'school-guide.html';
+            } else if (catLower.includes('equip') || catLower.includes('medical') || catLower.includes('device') || catLower.includes('review')) {
+                targetPage = 'equipment.html';
+            } else {
+                targetPage = 'articles.html';
+            }
+        } else {
             targetPage = link;
         }
         
@@ -773,58 +649,7 @@
         return wrapper;
     }
 
-    // Render each section based on category mapping
-
-// Render Featured Hero Section (max 3 items, tagged as "featured" in Google Sheets)
-function renderFeaturedSection() {
-    const featuredItems = allPosts.filter(item => {
-        const cat = (item.category || '').toLowerCase();
-        // Check if item is explicitly tagged as "featured" in category column
-        return cat === 'featured' || cat.includes('featured') || cat === 'hero';
-    }).slice(0, 3); // Maximum 3 featured items
-    
-    const featuredHero = document.getElementById('featuredHero');
-    const featuredGrid = document.getElementById('featuredGrid');
-    
-    if (featuredItems.length === 0) {
-        featuredHero.classList.remove('visible');
-        return;
-    }
-    
-    featuredHero.classList.add('visible');
-    featuredGrid.innerHTML = '';
-    
-    featuredItems.forEach((item, index) => {
-        const card = document.createElement('a');
-        card.className = 'featured-card';
-        
-        // Determine target link
-        let targetLink = item.link && item.link !== '#' ? item.link : '#';
-        card.href = targetLink;
-        card.target = '_self';
-        
-        // Image handling
-        const imgUrl = item.image && item.image.trim() !== '' 
-            ? item.image 
-            : 'https://placehold.co/1200x800/003d7a/white?text=Featured+News';
-        
-        // Excerpt (use title as fallback excerpt)
-        const excerpt = item.excerpt || `${item.title} - Read more about this important update from PearlNurses.`;
-        
-        card.innerHTML = `
-            <img class="featured-image" src="${imgUrl}" alt="${escapeText(item.title)}" loading="eager" onerror="this.src='https://placehold.co/1200x800/003d7a/white?text=PearlNurses'">
-            <div class="featured-overlay">
-                <span class="featured-category">⭐ FEATURED</span>
-                <h2 class="featured-title">${escapeText(item.title)}</h2>
-                <p class="featured-excerpt">${escapeText(excerpt.substring(0, 120))}${excerpt.length > 120 ? '...' : ''}</p>
-            </div>
-        `;
-        
-        featuredGrid.appendChild(card);
-    });
-}
-
-
+    // Render each section with dynamic filtering using category rules
     function renderAllSections() {
         if (!allPosts.length) {
             const emptyMsg = '<div class="empty-message"><i class="fas fa-database"></i> No posts available. Add data to Google Sheet.</div>';
@@ -835,10 +660,10 @@ function renderFeaturedSection() {
             return;
         }
 
-        // 1. COVER NEWS: category "news" or "featured" or "cover"
+  // 1. COVER NEWS: priority news & featured
         const coverItems = allPosts.filter(item => {
             const cat = (item.category || '').toLowerCase();
-            return cat === 'news' || cat === 'featured' || cat === 'cover';
+            return cat === 'news' || cat === 'featured' || cat === 'cover' || cat === 'breaking';
         });
         const coverContainer = document.getElementById('coverGrid');
         coverContainer.innerHTML = '';
@@ -850,10 +675,10 @@ function renderFeaturedSection() {
             });
         }
 
-        // 2. ARTICLES (Trending / General): categories that are NOT news/featured/cover and NOT school/equipment
+        // 2. ARTICLES (General / trending) – exclude school/equip/news
         const generalItems = allPosts.filter(item => {
             const cat = (item.category || '').toLowerCase();
-            return cat !== 'news' && cat !== 'featured' && cat !== 'cover' && cat !== 'school life' && cat !== 'school' && cat !== 'medical equipment' && cat !== 'equipment';
+            return cat !== 'news' && cat !== 'featured' && cat !== 'cover' && cat !== 'breaking' && !cat.includes('school') && !cat.includes('student') && !cat.includes('equip') && !cat.includes('medical') && !cat.includes('device') && !cat.includes('review');
         });
         const articlesContainer = document.getElementById('articlesGrid');
         articlesContainer.innerHTML = '';
@@ -865,10 +690,10 @@ function renderFeaturedSection() {
             });
         }
 
-        // 3. SCHOOL LIFE: category contains "school" or "student" or "nursing school"
+        // 3. SCHOOL LIFE: academic / student life
         const schoolItems = allPosts.filter(item => {
             const cat = (item.category || '').toLowerCase();
-            return cat.includes('school') || cat.includes('student') || cat === 'academy' || cat === 'nursing education';
+            return cat.includes('school') || cat.includes('student') || cat === 'academy' || cat === 'nursing education' || cat === 'campus';
         });
         const schoolContainer = document.getElementById('schoolGrid');
         schoolContainer.innerHTML = '';
@@ -880,10 +705,10 @@ function renderFeaturedSection() {
             });
         }
 
-        // 4. MEDICAL EQUIPMENT: category includes "equip", "medical", "device", "review"
+        // 4. MEDICAL EQUIPMENT: reviews, devices, tools
         const equipItems = allPosts.filter(item => {
             const cat = (item.category || '').toLowerCase();
-            return cat.includes('equip') || cat.includes('medical') || cat.includes('device') || cat.includes('review') || cat === 'tools';
+            return cat.includes('equip') || cat.includes('medical') || cat.includes('device') || cat.includes('review') || cat === 'tools' || cat === 'stethoscope' || cat === 'gear';
         });
         const equipContainer = document.getElementById('equipGrid');
         equipContainer.innerHTML = '';
@@ -896,7 +721,7 @@ function renderFeaturedSection() {
         }
     }
 
-    // Google Sheets loader
+    // Google Sheets loader with robust parsing
     async function fetchSheetData() {
         const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
         try {
@@ -914,25 +739,40 @@ function renderFeaturedSection() {
     }
 
     async function loadData() {
-    const rows = await fetchSheetData();
-    if (!rows || rows.length === 0) {
-        allPosts = [];
+        const rows = await fetchSheetData();
+        if (!rows || rows.length === 0) {
+            allPosts = [];
+            renderAllSections();
+            // inject some demo data so the page never feels empty if sheet is not populated
+            const demoData = [
+                { title: "Uganda Launches New Nursing Curriculum", category: "News", image: "https://placehold.co/600x400/0056b3/white?text=Nursing+Education", link: "#" },
+                { title: "Top 10 Study Tips for Nursing Students", category: "School Life", image: "https://placehold.co/600x400/00a8e8/white?text=Study+Tips", link: "#" },
+                { title: "Best Stethoscopes for 2025: Reviews", category: "Medical Equipment", image: "https://placehold.co/600x400/1e2a3e/white?text=Stethoscope", link: "#" },
+                { title: "Nurse Wellness: Managing Shift Fatigue", category: "Wellness", image: "https://placehold.co/600x400/38b000/white?text=Wellness", link: "#" }
+            ];
+            allPosts = demoData.map(d => ({ title: d.title, category: d.category, image: d.image, link: d.link }));
+            renderAllSections();
+            return;
+        }
+        const posts = [];
+        for (let row of rows) {
+            if (!row.c || !row.c[0] || !row.c[0].v) continue;
+            posts.push({
+                title: String(row.c[0].v || 'Untitled').trim(),
+                category: String(row.c[1]?.v || 'General').trim(),
+                image: String(row.c[3]?.v || '').trim(),
+                link: String(row.c[4]?.v || '#').trim()
+            });
+        }
+        if (posts.length === 0) {
+            // fallback demo if sheet returns empty rows
+            posts.push({ title: "PearlNurses: Official Nursing Hub Launched", category: "News", image: "", link: "#" });
+        }
+        allPosts = posts;
         renderAllSections();
-        // inject some demo data so the page never feels empty if sheet is not populated
-        const demoData = [
-            { title: "BREAKING: New Nursing Council Regulations Announced", category: "Featured", image: "https://placehold.co/1200x800/0056b3/white?text=Breaking+News", link: "#", excerpt: "Major policy changes affecting all registered nurses in Uganda effective immediately." },
-            { title: "Uganda Launches New Nursing Curriculum", category: "News", image: "https://placehold.co/600x400/0056b3/white?text=Nursing+Education", link: "#", excerpt: "" },
-            { title: "Top 10 Study Tips for Nursing Students", category: "School Life", image: "https://placehold.co/600x400/00a8e8/white?text=Study+Tips", link: "#", excerpt: "" },
-            { title: "Best Stethoscopes for 2025: Reviews", category: "Medical Equipment", image: "https://placehold.co/600x400/1e2a3e/white?text=Stethoscope", link: "#", excerpt: "" }
-        ];
-        allPosts = demoData.map(d => ({ title: d.title, category: d.category, image: d.image, link: d.link, excerpt: d.excerpt || '' }));
-        renderFeaturedSection();
-        renderAllSections();
-        return;
     }
 
-
-    // Global search filter
+   // Global search filter: toggles visibility based on card title
     window.filterAllSections = function() {
         const query = document.getElementById('search-input').value.toLowerCase().trim();
         const allCards = document.querySelectorAll('.grid-card, .cover-card');
@@ -968,16 +808,16 @@ function renderFeaturedSection() {
     document.getElementById('footerContactBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('contactModal'); });
     document.getElementById('aboutNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
     document.getElementById('privacyPolicyLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("📜 Privacy Policy: We respect your data. No personal information shared without consent."); });
-
-    // More link alerts for sections without dedicated pages
-    const moreIds = ['schoolMoreLink', 'equipMoreLink'];
+    
+    // More link handlers with friendly info
+    const moreIds = ['schoolMoreLink', 'equipMoreLink', 'coverMoreLink', 'articlesMoreLink'];
     moreIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('click', (e) => { e.preventDefault(); alert(`✨ Full section content will be available soon. Stay connected with PearlNurses!`); });
     });
-    
+
     document.querySelectorAll('.topic-chip').forEach(chip => {
-        chip.addEventListener('click', (e) => { e.preventDefault(); alert(`🔍 "${chip.innerText}" — resources coming soon. Check our latest updates above!`); });
+        chip.addEventListener('click', (e) => { e.preventDefault(); alert(`🔍 "${chip.innerText}" — specialized resources coming soon. Check our latest updates above!`); });
     });
     document.querySelectorAll('.nav-links a[data-nav]').forEach(link => {
         link.addEventListener('click', (e) => { e.preventDefault(); alert(`🔜 "${link.innerText}" section under development. Stay tuned!`); });
@@ -990,7 +830,7 @@ function renderFeaturedSection() {
     });
     document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-    // Init
+    // initial load
     loadData();
 </script>
 </body>
