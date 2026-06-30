@@ -442,6 +442,60 @@
             .cover-card .card-image { height: 180px; }
             .card-image { height: 160px; }
         }
+
+new changes
+/* Phone-edge full-width grids */
+.section-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.scroll-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.horizontal-grid {
+    gap: 0 !important;
+    padding: 0 !important;
+    grid-template-columns: 1fr !important;
+}
+
+.grid-card, .cover-card {
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    margin: 0 !important;
+}
+
+.card-image {
+    height: 120px !important;
+}
+
+.card-info {
+    padding: 12px 16px !important;
+}
+
+.card-title {
+    font-size: 0.95rem !important;
+}
+
+.section-header {
+    padding: 16px 16px 8px 16px !important;
+}
+
+.section-label {
+    font-size: 1.1rem !important;
+    padding-left: 12px !important;
+}
+
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+}
+
     </style>
 </head>
 
@@ -472,26 +526,26 @@
 </header>
 
 <!-- COVER NEWS SECTION (Featured/Urgent Updates) -->
-<div class="section-wrapper">
+<div class="section-wrapper" style="padding: 0; margin: 0;">
     <div class="section-header">
         <span class="section-label">News & Updates</span>
         <a href="#" class="section-more" id="coverMoreLink">View all →</a>
     </div>
-    <div class="scroll-container" id="coverScroll">
-        <div class="horizontal-grid" id="coverGrid">
+    <div class="scroll-container" id="coverScroll" style="padding: 0; margin: 0;">
+        <div class="horizontal-grid" id="coverGrid" style="gap: 0; padding: 0;">
             <div class="loading-placeholder"><i class="fas fa-spinner fa-pulse"></i> Loading top updates...</div>
         </div>
     </div>
 </div>
 
 <!-- TRENDING / GENERAL ARTICLES SECTION -->
-<div class="section-wrapper">
+<div class="section-wrapper" style="padding: 0; margin: 0;">
     <div class="section-header">
         <span class="section-label">Articles</span>
         <a href="#" class="section-more" id="articlesMoreLink">More articles →</a>
     </div>
-    <div class="scroll-container" id="articlesScroll">
-        <div class="horizontal-grid" id="articlesGrid">
+    <div class="scroll-container" id="articlesScroll" style="padding: 0; margin: 0;">
+        <div class="horizontal-grid" id="articlesGrid" style="gap: 0; padding: 0;">
             <div class="loading-placeholder"><i class="fas fa-spinner fa-pulse"></i> Fetching top reads...</div>
         </div>
     </div>
@@ -601,6 +655,10 @@
     function createCard(link, imgUrl, category, title, isCover = false) {
         const wrapper = document.createElement('a');
         wrapper.className = isCover ? 'cover-card' : 'grid-card';
+wrapper.style.borderRadius = '0';
+wrapper.style.margin = '0';
+wrapper.style.borderLeft = 'none';
+wrapper.style.borderRight = 'none';
         const catLower = (category || '').toLowerCase();
         let targetPage = link && link !== '#' ? link : '#';
         
