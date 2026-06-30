@@ -433,21 +433,22 @@
             border-color: var(--primary);
         }
 
-        @media (max-width: 640px) {
-    .horizontal-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0 !important;
+       @media (max-width: 640px) {
+    .grid-card,
+    .cover-card {
+        height: 180px !important;
     }
-    .section-label { font-size: 1.1rem !important; }
-    .cover-card .card-image { height: 120px !important; }
-    .card-image { height: 120px !important; }
-    .grid-card, .cover-card {
-        border-radius: 0 !important;
-        border-left: none !important;
-        border-right: none !important;
+    .card-info {
+        padding: 30px 12px 12px !important;
+    }
+    .card-title {
+        font-size: 0.85rem !important;
+    }
+    .card-category {
+        font-size: 0.6rem !important;
     }
     .section-header {
-        padding: 12px 16px 6px 16px !important;
+        padding: 10px 12px 4px 12px !important;
     }
 }
 
@@ -469,24 +470,73 @@ new changes
     grid-template-columns: 1fr !important;
 }
 
-.grid-card, .cover-card {
+/* Cards – fixed height, full‑bleed image */
+.grid-card,
+.cover-card {
+    position: relative !important;
+    height: 220px !important;
+    overflow: hidden !important;
     border-radius: 0 !important;
-    border-left: none !important;
-    border-right: none !important;
+    border: none !important;
     border-bottom: 1px solid var(--border) !important;
+    background: #1e2a3e;
+}
+
+/* Image fills the whole card */
+.card-image {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+}
+.card-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+/* Text overlay – gradient from dark at bottom to transparent */
+.card-info {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 40px 16px 16px !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%) !important;
+    color: white !important;
+    border-radius: 0 !important;
+}
+
+.card-category {
+    color: #ffd700 !important;          /* gold accent */
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.7rem !important;
+    margin-bottom: 4px !important;
+}
+.card-title {
+    color: white !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6) !important;
+}
+
+/* Tighter section headers (optional but recommended) */
+.section-header {
+    padding: 12px 16px 4px 16px !important;
     margin: 0 !important;
 }
-
-.card-image {
-    height: 120px !important;
+.section-label {
+    font-size: 1.1rem !important;
+    border-left-width: 4px !important;
+    padding-left: 10px !important;
 }
-
-.card-info {
-    padding: 12px 16px !important;
-}
-
-.card-title {
-    font-size: 0.95rem !important;
+.section-more {
+    font-size: 0.75rem !important;
+    padding: 4px 12px !important;
 }
 
 .section-header {
@@ -534,25 +584,25 @@ body {
 </header>
 
 <!-- COVER NEWS SECTION (Featured/Urgent Updates) -->
-<div class="section-wrapper" style="padding: 0; margin: 0;">
+<div class="section-wrapper">
     <div class="section-header">
         <span class="section-label">News & Updates</span>
         <a href="#" class="section-more" id="coverMoreLink">View all →</a>
     </div>
-    <div class="scroll-container" id="coverScroll" style="padding: 0; margin: 0;">
-        <div class="horizontal-grid" id="coverGrid" style="gap: 0; padding: 0;">
+    <div class="scroll-container" id="coverScroll">
+        <div class="horizontal-grid" id="coverGrid">
             <div class="loading-placeholder"><i class="fas fa-spinner fa-pulse"></i> Loading top updates...</div>
         </div>
     </div>
 </div>
 
 <!-- TRENDING / GENERAL ARTICLES SECTION -->
-<div class="section-wrapper" style="padding: 0; margin: 0;">
+<div class="section-wrapper">
     <div class="section-header">
         <span class="section-label">Articles</span>
         <a href="#" class="section-more" id="articlesMoreLink">More articles →</a>
     </div>
-    <div class="scroll-container" id="articlesScroll" style="padding: 0; margin: 0;">
+    <div class="scroll-container" id="articlesScroll">
         <div class="horizontal-grid" id="articlesGrid" style="gap: 0; padding: 0;">
             <div class="loading-placeholder"><i class="fas fa-spinner fa-pulse"></i> Fetching top reads...</div>
         </div>
