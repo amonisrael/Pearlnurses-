@@ -909,11 +909,11 @@ wrapper.style.borderRight = 'none';
     document.getElementById('privacyPolicyLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("📜 Privacy Policy: We respect your data. No personal information shared without consent."); });
     
     // More link handlers with friendly info
-    const moreIds = ['schoolMoreLink', 'equipMoreLink', 'coverMoreLink', 'articlesMoreLink'];
-    moreIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('click', (e) => { e.preventDefault(); alert(`✨ Full section content will be available soon. Stay connected with PearlNurses!`); });
-    });
+    const moreIds = ['schoolMoreLink', 'equipMoreLink'];
+moreIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', (e) => { e.preventDefault(); alert(`✨ Full section content will be available soon. Stay connected with PearlNurses!`); });
+});
 
     document.querySelectorAll('.topic-chip').forEach(chip => {
         chip.addEventListener('click', (e) => { e.preventDefault(); alert(`🔍 "${chip.innerText}" — specialized resources coming soon. Check our latest updates above!`); });
