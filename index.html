@@ -683,7 +683,7 @@ body {
             <h4>Support</h4>
             <a id="footerAboutBtn">About Us</a>
             <a id="footerContactBtn">Contact Us</a>
-            <a href="privatepolicy.html>Privacy Policy</a>
+            <a href="privatepolicy.html">Privacy Policy</a>
         </div>
         <div class="footer-col">
             <p style="color:#94a3b8; font-size:0.75rem;">&copy; <span id="currentYear"></span> PearlNurses. All rights reserved.</p>
@@ -710,43 +710,63 @@ body {
     }
 
     // Card creator – enhanced to link to specialized pages based on category
-    function createCard(link, imgUrl, category, title, isCover = false) {
-        const wrapper = document.createElement('a');
-        wrapper.className = isCover ? 'cover-card' : 'grid-card';
-wrapper.style.borderRadius = '0';
-wrapper.style.margin = '0';
-wrapper.style.borderLeft = 'none';
-wrapper.style.borderRight = 'none';
-        let targetPage = link && link !== '#' ? link : '#';
-        
-        wrapper.href = targetPage;
-        wrapper.target = '_self';
+    function createCard(item, isCover = false) {
+    const { link, image, type, title, id } = item;
+    const wrapper = document.createElement('a');
+    wrapper.className = isCover ? 'cover-card' : 'grid-card';
+    wrapper.style.borderRadius = '0';
+    wrapper.style.margin = '0';
+    wrapper.style.borderLeft = 'none';
+    wrapper.style.borderRight = 'none';
 
-        const imgDiv = document.createElement('div');
-        imgDiv.className = 'card-image';
-        const img = document.createElement('img');
-        const validImg = imgUrl && imgUrl.trim() !== '' ? imgUrl : 'https://placehold.co/600x400/eef2f6/5b6e8c?text=PearlNurses';
-        img.src = validImg;
-        img.alt = escapeText(title) || 'Article';
-        img.loading = 'lazy';
-        img.onerror = () => { img.src = 'https://placehold.co/600x400/eef2f6/5b6e8c?text=Image+Missing'; };
-        imgDiv.appendChild(img);
-
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'card-info';
-        const catSpan = document.createElement('span');
-        catSpan.className = 'card-category';
-        catSpan.textContent = escapeText(category) || 'Article';
-        const titleH3 = document.createElement('h3');
-        titleH3.className = 'card-title';
-        titleH3.textContent = escapeText(title) || 'Untitled';
-        infoDiv.appendChild(catSpan);
-        infoDiv.appendChild(titleH3);
-
-        wrapper.appendChild(imgDiv);
-        wrapper.appendChild(infoDiv);
-        return wrapper;
+    let targetPage = link && link !== '#' ? link : '#';
+    if (!link || link === '#' || link === '') {
+        const typeLower = (type || '').toLowerCase();
+        if (typeLower === 'news' || typeLower === 'breaking') {
+            targetPage = `news.html?id=${id}`;
+        } else {
+            targetPage = `articles.html?id=${id}`;
+        }
     }
+    wrapper.href = targetPage;
+    wrapper.target = '_self';
+
+    const imgDiv = document.createElement('div');
+    imgDiv.className = 'card-image';
+    const img = document.createElement('img');
+    let validImg = image && image.trim() !== '' && image.trim().startsWith('http') ? image : '';
+    if (!validImg) {
+        const typeLower = (type || '').toLowerCase();
+        if (typeLower === 'news' || typeLower === 'breaking') {
+            validImg = 'https://placehold.co/600x400/0056b3/white?text=📰+News';
+        } else if (typeLower === 'review') {
+            validImg = 'https://placehold.co/600x400/00a8e8/white?text=⭐+Review';
+        } else {
+            validImg = 'https://placehold.co/600x400/eef2f6/5b6e8c?text=PearlNurses';
+        }
+    }
+    img.src = validImg;
+    img.alt = escapeText(title) || 'Article';
+    img.loading = 'lazy';
+    img.onerror = () => { img.src = 'https://placehold.co/600x400/eef2f6/5b6e8c?text=Image+Missing'; };
+    imgDiv.appendChild(img);
+
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'card-info';
+    const catSpan = document.createElement('span');
+    catSpan.className = 'card-category';
+    const displayType = (type && type !== '') ? type : 'Article';
+    catSpan.textContent = escapeText(displayType);
+    const titleH3 = document.createElement('h3');
+    titleH3.className = 'card-title';
+    titleH3.textContent = escapeText(title) || 'Untitled';
+    infoDiv.appendChild(catSpan);
+    infoDiv.appendChild(titleH3);
+
+    wrapper.appendChild(imgDiv);
+    wrapper.appendChild(infoDiv);
+    return wrapper;
+}
 
     // Render each section with dynamic filtering using category rules
     function renderAllSections() {
@@ -761,62 +781,64 @@ wrapper.style.borderRight = 'none';
 
   // 1. COVER NEWS: priority news & featured
         const coverItems = allPosts.filter(item => {
-            const cat = (item.category || '').toLowerCase();
-            return cat === 'news' || cat === 'featured' || cat === 'cover' || cat === 'breaking';
-        });
+    const type = (item.type || '').toLowerCase();
+    return type === 'news' || type === 'breaking';
+});
         const coverContainer = document.getElementById('coverGrid');
         coverContainer.innerHTML = '';
         if (coverItems.length === 0) {
             coverContainer.innerHTML = '<div class="empty-message">📭 No cover news at the moment. Stay tuned!</div>';
         } else {
             coverItems.forEach(item => {
-                coverContainer.appendChild(createCard(item.link, item.image, item.category, item.title, true));
-            });
+    coverContainer.appendChild(createCard(item, true));
+});
         }
 
         // 2. ARTICLES (General / trending) – exclude school/equip/news
         const generalItems = allPosts.filter(item => {
-            const cat = (item.category || '').toLowerCase();
-            return cat !== 'news' && cat !== 'featured' && cat !== 'cover' && cat !== 'breaking' && !cat.includes('school') && !cat.includes('student') && !cat.includes('equip') && !cat.includes('medical') && !cat.includes('device') && !cat.includes('review');
-        });
+    const type = (item.type || '').toLowerCase();
+    return type === 'article' || type === 'feature' || type === 'guide';
+});
         const articlesContainer = document.getElementById('articlesGrid');
         articlesContainer.innerHTML = '';
         if (generalItems.length === 0) {
             articlesContainer.innerHTML = '<div class="empty-message">✨ Trending stories will appear here soon.</div>';
         } else {
             generalItems.forEach(item => {
-                articlesContainer.appendChild(createCard(item.link, item.image, item.category, item.title, false));
-            });
+    coverContainer.appendChild(createCard(item, true));
+});
         }
 
         // 3. SCHOOL LIFE: academic / student life
         const schoolItems = allPosts.filter(item => {
-            const cat = (item.category || '').toLowerCase();
-            return cat.includes('school') || cat.includes('student') || cat === 'academy' || cat === 'nursing education' || cat === 'campus';
-        });
+    const type = (item.type || '').toLowerCase();
+    const tags = (item.tags || '').toLowerCase();
+    return type === 'student life' || tags.includes('school') || tags.includes('student') || tags.includes('education');
+});
         const schoolContainer = document.getElementById('schoolGrid');
         schoolContainer.innerHTML = '';
         if (schoolItems.length === 0) {
             schoolContainer.innerHTML = '<div class="empty-message">📚 Share your nursing school journey — contribute content!</div>';
         } else {
             schoolItems.forEach(item => {
-                schoolContainer.appendChild(createCard(item.link, item.image, item.category, item.title, false));
-            });
+    coverContainer.appendChild(createCard(item, true));
+});
         }
 
         // 4. MEDICAL EQUIPMENT: reviews, devices, tools
         const equipItems = allPosts.filter(item => {
-            const cat = (item.category || '').toLowerCase();
-            return cat.includes('equip') || cat.includes('medical') || cat.includes('device') || cat.includes('review') || cat === 'tools' || cat === 'stethoscope' || cat === 'gear';
-        });
+    const type = (item.type || '').toLowerCase();
+    const tags = (item.tags || '').toLowerCase();
+    return type === 'review' || tags.includes('equip') || tags.includes('medical') || tags.includes('device') || tags.includes('stethoscope');
+});
         const equipContainer = document.getElementById('equipGrid');
         equipContainer.innerHTML = '';
         if (equipItems.length === 0) {
             equipContainer.innerHTML = '<div class="empty-message">🩺 Equipment reviews & buying guides coming soon.</div>';
         } else {
             equipItems.forEach(item => {
-                equipContainer.appendChild(createCard(item.link, item.image, item.category, item.title, false));
-            });
+    coverContainer.appendChild(createCard(item, true));
+});
         }
     }
 
@@ -843,25 +865,23 @@ wrapper.style.borderRight = 'none';
             allPosts = [];
             renderAllSections();
             // inject some demo data so the page never feels empty if sheet is not populated
-            const demoData = [
-                { title: "Uganda Launches New Nursing Curriculum", category: "News", image: "https://placehold.co/600x400/0056b3/white?text=Nursing+Education", link: "#" },
-                { title: "Top 10 Study Tips for Nursing Students", category: "School Life", image: "https://placehold.co/600x400/00a8e8/white?text=Study+Tips", link: "#" },
-                { title: "Best Stethoscopes for 2025: Reviews", category: "Medical Equipment", image: "https://placehold.co/600x400/1e2a3e/white?text=Stethoscope", link: "#" },
-                { title: "Nurse Wellness: Managing Shift Fatigue", category: "Wellness", image: "https://placehold.co/600x400/38b000/white?text=Wellness", link: "#" }
-            ];
-            allPosts = demoData.map(d => ({ title: d.title, category: d.category, image: d.image, link: d.link }));
-            renderAllSections();
-            return;
+            allPosts = [];
+renderAllSections();
+return;
         }
         const posts = [];
         for (let row of rows) {
             if (!row.c || !row.c[0] || !row.c[0].v) continue;
             posts.push({
-                title: String(row.c[0].v || 'Untitled').trim(),
-                category: String(row.c[1]?.v || 'General').trim(),
-                image: String(row.c[3]?.v || '').trim(),
-                link: String(row.c[4]?.v || '#').trim()
-            });
+    id: String(row.c[0]?.v || '').trim(),
+    type: String(row.c[1]?.v || 'Article').trim(),
+    title: String(row.c[2]?.v || 'Untitled').trim(),
+    tags: String(row.c[3]?.v || '').trim(),
+    excerpt: String(row.c[4]?.v || '').trim(),
+    content: String(row.c[5]?.v || '').trim(),
+    image: String(row.c[6]?.v || '').trim(),
+    link: String(row.c[7]?.v || '#').trim()
+});
         }
         if (posts.length === 0) {
             // fallback demo if sheet returns empty rows
