@@ -689,21 +689,34 @@
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
             if (!row.c || !row.c[0] || !row.c[0].v) continue;
-            const title = row.c[0]?.v || '';
-            const category = row.c[1]?.v || 'General';
-            const image = row.c[3]?.v || '';
-            const link = row.c[4]?.v || '#';
+            const id = row.c[0]?.v || '';
+const type = row.c[1]?.v || 'News';
+const title = row.c[2]?.v || 'Untitled';
+const tags = row.c[3]?.v || '';
+const excerpt = row.c[4]?.v || '';
+const content = row.c[5]?.v || '';
+const image = row.c[6]?.v || '';
+const link = row.c[7]?.v || '#';
+
             // optional excerpt: we create from title/desc
             items.push({
-                title: String(title).trim(),
-                category: String(category).trim(),
-                image: String(image).trim(),
-                link: String(link).trim(),
-                excerpt: `Read more about "${String(title).trim()}" — essential update for Ugandan nurses.`
-            });
+    id: String(id).trim(),
+    type: String(type).trim(),
+    title: String(title).trim(),
+    tags: String(tags).trim(),
+    excerpt: String(excerpt).trim() || `Read more about "${String(title).trim()}" — essential update for Ugandan nurses.`,
+    content: String(content).trim(),
+    image: String(image).trim(),
+    link: String(link).trim()
+});
         }
         // Reverse to get latest first (assuming sheet rows: oldest top, newest bottom)
-        allNewsItems = items.reverse();
+        // Only keep items where type is News or Breaking
+const newsItems = items.filter(item => {
+    const type = (item.type || '').toLowerCase();
+    return type === 'news' || type === 'breaking';
+});
+allNewsItems = newsItems.reverse();
 
         // Initialize infinite scroll: first batch
         displayedCount = Math.min(ITEMS_PER_BATCH, allNewsItems.length);
