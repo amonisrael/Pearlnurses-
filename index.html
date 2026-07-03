@@ -587,7 +587,7 @@ body {
 <div class="section-wrapper">
     <div class="section-header">
         <span class="section-label">News & Updates</span>
-        <a href="#" class="section-more" id="coverMoreLink">View all →</a>
+        <a href="news.html" class="section-more" id="coverMoreLink">View all →</a>
     </div>
     <div class="scroll-container" id="coverScroll">
         <div class="horizontal-grid" id="coverGrid">
@@ -600,7 +600,7 @@ body {
 <div class="section-wrapper">
     <div class="section-header">
         <span class="section-label">Articles</span>
-        <a href="#" class="section-more" id="articlesMoreLink">More articles →</a>
+        <a href="articles.html" class="section-more" id="articlesMoreLink">More articles →</a>
     </div>
     <div class="scroll-container" id="articlesScroll">
         <div class="horizontal-grid" id="articlesGrid" style="gap: 0; padding: 0;">
@@ -717,24 +717,7 @@ wrapper.style.borderRadius = '0';
 wrapper.style.margin = '0';
 wrapper.style.borderLeft = 'none';
 wrapper.style.borderRight = 'none';
-        const catLower = (category || '').toLowerCase();
         let targetPage = link && link !== '#' ? link : '#';
-        
-        // Intelligent routing: if link is external or internal absolute path we keep it;
-        // but for better demo experience we route categories:
-        if (!link || link === '#' || link === '') {
-            if (catLower === 'news' || catLower === 'featured' || catLower === 'cover') {
-                targetPage = 'news.html';
-            } else if (catLower.includes('school') || catLower.includes('student') || catLower === 'academy') {
-                targetPage = 'school-guide.html';
-            } else if (catLower.includes('equip') || catLower.includes('medical') || catLower.includes('device') || catLower.includes('review')) {
-                targetPage = 'equipment.html';
-            } else {
-                targetPage = 'articles.html';
-            }
-        } else {
-            targetPage = link;
-        }
         
         wrapper.href = targetPage;
         wrapper.target = '_self';
