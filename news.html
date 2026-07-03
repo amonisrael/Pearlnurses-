@@ -492,7 +492,12 @@
     function createNewsArticle(item, index) {
         const article = document.createElement('a');
         article.className = 'news-article';
-        article.href = item.link && item.link !== '#' ? item.link : '#';
+        // If link is article.html or news.html with ID, or external URL
+article.href = item.link && item.link !== '#' ? item.link : '#';
+// If you want to auto-generate the link from ID when empty:
+if (!item.link || item.link === '#') {
+    article.href = `news.html?id=${item.id}`;
+}
         article.target = (item.link && item.link.startsWith('http')) ? '_blank' : '_self';
         article.setAttribute('data-idx', index);
 
@@ -524,14 +529,10 @@
             imageDiv.appendChild(img);
         }
 
-        // Excerpt (truncated title + description fallback)
-        const excerpt = document.createElement('p');
-        excerpt.className = 'article-excerpt';
-        let excerptText = item.excerpt || '';
-        if (!excerptText && item.title) {
-            excerptText = item.title.length > 100 ? item.title.substring(0, 100) + '...' : item.title;
-        }
-        excerpt.textContent = excerptText || 'Click to read full update from PearlNurses.';
+        // Excerpt – use the sheet's excerpt column
+const excerpt = document.createElement('p');
+excerpt.className = 'article-excerpt';
+excerpt.textContent = item.excerpt || 'Click to read full update from PearlNurses.';
 
         article.appendChild(categorySpan);
         article.appendChild(title);
