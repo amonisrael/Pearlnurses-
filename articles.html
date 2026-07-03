@@ -532,7 +532,12 @@
     function createArticleCard(item, index) {
         const article = document.createElement('a');
         article.className = 'article-card';
-        article.href = item.link && item.link !== '#' ? item.link : '#';
+        // If link is article.html or news.html with ID, or external URL
+article.href = item.link && item.link !== '#' ? item.link : '#';
+// If you want to auto-generate the link from ID when empty:
+if (!item.link || item.link === '#') {
+    article.href = `articles.html?id=${item.id}`;
+}
         article.target = (item.link && item.link.startsWith('http')) ? '_blank' : '_self';
         article.setAttribute('data-idx', index);
 
@@ -566,13 +571,8 @@
 
         // Excerpt
         const excerpt = document.createElement('p');
-        excerpt.className = 'card-excerpt';
-        let excerptText = item.excerpt || '';
-        if (!excerptText && item.title) {
-            excerptText = item.title.length > 120 ? item.title.substring(0, 120) + '...' : item.title;
-        }
-        excerpt.textContent = excerptText || 'Click to read this insightful article from PearlNurses.';
-
+excerpt.className = 'card-excerpt';
+excerpt.textContent = item.excerpt || 'Click to read this insightful article from PearlNurses.';
         article.appendChild(categorySpan);
         article.appendChild(title);
         article.appendChild(metaDiv);
@@ -773,15 +773,23 @@
             else if (catLower.includes('tech') || catLower.includes('digital')) mappedCategory = 'Health Tech';
 
             items.push({
-                title: String(title).trim(),
-                category: String(mappedCategory).trim(),
-                image: String(image).trim(),
-                link: String(link).trim(),
-                excerpt: `Explore this comprehensive guide: "${String(title).trim()}" — essential knowledge for every Ugandan nursing professional.`
-            });
+    id: String(id).trim(),
+    type: String(type).trim(),
+    title: String(title).trim(),
+    tags: String(tags).trim(),
+    excerpt: String(excerpt).trim() || `Explore this comprehensive guide: "${String(title).trim()}" — essential knowledge for every Ugandan nursing professional.`,
+    content: String(content).trim(),
+    image: String(image).trim(),
+    link: String(link).trim()
+});
         }
         // Reverse to get latest first (newest entries at bottom of sheet become top)
-        allArticles = items.reverse();
+        // Only keep items where type is Article, Feature, Review, or Student Life
+const articleItems = items.filter(item => {
+    const type = (item.type || '').toLowerCase();
+    return type === 'article' || type === 'feature' || type === 'review' || type === 'student life' || type === 'guide';
+});
+allArticles = articleItems.reverse();
 
         // Apply initial filters
         applyFilters();
