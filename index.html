@@ -805,7 +805,7 @@ body {
             articlesContainer.innerHTML = '<div class="empty-message">✨ Trending stories will appear here soon.</div>';
         } else {
             generalItems.forEach(item => {
-    coverContainer.appendChild(createCard(item, true));
+    coverContainer.appendChild(createCard(item, false));
 });
         }
 
@@ -821,7 +821,7 @@ body {
             schoolContainer.innerHTML = '<div class="empty-message">📚 Share your nursing school journey — contribute content!</div>';
         } else {
             schoolItems.forEach(item => {
-    coverContainer.appendChild(createCard(item, true));
+    coverContainer.appendChild(createCard(item, false));
 });
         }
 
@@ -837,7 +837,7 @@ body {
             equipContainer.innerHTML = '<div class="empty-message">🩺 Equipment reviews & buying guides coming soon.</div>';
         } else {
             equipItems.forEach(item => {
-    coverContainer.appendChild(createCard(item, true));
+    coverContainer.appendChild(createCard(item, false));
 });
         }
     }
@@ -862,25 +862,22 @@ body {
     async function loadData() {
         const rows = await fetchSheetData();
         if (!rows || rows.length === 0) {
-            allPosts = [];
-            renderAllSections();
-            // inject some demo data so the page never feels empty if sheet is not populated
-            allPosts = [];
-renderAllSections();
-return;
-        }
+    allPosts = [];
+    renderAllSections();
+    return;
+}
         const posts = [];
         for (let row of rows) {
             if (!row.c || !row.c[0] || !row.c[0].v) continue;
             posts.push({
     id: String(row.c[0]?.v || '').trim(),
     type: String(row.c[1]?.v || 'Article').trim(),
-    title: String(row.c[2]?.v || 'Untitled').trim(),
-    tags: String(row.c[3]?.v || '').trim(),
-    excerpt: String(row.c[4]?.v || '').trim(),
-    content: String(row.c[5]?.v || '').trim(),
-    image: String(row.c[6]?.v || '').trim(),
-    link: String(row.c[7]?.v || '#').trim()
+    title: String(row.c[]?.v || 'Untitled').trim(),
+    tags: String(row.c[2]?.v || '').trim(),
+    excerpt: String(row.c[3]?.v || '').trim(),
+    content: String(row.c[4]?.v || '').trim(),
+    image: String(row.c[5]?.v || '').trim(),
+    link: String(row.c[6]?.v || '#').trim()
 });
         }
         if (posts.length === 0) {
