@@ -872,12 +872,12 @@ body {
             posts.push({
     id: String(row.c[0]?.v || '').trim(),
     type: String(row.c[1]?.v || 'Article').trim(),
-    title: String(row.c[]?.v || 'Untitled').trim(),
-    tags: String(row.c[2]?.v || '').trim(),
-    excerpt: String(row.c[3]?.v || '').trim(),
-    content: String(row.c[4]?.v || '').trim(),
-    image: String(row.c[5]?.v || '').trim(),
-    link: String(row.c[6]?.v || '#').trim()
+    title: String(row.c[2]?.v || 'Untitled').trim(),
+    tags: String(row.c[3]?.v || '').trim(),
+    excerpt: String(row.c[4]?.v || '').trim(),
+    content: String(row.c[5]?.v || '').trim(),
+    image: String(row.c[6]?.v || '').trim(),
+    link: String(row.c[7]?.v || '#').trim()
 });
         }
         if (posts.length === 0) {
