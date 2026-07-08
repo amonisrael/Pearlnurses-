@@ -30,7 +30,7 @@
             line-height: 1.5;
         }
 
-        /* HEADER & NAVIGATION (identical to homepage) */
+        /* HEADER & NAVIGATION */
         header {
             background: var(--primary);
             position: sticky;
@@ -77,7 +77,7 @@
             transform: scale(0.96);
         }
 
-       /* SEARCH */
+        /* SEARCH */
         #search-container {
             display: none;
             background: white;
@@ -140,7 +140,7 @@
             display: inline-block;
         }
 
-        /* MAIN CONTENT - ARTICLES PAGE */
+        /* MAIN CONTENT */
         .articles-header {
             background: linear-gradient(135deg, #f0f4f8 0%, #e6edf4 100%);
             padding: 48px 20px 32px;
@@ -160,123 +160,165 @@
             margin: 0 auto;
         }
 
-        /* Category Filter Tabs */
-        .category-filters {
-            max-width: 1000px;
-            margin: 24px auto 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            padding: 0 20px;
-        }
-
-        .filter-chip {
-            background: white;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-chip:hover, .filter-chip.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
         .articles-container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 32px 20px 60px;
         }
 
-        /* Article Card - Full width style */
-        .article-card {
-            background: white;
-            border-radius: 24px;
-            margin-bottom: 28px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 0 0 1px var(--border);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+        /* ========== FULL ARTICLE STYLES ========== */
+        .article-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+            margin-bottom: 12px;
         }
 
-        .article-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.08), 0 0 0 1px var(--border);
+        .article-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 12px 0 16px;
         }
 
-        .card-category {
-            display: inline-block;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent);
+        .article-tags .tag {
             background: #eef6fc;
+            color: var(--primary);
             padding: 4px 14px;
             border-radius: 30px;
-            margin-bottom: 14px;
-            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
-        .card-title {
+        .article-meta {
+            color: #6c7e97;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .article-meta i {
+            margin-right: 4px;
+            color: var(--accent);
+        }
+
+        .featured-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: 16px 0 24px;
+        }
+
+        .article-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #1e2a3e;
+        }
+
+        .article-body p {
+            margin-bottom: 18px;
+        }
+
+        .article-body h2 {
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 32px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: 2px solid var(--primary);
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+
+        .back-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ========== RELATED ARTICLES ========== */
+        .related-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid var(--border);
+        }
+
+        .related-section h2 {
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .related-card {
+            text-decoration: none;
+            color: inherit;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .related-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .related-card .card-image {
+            height: 140px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .related-card .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-card .card-info {
+            padding: 14px;
+        }
+
+        .related-card .card-category {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            background: #eef6fc;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+        }
+
+        .related-card .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--text);
             line-height: 1.3;
         }
 
-        .card-meta {
-            display: flex;
-            gap: 16px;
-            font-size: 0.8rem;
-            color: #6c7e97;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .card-meta i {
-            margin-right: 5px;
-            color: var(--accent);
-        }
-
-        .card-image {
-            margin: 16px 0 12px;
-            border-radius: 20px;
-            overflow: hidden;
-            max-height: 280px;
-        }
-
-        .card-image img {
-            width: 100%;
-            height: auto;
-            max-height: 280px;
-            object-fit: cover;
-            border-radius: 20px;
-        }
-
-        .card-excerpt {
-            color: #334155;
-            line-height: 1.6;
-            margin-top: 8px;
-        }
-
-        /* Loading & End States */
-        .loading-trigger {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
+        /* LOADING */
         .loading-spinner {
             display: inline-block;
             width: 40px;
@@ -291,20 +333,9 @@
             to { transform: rotate(360deg); }
         }
 
-        .end-message {
+        .loading-state {
             text-align: center;
-            padding: 40px 20px;
-            color: #7c8ba0;
-            border-top: 1px solid var(--border);
-            margin-top: 20px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-            background: var(--gray-light);
-            border-radius: 32px;
-            color: #5b6e8c;
+            padding: 60px 20px;
         }
 
         /* MODALS */
@@ -396,14 +427,14 @@
         }
 
         @media (max-width: 640px) {
-            .card-title { font-size: 1.25rem; }
+            .article-title { font-size: 1.6rem; }
             .articles-header h1 { font-size: 1.8rem; }
-            .article-card { padding: 18px; }
+            .related-grid { grid-template-columns: 1fr; }
+            .featured-image { max-height: 250px; }
         }
     </style>
 </head>
-
-   <body>
+<body>
 
 <header>
     <div class="header-container">
@@ -415,7 +446,7 @@
             <button class="btn-icon" id="searchToggleBtn" aria-label="Search"><i class="fas fa-search"></i></button>
         </div>
         <ul class="nav-links" id="nav-menu">
-            <li><a href="uganda.html">Nursing in Uganda</a></li>
+            <li><a href="nursing.html">Nursing in Uganda</a></li>
             <li><a href="schoolguide.html">School Guide</a></li>
             <li><a href="jobs.html">JOBS</a></li>
             <li><a href="equip.html">Equipment & Reviews</a></li>
@@ -424,7 +455,7 @@
         </ul>
     </div>
     <div id="search-container">
-        <input type="text" id="search-input" placeholder="🔍 Search articles by title or category..." onkeyup="filterArticles()">
+        <input type="text" id="search-input" placeholder="🔍 Search articles..." onkeyup="filterArticles()">
     </div>
 </header>
 
@@ -434,24 +465,11 @@
         <p>In-depth guides, clinical insights, career advice, and professional development for Ugandan nurses</p>
     </div>
 
-    <!-- Category Filters -->
-    <div class="category-filters" id="categoryFilters">
-        <button class="filter-chip active" data-category="all">All Articles</button>
-        <button class="filter-chip" data-category="clinical">Clinical Guides</button>
-        <button class="filter-chip" data-category="career">Career & Jobs</button>
-        <button class="filter-chip" data-category="education">Education & School</button>
-        <button class="filter-chip" data-category="wellness">Nurse Wellness</button>
-        <button class="filter-chip" data-category="tech">Health Tech</button>
-    </div>
-
     <div class="articles-container" id="articlesContainer">
-        <div id="articlesList"></div>
-        <div id="loadingTrigger" class="loading-trigger" style="display: none;">
-            <div class="loading-spinner"></div>
-            <p style="margin-top: 12px;">Loading more articles...</p>
-        </div>
-        <div id="endMessage" class="end-message" style="display: none;">
-            <i class="fas fa-check-circle"></i> You've reached the end — no more articles at this time.
+        <div id="articleContainer"></div>
+        <div id="relatedContainer" class="related-section" style="display: none;">
+            <h2><i class="fas fa-book-open"></i> More Articles</h2>
+            <div class="related-grid" id="relatedGrid"></div>
         </div>
     </div>
 </main>
@@ -461,7 +479,7 @@
     <div class="modal-content" onclick="event.stopPropagation()">
         <i class="fas fa-hand-holding-heart" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
         <h2 style="color:var(--primary); margin-bottom: 12px;">About PearlNurses</h2>
-        <p style="margin:16px 0; color:#334155;">PearlNurses is Uganda’s digital home for nurses — delivering clinical insights, career opportunities, equipment reviews, and community news. Empowering the backbone of healthcare.</p>
+        <p style="margin:16px 0; color:#334155;">PearlNurses is Uganda's digital home for nurses — delivering clinical insights, career opportunities, equipment reviews, and community news. Empowering the backbone of healthcare.</p>
         <button onclick="closeModal('aboutModal')" style="background:var(--primary); color:white; border:none; padding:10px 28px; border-radius:40px; font-weight:600; cursor:pointer;">Close</button>
     </div>
 </div>
@@ -478,7 +496,7 @@
     </div>
 </div>
 
-   <footer>
+<footer>
     <div class="footer-grid">
         <div class="footer-col">
             <h4>PearlNurses</h4>
@@ -491,7 +509,7 @@
             <h4>Support</h4>
             <a id="footerAboutBtn">About Us</a>
             <a id="footerContactBtn">Contact Us</a>
-            <a href="#" id="privacyPolicyLink">Privacy Policy</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
         </div>
         <div class="footer-col">
             <p style="color:#94a3b8; font-size:0.75rem;">&copy; <span id="currentYear"></span> PearlNurses. All rights reserved.</p>
@@ -500,19 +518,13 @@
 </footer>
 
 <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
-<script>
-    // ---------- GOOGLE SHEETS CONFIG ----------
-    const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
-    let allArticles = [];           // store all fetched items (latest first)
-    let filteredArticles = [];      // filtered version based on category/search
-    let displayedCount = 0;
-    const ITEMS_PER_BATCH = 8;
-    let isLoading = false;
-    let hasMore = true;
-    let currentCategory = "all";
-    let currentSearchQuery = "";
 
-    // Helper: escape HTML
+<script>
+    // ========================
+    // GOOGLE SHEETS CONFIGURATION
+    // ========================
+    const SHEET_ID = '1ZA8Lxxw4aFBebxlrPpJx5FvEyB_VdoG5Ob8D0LYiIr0';
+
     function escapeText(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -523,218 +535,14 @@
         });
     }
 
-    // Format date
-    function formatDate() {
-        return new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-
-    // Create article card DOM element
-    function createArticleCard(item, index) {
-        const article = document.createElement('a');
-        article.className = 'article-card';
-        // If link is article.html or news.html with ID, or external URL
-article.href = item.link && item.link !== '#' ? item.link : '#';
-// If you want to auto-generate the link from ID when empty:
-if (!item.link || item.link === '#') {
-    article.href = `articles.html?id=${item.id}`;
-}
-        article.target = (item.link && item.link.startsWith('http')) ? '_blank' : '_self';
-        article.setAttribute('data-idx', index);
-
-        // Category badge
-        const categorySpan = document.createElement('span');
-        categorySpan.className = 'card-category';
-        categorySpan.textContent = escapeText(item.category) || 'Article';
-
-        // Title
-        const title = document.createElement('h2');
-        title.className = 'card-title';
-        title.textContent = escapeText(item.title) || 'Untitled Article';
-
-        // Meta info
-        const metaDiv = document.createElement('div');
-        metaDiv.className = 'card-meta';
-        metaDiv.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate()} &nbsp;|&nbsp; <i class="fas fa-tag"></i> ${escapeText(item.category) || 'Resource'} &nbsp;|&nbsp; <i class="fas fa-clock"></i> 5 min read`;
-
-        // Image (if exists)
-        let imageDiv = null;
-        if (item.image && item.image.trim() !== '') {
-            imageDiv = document.createElement('div');
-            imageDiv.className = 'card-image';
-            const img = document.createElement('img');
-            img.src = item.image;
-            img.alt = escapeText(item.title);
-            img.loading = 'lazy';
-            img.onerror = () => { img.src = 'https://placehold.co/800x400/eef2f6/5b6e8c?text=PearlNurses'; };
-            imageDiv.appendChild(img);
-        }
-
-        // Excerpt
-        const excerpt = document.createElement('p');
-excerpt.className = 'card-excerpt';
-excerpt.textContent = item.excerpt || 'Click to read this insightful article from PearlNurses.';
-        article.appendChild(categorySpan);
-        article.appendChild(title);
-        article.appendChild(metaDiv);
-        if (imageDiv) article.appendChild(imageDiv);
-        article.appendChild(excerpt);
-
-        return article;
-    }
-
-    // Apply filters (category + search)
-    function applyFilters() {
-        let filtered = [...allArticles];
-
-        // Category filter
-        if (currentCategory !== "all") {
-            filtered = filtered.filter(item => {
-                const cat = (item.category || '').toLowerCase();
-                return cat.includes(currentCategory.toLowerCase());
-            });
-        }
-
-        // Search filter
-        if (currentSearchQuery.trim() !== "") {
-            const query = currentSearchQuery.toLowerCase();
-            filtered = filtered.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                (item.category && item.category.toLowerCase().includes(query))
-            );
-        }
-
-        filteredArticles = filtered;
-        return filteredArticles;
-    }
-
-        // Render visible articles based on displayedCount
-    function renderVisibleArticles() {
-        const container = document.getElementById('articlesList');
-        if (!container) return;
-
-        const itemsToShow = filteredArticles.slice(0, displayedCount);
-        container.innerHTML = '';
-
-        if (itemsToShow.length === 0 && filteredArticles.length === 0) {
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i> No articles found. Try different filters or check back later!</div>';
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'none';
-            return;
-        }
-
-        if (itemsToShow.length === 0 && filteredArticles.length > 0) {
-            // This case shouldn't happen with proper logic, but just in case
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-filter"></i> No matching articles with current filters.</div>';
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'none';
-            return;
-        }
-
-        itemsToShow.forEach((item, idx) => {
-            container.appendChild(createArticleCard(item, idx));
-        });
-
-        // Manage loading & end triggers
-        if (displayedCount >= filteredArticles.length && filteredArticles.length > 0) {
-            document.getElementById('loadingTrigger').style.display = 'none';
-            document.getElementById('endMessage').style.display = 'block';
-            hasMore = false;
-        } else {
-            document.getElementById('loadingTrigger').style.display = 'block';
-            document.getElementById('endMessage').style.display = 'none';
-            hasMore = true;
-        }
-    }
-
-    // Load more items (infinite scroll)
-    function loadMoreItems() {
-        if (isLoading) return;
-        if (!hasMore) return;
-
-        isLoading = true;
-        setTimeout(() => {
-            const newCount = Math.min(displayedCount + ITEMS_PER_BATCH, filteredArticles.length);
-            if (newCount > displayedCount) {
-                displayedCount = newCount;
-                renderVisibleArticles();
-            }
-            isLoading = false;
-            if (displayedCount >= filteredArticles.length) {
-                hasMore = false;
-                document.getElementById('loadingTrigger').style.display = 'none';
-                document.getElementById('endMessage').style.display = 'block';
-            } else {
-                document.getElementById('loadingTrigger').style.display = 'block';
-            }
-        }, 300);
-    }
-
-    // Reset pagination and re-render
-    function resetAndRender() {
-        displayedCount = Math.min(ITEMS_PER_BATCH, filteredArticles.length);
-        hasMore = displayedCount < filteredArticles.length;
-        renderVisibleArticles();
-        if (hasMore) {
-            // Observer will be re-init on scroll
-        }
-    }
-
-    // Filter function (category + search combined)
-    function updateFiltersAndRender() {
-        applyFilters();
-        resetAndRender();
-        // Reset scroll observer position
-        if (window.observer) {
-            window.observer.disconnect();
-        }
-        initIntersectionObserver();
-    }
-
-    // Category filter click handler
-    function setCategory(category) {
-        currentCategory = category;
-        // Update active state on buttons
-        document.querySelectorAll('.filter-chip').forEach(btn => {
-            if (btn.getAttribute('data-category') === category) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-        updateFiltersAndRender();
-    }
-
-    // Search filter
-    window.filterArticles = function() {
-        const searchInput = document.getElementById('search-input');
-        currentSearchQuery = searchInput ? searchInput.value : "";
-        updateFiltersAndRender();
-    };
-
-    // Intersection Observer for infinite scroll
-    function initIntersectionObserver() {
-        const trigger = document.getElementById('loadingTrigger');
-        if (!trigger) return;
-
-        window.observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !isLoading && hasMore && filteredArticles.length > displayedCount) {
-                    loadMoreItems();
-                }
-            });
-        }, { threshold: 0.5, rootMargin: "0px 0px 100px 0px" });
-
-        window.observer.observe(trigger);
-    }
-
-    // Fetch data from Google Sheets (latest first)
+    // Fetch data from Google Sheets
     async function fetchSheetData() {
-        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Posts`;
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=posts`;
         try {
             const response = await fetch(url);
             const text = await response.text();
             const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/);
-            if (!jsonMatch) throw new Error('Invalid spreadsheet response');
+            if (!jsonMatch) throw new Error('Invalid response');
             const jsonData = JSON.parse(jsonMatch[1]);
             if (!jsonData.table || !jsonData.table.rows) return [];
             return jsonData.table.rows;
@@ -744,81 +552,174 @@ excerpt.textContent = item.excerpt || 'Click to read this insightful article fro
         }
     }
 
-    // Load & process data
-    async function loadArticlesData() {
-        const rows = await fetchSheetData();
-        if (!rows || rows.length === 0) {
-            allArticles = [];
-            filteredArticles = [];
-            renderVisibleArticles();
+    // Create related article card
+    function createRelatedCard(item) {
+        const wrapper = document.createElement('a');
+        wrapper.className = 'related-card';
+        wrapper.href = `articles.html?id=${item.id}`;
+        wrapper.target = '_self';
+
+        const imgDiv = document.createElement('div');
+        imgDiv.className = 'card-image';
+        const img = document.createElement('img');
+        let validImg = item.image && item.image.trim() !== '' && item.image.trim().startsWith('http') ? item.image : '';
+        if (!validImg) {
+            validImg = 'https://placehold.co/600x400/00a8e8/white?text=📖+Article';
+        }
+        img.src = validImg;
+        img.alt = escapeText(item.title);
+        img.loading = 'lazy';
+        img.onerror = () => { img.src = 'https://placehold.co/600x400/eef2f6/5b6e8c?text=Image+Missing'; };
+        imgDiv.appendChild(img);
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'card-info';
+        const catSpan = document.createElement('span');
+        catSpan.className = 'card-category';
+        catSpan.textContent = escapeText(item.type) || 'Article';
+        const titleH3 = document.createElement('h3');
+        titleH3.className = 'card-title';
+        titleH3.textContent = escapeText(item.title) || 'Untitled';
+        infoDiv.appendChild(catSpan);
+        infoDiv.appendChild(titleH3);
+
+        wrapper.appendChild(imgDiv);
+        wrapper.appendChild(infoDiv);
+        return wrapper;
+    }
+
+    // Display full article and related articles
+    async function displayFullArticle() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const container = document.getElementById('articleContainer');
+        const relatedContainer = document.getElementById('relatedContainer');
+        const relatedGrid = document.getElementById('relatedGrid');
+
+        if (!id) {
+            container.innerHTML = '<p style="padding:40px; text-align:center;">No article selected. <a href="articles.html">View all articles →</a></p>';
+            relatedContainer.style.display = 'none';
             return;
         }
 
-        const items = [];
-        for (let i = 0; i < rows.length; i++) {
-            const row = rows[i];
-            if (!row.c || !row.c[0] || !row.c[0].v) continue;
-            const title = row.c[0]?.v || '';
-            const category = row.c[1]?.v || 'General';
-            const image = row.c[3]?.v || '';
-            const link = row.c[4]?.v || '#';
+        // Show loading state
+        container.innerHTML = '<div class="loading-state"><div class="loading-spinner"></div><p style="margin-top:12px;">Loading article...</p></div>';
 
-            // Map categories to filter groups
-            let mappedCategory = category;
-            const catLower = category.toLowerCase();
-            if (catLower.includes('clinical') || catLower.includes('guide')) mappedCategory = 'Clinical Guides';
-            else if (catLower.includes('career') || catLower.includes('job')) mappedCategory = 'Career & Jobs';
-            else if (catLower.includes('school') || catLower.includes('student') || catLower.includes('education')) mappedCategory = 'Education & School';
-            else if (catLower.includes('wellness') || catLower.includes('self-care')) mappedCategory = 'Nurse Wellness';
-            else if (catLower.includes('tech') || catLower.includes('digital')) mappedCategory = 'Health Tech';
-
-            items.push({
-    id: String(id).trim(),
-    type: String(type).trim(),
-    title: String(title).trim(),
-    tags: String(tags).trim(),
-    excerpt: String(excerpt).trim() || `Explore this comprehensive guide: "${String(title).trim()}" — essential knowledge for every Ugandan nursing professional.`,
-    content: String(content).trim(),
-    image: String(image).trim(),
-    link: String(link).trim()
-});
+        const rows = await fetchSheetData();
+        if (!rows || rows.length === 0) {
+            container.innerHTML = '<p style="padding:40px; text-align:center;">Article not found. <a href="articles.html">Back to all articles →</a></p>';
+            relatedContainer.style.display = 'none';
+            return;
         }
-        // Reverse to get latest first (newest entries at bottom of sheet become top)
-        // Only keep items where type is Article, Feature, Review, or Student Life
-const articleItems = items.filter(item => {
-    const type = (item.type || '').toLowerCase();
-    return type === 'article' || type === 'feature' || type === 'review' || type === 'student life' || type === 'guide';
-});
-allArticles = articleItems.reverse();
 
-        // Apply initial filters
-        applyFilters();
-        displayedCount = Math.min(ITEMS_PER_BATCH, filteredArticles.length);
-        hasMore = displayedCount < filteredArticles.length;
-        renderVisibleArticles();
-
-        if (hasMore) {
-            initIntersectionObserver();
-        } else {
-            document.getElementById('loadingTrigger').style.display = 'none';
-            if (filteredArticles.length > 0) {
-                document.getElementById('endMessage').style.display = 'block';
+        // Parse all rows and find the target article
+        let articleData = null;
+        let allArticles = [];
+        for (let row of rows) {
+            if (!row.c || !row.c[0] || !row.c[0].v) continue;
+            if (String(row.c[0].v).toLowerCase() === 'id') continue;
+            const rowData = {
+                id: String(row.c[0]?.v || '').trim(),
+                type: String(row.c[1]?.v || 'Article').trim(),
+                title: String(row.c[2]?.v || 'Untitled').trim(),
+                tags: String(row.c[3]?.v || '').trim(),
+                excerpt: String(row.c[4]?.v || '').trim(),
+                content: String(row.c[5]?.v || '').trim(),
+                image: String(row.c[6]?.v || '').trim(),
+                link: String(row.c[7]?.v || '#').trim()
+            };
+            allArticles.push(rowData);
+            if (String(row.c[0].v).trim() === id) {
+                articleData = rowData;
             }
+        }
+
+        if (!articleData) {
+            container.innerHTML = '<p style="padding:40px; text-align:center;">Article not found. <a href="articles.html">Back to all articles →</a></p>';
+            relatedContainer.style.display = 'none';
+            return;
+        }
+
+        // ========== RENDER FULL ARTICLE ==========
+        container.innerHTML = '';
+
+        // Title
+        const titleEl = document.createElement('h1');
+        titleEl.className = 'article-title';
+        titleEl.textContent = articleData.title;
+        container.appendChild(titleEl);
+
+        // Tags
+        if (articleData.tags) {
+            const tagsDiv = document.createElement('div');
+            tagsDiv.className = 'article-tags';
+            const tagArray = articleData.tags.split(',').map(t => t.trim());
+            tagArray.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = tag;
+                tagsDiv.appendChild(span);
+            });
+            container.appendChild(tagsDiv);
+        }
+
+        // Meta info
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'article-meta';
+        const date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        metaDiv.innerHTML = `<span><i class="fas fa-calendar-alt"></i> ${date}</span>
+                             <span><i class="fas fa-tag"></i> ${articleData.type}</span>`;
+        container.appendChild(metaDiv);
+
+        // Featured Image
+        if (articleData.image && articleData.image.trim() !== '' && articleData.image.trim().startsWith('http')) {
+            const img = document.createElement('img');
+            img.className = 'featured-image';
+            img.src = articleData.image;
+            img.alt = articleData.title;
+            img.loading = 'lazy';
+            img.onerror = () => { img.style.display = 'none'; };
+            container.appendChild(img);
+        }
+
+        // Full Content
+        const bodyDiv = document.createElement('div');
+        bodyDiv.className = 'article-body';
+        const contentText = articleData.content || 'No content available.';
+        bodyDiv.innerHTML = contentText.replace(/\n/g, '<br>');
+        container.appendChild(bodyDiv);
+
+        // Back button
+        const backBtn = document.createElement('a');
+        backBtn.href = 'articles.html';
+        backBtn.className = 'back-button';
+        backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to all articles';
+        container.appendChild(backBtn);
+
+        // ========== RENDER RELATED ARTICLES ==========
+        // Filter other articles (type = article, review, feature, guide – excluding current)
+        const relatedItems = allArticles.filter(item => {
+            const typeLower = (item.type || '').toLowerCase();
+            return (typeLower === 'article' || typeLower === 'review' || typeLower === 'feature' || typeLower === 'guide') && item.id !== articleData.id;
+        });
+
+        if (relatedItems.length > 0) {
+            relatedContainer.style.display = 'block';
+            relatedGrid.innerHTML = '';
+            relatedItems.forEach(item => {
+                relatedGrid.appendChild(createRelatedCard(item));
+            });
+        } else {
+            relatedContainer.style.display = 'none';
         }
     }
 
-    // ----- UI Helpers (same as homepage) -----
+    // ----- UI Helpers -----
     function toggleMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
     function toggleSearch() {
         const sc = document.getElementById('search-container');
         sc.classList.toggle('active');
-        if (sc.classList.contains('active')) {
-            document.getElementById('search-input').focus();
-        } else {
-            document.getElementById('search-input').value = '';
-            currentSearchQuery = "";
-            updateFiltersAndRender();
-        }
+        if (sc.classList.contains('active')) document.getElementById('search-input').focus();
     }
     window.openModal = (id) => { document.getElementById(id).style.display = 'flex'; };
     window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
@@ -830,15 +731,6 @@ allArticles = articleItems.reverse();
     document.getElementById('footerAboutBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
     document.getElementById('footerContactBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('contactModal'); });
     document.getElementById('aboutNavBtn')?.addEventListener('click', (e) => { e.preventDefault(); openModal('aboutModal'); });
-    document.getElementById('privacyPolicyLink')?.addEventListener('click', (e) => { e.preventDefault(); alert("📜 Privacy Policy: We respect your data. No personal information shared without consent."); });
-
-    // Category filter button listeners
-    document.querySelectorAll('.filter-chip').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const category = btn.getAttribute('data-category');
-            setCategory(category);
-        });
-    });
 
     document.addEventListener('keydown', (e) => { if(e.key === 'Escape') document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); });
     window.addEventListener('scroll', () => {
@@ -847,8 +739,8 @@ allArticles = articleItems.reverse();
     });
     document.getElementById('currentYear').innerText = new Date().getFullYear();
 
-    // start loading
-    loadArticlesData();
+    // Initialize
+    document.addEventListener('DOMContentLoaded', displayFullArticle);
 </script>
 </body>
 </html>
