@@ -943,19 +943,20 @@
         for (let row of rows) {
             if (!row.c || !row.c[0] || !row.c[0].v) continue;
             if (String(row.c[0].v).toLowerCase() === 'id') continue;
-            const type = (row.c[1]?.v || '').toLowerCase();
-            if (type === 'news' || type === 'breaking') {
-                items.push({
-                    id: String(row.c[0]?.v || '').trim(),
-                    type: String(row.c[1]?.v || 'News').trim(),
-                    title: String(row.c[2]?.v || 'Untitled').trim(),
-                    tags: String(row.c[3]?.v || '').trim(),
-                    excerpt: String(row.c[4]?.v || '').trim(),
-                    content: String(row.c[5]?.v || '').trim(),
-                    image: String(row.c[6]?.v || '').trim(),
-                    link: String(row.c[7]?.v || '#').trim()
-                });
-            }
+            const type = (row.c[1]?.v || '').trim().toLowerCase();
+// Include if type is 'news' or 'breaking' or contains them
+if (type && (type === 'news' || type === 'breaking' || type.includes('news') || type.includes('breaking'))) {
+    items.push({
+        id: String(row.c[0]?.v || '').trim(),
+        type: String(row.c[1]?.v || 'News').trim(),
+        title: String(row.c[2]?.v || 'Untitled').trim(),
+        tags: String(row.c[3]?.v || '').trim(),
+        excerpt: String(row.c[4]?.v || '').trim(),
+        content: String(row.c[5]?.v || '').trim(),
+        image: String(row.c[6]?.v || '').trim(),
+        link: String(row.c[7]?.v || '#').trim()
+    });
+}
         }
         allNewsItems = items.reverse();
         displayedCount = Math.min(ITEMS_PER_BATCH, allNewsItems.length);
