@@ -1141,9 +1141,9 @@
 
         // Related
         const relatedItems = allArticles.filter(item => {
-            const typeLower = (item.type || '').toLowerCase();
-            return (typeLower === 'article' || typeLower === 'review' || typeLower === 'feature' || typeLower === 'guide') && item.id !== articleData.id;
-        });
+    const typeLower = (item.type || '').trim().toLowerCase();
+    return typeLower !== 'news' && typeLower !== 'breaking' && item.id !== articleData.id;
+});
 
         if (relatedItems.length > 0) {
             relatedContainer.style.display = 'block';
